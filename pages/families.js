@@ -22,11 +22,11 @@ const families = () => {
       <style jsx>
       {`
         .familiesPageContainer{
-         position: relative;
-         overflow:hidden;
-         margin:0;
-         height:100%;
-         padding-top: 100%;
+        position: relative;
+        overflow:hidden;
+        margin:0;
+        height:100%;
+        padding-top: 100vh;
         }
         .familiesPageContent{
           position: absolute;
@@ -39,16 +39,16 @@ const families = () => {
         }
         @media screen and (min-width: 1200px){
           .familiesPageContainer{
+            padding-top:9500px;
            }
            .familiesPageContent{
-             position: absolute;
-             width: 100vw;
-             height: 200vh;
-             box-sizing:border-box;
-             top:0;
-             border: 0;
-             margin:0;
-             left:0;
+            position: absolute;
+            width: 100%;
+            height:  9500px;
+            top:0;
+            border: 0;
+            margin:0;
+            left:0;
            }
           }
       `}
