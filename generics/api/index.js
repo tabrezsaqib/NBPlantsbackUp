@@ -35,6 +35,7 @@ export async function adminLogin(url, params = {}) {
 
 export async function post(url, params = {}) {
   let accessToken = localStore.getToken()
+  console.log(localStore.getToken(), "token1")
   return fetch(url, {
     method: "POST",
     headers: {
@@ -54,4 +55,14 @@ export async function post(url, params = {}) {
 
 export function capitalizeFirstLetter(data) {
   return data.toString().charAt(0).toUpperCase() + data.slice(1)
+}
+
+export function capitalizeAllLetters(data) {
+  return data.toString().toUpperCase()
+}
+
+export function capitalizeEveryWord(data) {
+  return data.toString().split(' ').map(
+    word => word.charAt(0).toUpperCase() + word.slice(1)
+  ).join(' ')
 }

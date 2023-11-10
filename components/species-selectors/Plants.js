@@ -23,6 +23,7 @@ import ListPlantSpecies from "../main/ListPlantSpecies"
 import SideNav from "../side-nav/SideNav"
 import * as options from "../../data/sideNavListDataArray"
 import styles from "../../styles/Global.module.scss"
+import localstyles from "../../styles/Plants.module.css"
 
 const Plants = ({
   all_plants,
@@ -215,7 +216,7 @@ const Plants = ({
       <div
         className={
           filteredList.current.length == 0
-            ? [styles.error_bg_media_query, "error-bg col-lg-9"].join(" ")
+            ? [styles.error_bg_media_query,localstyles.errorBg, "col-lg-9"].join(" ")
             : "col-lg-9 col-sm-12"
         }>
         {/* <h4>Non Woody Plants..</h4> */}
@@ -226,18 +227,18 @@ const Plants = ({
             <div 
           // className="d-flex flex-row justify-content-center align-items-center align-self-center"
           >
-                <span className="itemsLabel">Species Per Page:</span>
+                <span className={localstyles.itemsLabel}>Species Per Page:</span>
                 <select 
-                className="displayDropdown"
+                className={localstyles.displayDropdown}
                 onChange={handleItemsPerPageChange}>
                   {dropDownValues.map((option, index) => (
-                    <option key={index} value={option}>{option}</option>
+                    <option className={localstyles.optionContent} key={index} value={option}>{option}</option>
                   ))}
                 </select>
             </div>
             }
           <ReactPaginate
-            className={toggle_pagination === true ? "hide" : ""}
+            className={toggle_pagination === true ? localstyles.hide : ""}
             nextLabel="next >"
             onPageChange={handlePageClick}
             pageRangeDisplayed={5}
@@ -260,40 +261,6 @@ const Plants = ({
           />
         </div>
       </div>
-      <style jsx>{`
-        .hide {
-          display: none;
-        }
-        .error-bg {
-          background-color: #ffffff;
-          margin-top: 16px;
-          margin-bottom: 27px;
-          border: 1px solid #e0e1e3;
-          border-radius: 15px;
-        }
-        .itemsLabel{
-          color: #333333;
-          background: #ffffff;
-          margin: 0px 0px 0px 0px;
-          padding: 6px 12px;
-        }
-        .displayDropDown{
-          color: #333333;
-          background: #ffffff;
-          margin: 0px 0px 0px 0px;
-          padding: 6px 12px;
-          fontSize: 16px;
-          border: 1px solid #dee2e6;
-          borderRadius: 0.25rem;
-          option:hover::after{
-            background: #1D9D47;
-            color: #ffffff;
-          }
-          option:hover{
-            cursor:pointer;
-          }
-        }
-      `}</style>
     </div>
   )
 }

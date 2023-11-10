@@ -1,0 +1,34 @@
+.selectorHeading {
+    font-size: 13px;
+    margin: 5px 5px;
+    font-weight: 900;
+  }
+
+  :global(.biCheck2Square::before) {
+    font-weight: 600 !important;
+  }
+  :global(.formCheckInput:hover) {
+    cursor: pointer !important;
+  }
+  :global(.formCheckLabel:hover) {
+    cursor: pointer !important;
+  }
+  .accordionButton:not(.collapsed) {
+    color: #1d9d47;
+    background-color: #f8f9fa;
+  }
+  .accordionButton:not(.collapsed)::after {
+    filter: invert(13%) sepia(68%) saturate(2891%) hue-rotate(346deg)
+      brightness(104%) contrast(97%);
+    -webkit-filter: invert(13%) sepia(68%) saturate(2891%)
+      hue-rotate(346deg) brightness(104%) contrast(97%);
+    -ms-filter: invert(13%) sepia(68%) saturate(2891%) hue-rotate(346deg)
+      brightness(104%) contrast(97%);
+  }
+  .accordionButton {
+    padding: 0.5rem 1.25rem;
+    background-color: #f8f9fa;
+  }
+  :global(.formCheckLabel) {
+    pointer-events: none;
+  }

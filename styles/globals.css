@@ -85,6 +85,15 @@ p {
 #flowers .form-check{
   width: 134px; 
 }
+
+#fruits .form-check{
+  width: 134px; 
+}
+
+#plant_type .form-check{
+  width: 165px; 
+}
+
 #four-column .form-check {
   width: 70px!important;
 }

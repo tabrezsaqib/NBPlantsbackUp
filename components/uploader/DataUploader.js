@@ -9,7 +9,7 @@ const DataUploader = ({}) => {
   const fileTypes = ["JSON"]
   const [file, setFile] = useState(null)
   const handleChange = (file) => {
-    console.log(file)
+    // console.log(file)
     setFile(file)
     const fileReader = new FileReader()
     fileReader.readAsText(file)

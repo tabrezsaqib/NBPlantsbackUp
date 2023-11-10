@@ -21,10 +21,14 @@ const initialState = {
   leaf_shape: new Array(options.leaf_shape.length).fill(false),
   spore_shape: new Array(options.spore_shape.length).fill(false),
   spore_location: new Array(options.spore_location.length).fill(false),
+  spore_covering: new Array(options.spore_covering.length).fill(false),
+  spore_under_leaf: new Array(options.spore_under_leaf.length).fill(false),
   stems: new Array(options.stems.length).fill(false),
+  growth_form: new Array(options.growth_form.length).fill(false),
   petal_symmetry: new Array(options.petal_symmetry.length).fill(false),
   inflorescence: new Array(options.inflorescence.length).fill(false),
   fruit_type: new Array(options.fruit_type.length).fill(false),
+  fruit_color: new Array(options.fruit_color.length).fill(false), 
   selectorFilter: "none",
   activeFilterList: [],
   activeFilter: false,
@@ -92,6 +96,16 @@ export const selectorsReducer = (state = initialState, action) => {
         ...state,
         spore_location: action.payload,
       }
+    case types.TOGGLE_SPORE_COVERING:
+      return {
+        ...state,
+        spore_covering: action.payload,
+      }
+    case types.TOGGLE_SPORE_UNDER_LEAF:
+      return {
+        ...state,
+        spore_under_leaf: action.payload,
+      }
     // case types.TOGGLE_COUNTY:
     //   return {
     //     ...state,
@@ -112,6 +126,11 @@ export const selectorsReducer = (state = initialState, action) => {
         ...state,
         stems: action.payload,
       }
+      case types.TOGGLE_GROWTH_FORM:
+        return {
+          ...state,
+          growth_form: action.payload,
+        }
     case types.TOGGLE_SHAPE:
       return {
         ...state,
@@ -122,6 +141,11 @@ export const selectorsReducer = (state = initialState, action) => {
         ...state,
         fruit_type: action.payload,
       }
+      case types.TOGGLE_FRUIT_COLOR:
+        return {
+          ...state,
+          fruit_color: action.payload,
+        }
     case types.TOGGLE_PETAL_SYMMETRY:
       return {
         ...state,

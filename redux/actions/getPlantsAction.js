@@ -111,11 +111,19 @@ export const triggerToolTip = (status) => async (dispatch) => {
     payload: status,
   })
 }
+
+export const setPlantFamilyDetails = (data) => async (dispatch) => {
+  dispatch({
+    type: types.PLANT_FAMILY_DETAILS,
+    payload: data,
+  })
+}
+
 export const searchByKeyword = (slug) => async (dispatch) => {
   const response = await api.get(
     `${SEARCH_URL}search?keyword=${slug}&per_page=50`
   )
-  console.log(response)
+//  console.log(response)
 
   if (response.data == null) {
     dispatch({

@@ -5,6 +5,7 @@ import Router from "next/router"
 import styles from "../../styles/Global.module.scss"
 import Ferns from "../species-selectors/Ferns"
 import GrassLike from "../species-selectors/GrassLike"
+import localstyles from "../../styles/SpeciesOption.module.css"
 
 const SpeciesOption = () => {
   const optionSelector = (type) => {
@@ -41,6 +42,15 @@ const SpeciesOption = () => {
         Router.reload()
       })
     }
+    if (type == "Grass") {
+      localStorage.setItem("route", "Grass")
+      Router.push(
+      "/grass"
+      )
+      .then(() => {
+        Router.reload()
+      })
+    }
   }
   return (
     <div className="d-flex justify-content-center">
@@ -49,33 +59,21 @@ const SpeciesOption = () => {
           styles.responsive_selection_blocks,
           "selection-blocks d-flex align-items-center justify-content-evenly",
         ].join(" ")}>
-        <a onClick={() => optionSelector("Woody")}>
-          <WoodyPlantSelector />
-        </a>
-        <a onClick={() => optionSelector("Non-woody")}>
-          <NonWoodyPlantSelector />
-        </a>
-        <a onClick={() => optionSelector("Fern")}>
+        <a className={localstyles.speciesLink} onClick={() => optionSelector("Fern")}>
           <Ferns />
         </a>
-        <a onClick={() => optionSelector("Non-woody")} className="disabled">
+        <a className={localstyles.speciesLink} onClick={() => optionSelector("Grass")} 
+        // className="disabled"
+        >
           <GrassLike />
         </a>
+        <a className={localstyles.speciesLink} onClick={() => optionSelector("Woody")}>
+          <WoodyPlantSelector />
+        </a>
+        <a className={localstyles.speciesLink} onClick={() => optionSelector("Non-woody")}>
+          <NonWoodyPlantSelector />
+        </a>
       </div>
-      <style jsx>{`
-        a:hover {
-          cursor: pointer;
-        }
-        .disabled {
-          pointer-events: none;
-          opacity: 0.6;
-          filter: alpha(opacity=50);
-          zoom: 1;
-          -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-          -moz-opacity: 0.5;
-          -khtml-opacity: 0.5;
-        }
-      `}</style>
     </div>
   )
 }

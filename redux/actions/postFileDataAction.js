@@ -13,4 +13,5 @@ const API_POST_URL = process.env.API_POST_URL
 // }
 export const postFileData = (data) => async (dispatch) => {
   await api.post(`${API_POST_URL}plants_db`, data)
+  console.log(data, "API_Call")
 }

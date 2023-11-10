@@ -27,39 +27,41 @@ const PlantItem = ({ plant }) => {
           <h4 className="heading mt-3">{plant.acf.common_name}</h4>
           <div className="d-flex flex-column">
             <span>
-              <i>{`${plant.title}`}</i>
+              <i>{`${plant.title.rendered ? plant.title.rendered : plant.title}`}</i>
+              {/* <i>{`${plant.title}`}</i> */}
             </span>
             <div className="d-flex flex-wrap tags">
-              {plant.acf.characteristics.habitat.map((val, index) => (
-                <span key={index}>
-                  {api.capitalizeFirstLetter(val)}, &nbsp;
-                </span>
-              ))}
-              {plant.acf.characteristics.leaf_type.map((val, index) => (
-                <span key={index}>
-                  {api.capitalizeFirstLetter(val)}, &nbsp;
-                </span>
-              ))}
-              {plant.acf.characteristics.leaf_arrangement.map((val, index) => (
-                <span key={index}>
-                  {api.capitalizeFirstLetter(val)}, &nbsp;
-                </span>
-              ))}
-              {plant.acf.characteristics.leaf_blade_edges.map((val, index) => (
-                <span key={index}>
-                  {api.capitalizeFirstLetter(val)}, &nbsp;
-                </span>
-              ))}
-              {plant.acf.characteristics.flower_colour.map((val, index) => (
-                <span key={index}>
-                  {api.capitalizeFirstLetter(val)}
-                  {val !==
-                  plant.acf.characteristics.flower_colour.slice(-1).pop()
-                    ? ","
-                    : ""}
-                  &nbsp;
-                </span>
-              ))}
+              {plant.acf.characteristics > 0 ? <>
+                {plant.acf.characteristics.habitat.map((val, index) => (
+                  <span key={index}>
+                    {api.capitalizeFirstLetter(val)}, &nbsp;
+                  </span>
+                ))}
+                {plant.acf.characteristics.leaf_type.map((val, index) => (
+                  <span key={index}>
+                    {api.capitalizeFirstLetter(val)}, &nbsp;
+                  </span>
+                ))}
+                {plant.acf.characteristics.leaf_arrangement.map((val, index) => (
+                  <span key={index}>
+                    {api.capitalizeFirstLetter(val)}, &nbsp;
+                  </span>
+                ))}
+                {plant.acf.characteristics.leaf_blade_edges.map((val, index) => (
+                  <span key={index}>
+                    {api.capitalizeFirstLetter(val)}, &nbsp;
+                  </span>
+                ))}
+                {plant.acf.characteristics.flower_colour.map((val, index) => (
+                  <span key={index}>
+                    {api.capitalizeFirstLetter(val)}
+                    {val !==
+                      plant.acf.characteristics.flower_colour.slice(-1).pop()
+                      ? ","
+                      : ""}
+                    &nbsp;
+                  </span>
+                ))}</> : ''}
             </div>
           </div>
         </div>

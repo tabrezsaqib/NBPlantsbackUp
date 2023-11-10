@@ -13,6 +13,7 @@ const initialState = {
   woody_plants_count: 0,
   popoverData: [],
   popoverStatus: false,
+  plantFamily: []
 }
 export const getPlantsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -80,6 +81,11 @@ export const getPlantsReducer = (state = initialState, action) => {
       return {
         ...state,
         popoverStatus: action.payload,
+      }
+    case types.PLANT_FAMILY_DETAILS:
+      return {
+        ...state,
+        plantFamily: action.payload,
       }
     default:
       return state

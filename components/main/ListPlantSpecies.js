@@ -29,7 +29,7 @@ const ListPlantSpecies = ({
                 "box-container",
                 styles.box_container_media_query,
               ].join(" ")}>
-              <Link
+              <Link legacyBehavior
                 href={{
                   pathname: `/plants/${data.slug}`,
                   query: { type: data.acf.plant_type },

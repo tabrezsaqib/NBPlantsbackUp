@@ -1,31 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import React from "react"
+import styles from "../../styles/Ferns.module.css"
 
 const Ferns = () => {
   return (
-    <div className="block">
-      <img src="../images/fern.png" alt="fern plant icon" />
-      <h4>Fern/Fern Ally</h4>
+    <div className={styles.block}>
+      <img className={styles.imgContent} src="../images/fern.png" alt="fern plant icon" />
+      <h4 className={styles.h4Content}>Fern/Fern Ally</h4>
       <p>In progress</p>
-
-      <style jsx>{`
-        .block {
-          padding: 30px 20px;
-          height: 300px;
-          img {
-            border-radius: 50%;
-            border: 2px solid #333333;
-          }
-          h4 {
-            padding-top: 15px;
-            font-size: 18px;
-            font-weight: bold;
-          }
-          span {
-            font-size: 14px;
-          }
-        }
-      `}</style>
     </div>
   )
 }

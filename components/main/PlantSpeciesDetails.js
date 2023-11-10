@@ -8,15 +8,21 @@ import Router from "next/router"
 import ReactHtmlParser from "react-html-parser"
 import styles from "../../styles/Global.module.scss"
 
+
 import Header from "../layouts/Header"
 import Navbar from "../layouts/Navbar"
 import Footer from "../layouts/Footer"
+import Link from "next/link"
+import { useDispatch } from "react-redux"
 
 const PlantSpeciesDetails = ({ plant_details }) => {
   const [slide, setSlide] = useState(false)
   const [slideIndex, setSlideIndex] = useState(null)
   const slideRef = useRef()
   const router = useRouter()
+  const dispatch = useDispatch()
+  const API_URL = process.env.API_URL
+
   const slideShow = (index) => {
     setSlide(true)
     setSlideIndex(index)
@@ -38,6 +44,25 @@ const PlantSpeciesDetails = ({ plant_details }) => {
     indicators: true,
   }
 
+  const loadPlantFamily = async (param) => {
+    if (param) {
+      Router.push({
+        pathname: "/plantFamilyDetails",
+        query: { keyword: param },
+      }).then(() => {
+        Router.reload()
+      })
+    }
+  }
+
+  const formatCase = (data) => {
+    if (data.search('sna') >= 0 || data.search('Sna') >= 0) {
+      return data.replace(/sna/ig,'SNA')  
+    }else{
+      return data
+    }
+  }
+
   const refresh = () => {
     let route = localStorage.getItem("route")
     Router.push({
@@ -54,7 +79,6 @@ const PlantSpeciesDetails = ({ plant_details }) => {
       },
     }).then(() => {})
   }
-
   return (
     <>
     <Header />
@@ -176,6 +200,37 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                   </div>
                 </div>
               </div>
+<br></br>
+              <div>
+                  {plant_details.acf.distribution_map_id ? <>
+                  <p>
+                  <strong>Distribution </strong><span style={{float:'right', fontSize:'12px'}}>&copy;ACCDC</span> 
+                  </p>
+                  <div className="row">
+                    <div className="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                      <div
+                        className={
+                          plant_details.acf.distribution_map_id !== ''
+                            ? "featured-image"
+                            : "featured-image disable-pointer-events"
+                        }
+                        data-bs-toggle="modal"
+                        data-bs-target="#distribution-map">
+                           {plant_details.acf.distribution_map_id == '' ? (
+                          <div className="d-flex flex-column text-center stock-img-container">
+                            <img src="../../images/no_result_found.png" alt="" />
+                            <span>Oops! No images found!</span>
+                          </div>
+                        ) : (
+                          <img
+                            src={`../../images/maps/${plant_details.acf.distribution_map_id}.jpg`}
+                            alt="Distribution map"
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </div></>:""}
+              </div>
               <div
                 className="modal fade"
                 id="exampleModal"
@@ -207,7 +262,9 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                                         ].full_image_url
                                       })`,
                                     }}></div>
-                                  <p className="img-caption">{item.caption}</p>
+                                  <p className="img-caption" key={index}>{plant_details.acf.image_url[
+                                      slideIndex || index
+                                    ].caption}</p>
                                 </div>
                               ))}
                           </Slide>
@@ -266,6 +323,48 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                   </div>
                 </div>
               </div>
+
+              <div
+                  className="modal fade"
+                  id="distribution-map"
+                  tabIndex="-1"
+                  aria-labelledby="distribution-map-label"
+                  aria-hidden="true">
+                  <div className="modal-dialog modal-dialog-centered modal-xl">
+                    <div className="modal-content">
+                      <div className="modal-header">
+                        <button
+                          type="button"
+                          className="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"></button>
+                      </div>
+                      <div className="modal-body" style={{ margin: "0 auto" }}>
+                        <div className="modal-image-container">
+                          {plant_details.acf.distribution_map_id === '' ? (
+                            <div className="d-flex flex-column text-center stock-img-container">
+                              <img
+                                src="../../images/no_result_found.png"
+                                alt=""
+                              />
+                              {/* <h3>Oops! No images found!</h3> */}
+                            </div>
+                          ) : (
+                            <div>
+                              <img
+                                src={`../../images/maps/${plant_details.acf.distribution_map_id}.jpg`}
+                                alt="Distribution map"
+                              />
+                              <p className="img-caption">
+                               <span>&copy;</span> ACCDC
+                              </p>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> 
             </div>
           </div>
           <div className="col-lg-9">
@@ -332,7 +431,13 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                   <p>
                     <strong>Plant Family: &nbsp;</strong>
                   </p>
-                  {ReactHtmlParser(plant_details.acf.plant_family)}
+                  <span className="familyLink" onClick={() => loadPlantFamily(plant_details.acf.plant_family)}> {ReactHtmlParser(plant_details.acf.plant_family)}</span>
+                  {plant_details.acf.family_english?<span>&#x3B;&nbsp;</span> : ""}
+                  {plant_details.acf.family_english && (
+                    <div className="d-flex">
+                      {plant_details.acf.family_english}
+                    </div>
+                  )}
                 </div>
               )}
               <div className="mb-3">
@@ -344,18 +449,6 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                   </div>
                 )}
               </div>
-              {plant_details.acf.varieties && (
-                <div>
-                  <p>
-                    <strong>Varieties: &nbsp;</strong>
-                  </p>
-                  <div className="d-flex flex-column">
-                    <div className="rtc-content">
-                      {ReactHtmlParser(plant_details.acf.varieties)}
-                    </div>
-                  </div>
-                </div>
-              )}
               <div className="d-flex label-value-section mt-2">
                 {plant_details.acf.plant_type && (
                   <div className="d-flex label-value-section">
@@ -387,20 +480,37 @@ const PlantSpeciesDetails = ({ plant_details }) => {
               <hr />
 
               <div className="d-flex flex-column">
+              {plant_details.acf.conservation_rank ?
+                      plant_details.acf.conservation_rank.length !== 0 && (
+                        <div className="d-flex">
+                          <p>
+                            <strong>Conservation Rank: &nbsp;</strong>
+                          </p>
+                          {plant_details.acf.conservation_rank.map(
+                            (item, index) => (
+                              <div className="d-flex" key={index}>
+                                <p>
+                                  {api.capitalizeFirstLetter(formatCase(item))}
+                                  {item !==
+                                    plant_details.acf.conservation_rank
+                                      .slice(-1)
+                                      .pop() ? (
+                                    <span>, &nbsp;</span>
+                                  ) : (
+                                    ""
+                                  )}
+                                </p>
+                              </div>
+                            )
+                          )}
+                        </div>
+                      ) : ''}
                 {plant_details.acf.characteristics.invasive && (
                   <div className="d-flex label-value-section">
                     <p>
-                      <strong>Invasive: &nbsp;</strong>
+                      <strong style={{ color: 'red' }}>Invasive: &nbsp;</strong>
                       {plant_details.acf.characteristics.invasive}
                     </p>
-                  </div>
-                )}
-                {plant_details.acf.conservation_rank && (
-                  <div className="d-flex label-value-section">
-                    <p>
-                      <strong>Conservation Rank: &nbsp;</strong>
-                    </p>
-                    {plant_details.acf.conservation_rank}
                   </div>
                 )}
                 <div className="d-flex">
@@ -435,17 +545,42 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                     </div>
                   )}
                 </div>
+                {plant_details.acf.characteristics.growth_form
+                          .length !== 0 && (
+                            <div className="d-flex label-value-section">
+                              <p>
+                                <strong>Growth Form: &nbsp;</strong>
+                              </p>
+                              {plant_details.acf.characteristics.growth_form.map(
+                                (item, index) => (
+                                  <div className="d-flex" key={index}>
+                                    <p>
+                                      {api.capitalizeFirstLetter(item)}
+                                      {index + 1 === plant_details.acf.characteristics.growth_form.length ? '' : ","} &nbsp;
+                                    </p>
+                                  </div>
+                                )
+                              )}
+                            </div>
+                )}
                 {plant_details.acf.characteristics.height && (
                   <div className="d-flex label-value-section">
                     <p>
-                      <strong>Height: &nbsp;</strong>
+                      <strong>Size: &nbsp;</strong>
                       {plant_details.acf.characteristics.height}
                     </p>
                   </div>
                 )}
-
                 {/* FLOWERS */}
-                {router.query.type !== "Fern" && (
+                {(router.query.type !== "Fern" && (plant_details.acf.characteristics.bloom_time || 
+                 plant_details.acf.characteristics.flower_colour.length !== 0 || plant_details.acf.characteristics.inflorescence.length !== 0 ||
+                 plant_details.acf.characteristics.number_flowers || plant_details.acf.characteristics.number_petals ||
+                 plant_details.acf.characteristics.petal_symmetry.length !== 0 || plant_details.acf.characteristics.lip_shape.length !== 0 ||
+                 plant_details.acf.characteristics.lip_description  || plant_details.acf.characteristics.nectar_spur ||
+                 plant_details.acf.characteristics.flower_description || plant_details.acf.characteristics.stipule_shape || 
+                 plant_details.acf.characteristics.stems.length !== 0 
+                 ))
+                && (
                   <div className="accordion mb-3" id="accordion1">
                     <div className="accordion-item">
                       <h2 className="accordion-header" id="headingOne">
@@ -477,7 +612,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
 
                             {plant_details.acf.characteristics.flower_colour
                               .length !== 0 && (
-                              <div className="d-flex">
+                              <div className="d-flex label-value-section">
                                 <p>
                                   <strong>Flower Colour: &nbsp;</strong>
                                 </p>
@@ -522,7 +657,25 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                                   </div>
                                 )
                               )}
-
+                              {plant_details.acf.characteristics
+                                .petal_symmetry !== 0 &&
+                                plant_details.acf.characteristics.petal_symmetry.map(
+                                  (item, index) => (
+                                    <div
+                                      className="d-flex label-value-section"
+                                      key={index}>
+                                      <p>
+                                        <strong>Petal Symmetry: &nbsp;</strong>
+                                      </p>
+                                      <div>
+                                        <p>
+                                          {api.capitalizeFirstLetter(item)}
+                                          &nbsp;
+                                        </p>
+                                      </div>
+                                    </div>
+                                  )
+                              )}
                             {plant_details.acf.characteristics
                               .number_flowers && (
                               <div className="d-flex label-value-section">
@@ -535,7 +688,18 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                                 </p>
                               </div>
                             )}
-
+                            {plant_details.acf.characteristics
+                              .number_rays && (
+                              <div className="d-flex label-value-section">
+                                <p>
+                                  <strong>Number Rays: &nbsp;</strong>
+                                  {
+                                    plant_details.acf.characteristics
+                                      .number_rays
+                                  }
+                                </p>
+                              </div>
+                            )}
                             {plant_details.acf.characteristics
                               .number_petals && (
                               <div className="d-flex label-value-section">
@@ -548,25 +712,6 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                                 </p>
                               </div>
                             )}
-                            {plant_details.acf.characteristics
-                              .petal_symmetry !== 0 &&
-                              plant_details.acf.characteristics.petal_symmetry.map(
-                                (item, index) => (
-                                  <div
-                                    className="d-flex label-value-section"
-                                    key={index}>
-                                    <p>
-                                      <strong>Petal Symmetry: &nbsp;</strong>
-                                    </p>
-                                    <div>
-                                      <p>
-                                        {api.capitalizeFirstLetter(item)}
-                                        &nbsp;
-                                      </p>
-                                    </div>
-                                  </div>
-                                )
-                              )}
                             {plant_details.acf.characteristics.lip_shape
                               .length !== 0 &&
                               plant_details.acf.characteristics.lip_shape.map(
@@ -606,26 +751,26 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                                 {plant_details.acf.characteristics.nectar_spur}
                               </div>
                             )}
-
-                            {plant_details.acf.characteristics.stipule_shape
-                              .length !== 0 &&
-                              plant_details.acf.characteristics.stipule_shape.map(
-                                (item, index) => (
-                                  <div
-                                    className="d-flex label-value-section"
-                                    key={index}>
-                                    <p>
-                                      <strong>Stipule Shape: &nbsp;</strong>
-                                    </p>
-                                    <div>
-                                      <p>
-                                        {api.capitalizeFirstLetter(item)}
-                                        &nbsp;
-                                      </p>
-                                    </div>
+                            {plant_details.acf.characteristics.stipule_shape && (
+                              <div className="d-flex label-value-section">
+                                <p>
+                                  <strong>Stipule Shape: &nbsp;</strong>
+                                </p>
+                                {api.capitalizeFirstLetter(plant_details.acf.characteristics.stipule_shape)}
+                              </div>
+                            )}
+                          </div>
+                          <div className="mb-3">
+                              {plant_details.acf.characteristics.flower_description && (
+                                <div >
+                                  <p>
+                                    <strong>Flower Description: &nbsp;</strong>
+                                  </p>
+                                  <div className="rtc-content">
+                                    {ReactHtmlParser(plant_details.acf.characteristics.flower_description)}
                                   </div>
-                                )
-                              )}
+                                </div>
+                            )}
                           </div>
                         </div>
                       </div>
@@ -633,22 +778,12 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                   </div>
                 )}
 
-                {plant_details.acf.characteristics.stems.length !== 0 &&
-                  plant_details.acf.characteristics.stems.map((item, index) => (
-                    <div className="d-flex label-value-section" key={index}>
-                      <p>
-                        <strong>Stems and/or Twigs: &nbsp;</strong>
-                      </p>
-                      <div>
-                        <p>
-                          {api.capitalizeFirstLetter(item)}
-                          &nbsp;
-                        </p>
-                      </div>
-                    </div>
-                  ))}
-
                 {/* LEAVES */}
+                { ( plant_details.acf.characteristics.leaf_duration.length !== 0 || plant_details.acf.characteristics.leaf_type.length !== 0 ||
+                  plant_details.acf.characteristics.leaf_arrangement.length !== 0 || plant_details.acf.characteristics.leaf_blade_edges.length !== 0 ||
+                  plant_details.acf.characteristics.leaf_shape.length !== 0 || plant_details.acf.characteristics.leaf_number || 
+                  plant_details.acf.characteristics.leaflet_divisions  || plant_details.acf.characteristics.leaves_per_node || 
+                  plant_details.acf.characteristics.leaf_description) &&
                 <div className="accordion mb-3" id="accordion2">
                   <div className="accordion-item">
                     <h2 className="accordion-header" id="headingTwo">
@@ -731,7 +866,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                             .length !== 0 && (
                             <div className="d-flex label-value-section">
                               <p>
-                                <strong>Leaf Blade Edges: &nbsp;</strong>
+                                <strong>Leaf Edge: &nbsp;</strong>
                               </p>
                               {plant_details.acf.characteristics.leaf_blade_edges.map(
                                 (item, index) => (
@@ -803,7 +938,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                             .leaves_per_node && (
                             <div className="d-flex label-value-section">
                               <p>
-                                <strong>Leaves per nodes: &nbsp;</strong>
+                                <strong>Leaves Per Node: &nbsp;</strong>
                               </p>
                               {
                                 plant_details.acf.characteristics
@@ -812,13 +947,120 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                             </div>
                           )}
                         </div>
+                        <div className="mb-3">
+                            {plant_details.acf.characteristics.leaf_description && (
+                              <div >
+                                <p>
+                                  <strong>Leaves Description: &nbsp;</strong>
+                                </p>
+                                <div className="rtc-content">
+                                  {ReactHtmlParser(plant_details.acf.characteristics.leaf_description)}
+                                </div>
+                              </div>
+                            )}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
+                </div>}
+
+            {/* FRUITS */}
+            {(router.query.type !== "Fern" && (plant_details.acf.characteristics.fruit_type.length !== 0 || plant_details.acf.characteristics.fruit_length ||
+                  plant_details.acf.characteristics.fruit_color.length !== 0 || plant_details.acf.characteristics.seed_dispersal) )&& (
+                              <div className="accordion mb-3" id="accordion3">
+                                <div className="accordion-item">
+                                  <h2 className="accordion-header" id="headingThree">
+                                    <button
+                                      className="accordion-button"
+                                      type="button"
+                                      data-bs-toggle="collapse"
+                                      data-bs-target="#collapseThree"
+                                      aria-expanded="true"
+                                      aria-controls="collapseThree">
+                                      <strong>Fruits</strong>
+                                    </button>
+                                  </h2>
+                                  <div
+                                    id="collapseThree"
+                                    className="accordion-collapse show"
+                                    aria-labelledby="headingThree"
+                                    data-bs-parent="#accordion3">
+                                    <div className="accordion-body">
+                                      <div className="d-flex flex-wrap">
+                                        {plant_details.acf.characteristics.fruit_type
+                                          .length !== 0 &&
+                                          plant_details.acf.characteristics.fruit_type.map(
+                                            (item, index) => (
+                                              <div
+                                                className="d-flex label-value-section"
+                                                key={index}>
+                                                <p>
+                                                  <strong>Fruit Type: &nbsp;</strong>
+                                                </p>
+                                                <div>
+                                                  <p>
+                                                    {api.capitalizeFirstLetter(item)} &nbsp;
+                                                  </p>
+                                                </div>
+                                              </div>
+                                            )
+                                          )}
+                                        {plant_details.acf.characteristics.fruit_length && (
+                                          <div className="d-flex label-value-section">
+                                            <p>
+                                              <strong>Fruit Size: &nbsp;</strong>
+                                            </p>
+                                            {api.capitalizeFirstLetter(
+                                              plant_details.acf.characteristics.fruit_length
+                                            )}
+                                          </div>
+                                        )}
+                                        {plant_details.acf.characteristics.fruit_color
+                                            .length !== 0 && (
+                                              <div className="d-flex label-value-section">
+                                                <p>
+                                                  <strong>Fruit Colour: &nbsp;</strong>
+                                                </p>
+                                                {plant_details.acf.characteristics.fruit_color.map(
+                                                  (item, index) => (
+                                                    <div className="d-flex" key={index}>
+                                                      <p>
+                                                        {api.capitalizeFirstLetter(item)}
+                                                        {item !==
+                                                          plant_details.acf.characteristics.fruit_color
+                                                            .slice(-1)
+                                                            .pop() ? (
+                                                          <span>, &nbsp;</span>
+                                                        ) : (
+                                                          ""
+                                                        )}
+                                                      </p>
+                                                    </div>
+                                                  )
+                                                )}
+                                              </div>
+                                            )}
+                                          {plant_details.acf.characteristics.seed_dispersal && (
+                                            <div className="d-flex label-value-section">
+                                              <p>
+                                                <strong>Seed Dispersal: &nbsp;</strong>
+                                              </p>
+                                              {api.capitalizeFirstLetter(
+                                                plant_details.acf.characteristics.seed_dispersal 
+                                              )}
+                                            </div>
+                                          )}
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            )}
 
                 {/* SPORES */}
-                {router.query.type == "Fern" && (
+                {(router.query.type == "Fern" &&(plant_details.acf.characteristics.spore_description || plant_details.acf.characteristics.spore_location.length !== 0 ||
+                  plant_details.acf.characteristics.spore_shape.length !== 0 ||  plant_details.acf.characteristics.spore_covering.length !== 0  ||
+                  plant_details.acf.characteristics.spore_under_leaf.length !== 0 ) ) && (
                   <div className="accordion mb-3" id="accordion3">
                     <div className="accordion-item">
                       <h2 className="accordion-header" id="headingThree">
@@ -877,11 +1119,80 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                                   </div>
                                 )
                               )}
+                            {plant_details.acf.characteristics.spore_covering
+                                .length !== 0 &&
+                                plant_details.acf.characteristics.spore_covering.map(
+                                  (item, index) => (
+                                    <div
+                                      className="d-flex label-value-section"
+                                      key={index}>
+                                      <p>
+                                        <strong>Spore Covering: &nbsp;</strong>
+                                      </p>
+                                      <div>
+                                        <p>
+                                          {api.capitalizeFirstLetter(item)}
+                                          &nbsp;
+                                        </p>
+                                      </div>
+                                    </div>
+                                  )
+                                )}
+                                 {plant_details.acf.characteristics.spore_under_leaf
+                                .length !== 0 &&
+                                plant_details.acf.characteristics.spore_under_leaf.map(
+                                  (item, index) => (
+                                    <div
+                                      className="d-flex label-value-section"
+                                      key={index}>
+                                      <p>
+                                        <strong>Spore Position: &nbsp;</strong>
+                                      </p>
+                                      <div>
+                                        <p>
+                                          {api.capitalizeFirstLetter(item)}
+                                          &nbsp;
+                                        </p>
+                                      </div>
+                                    </div>
+                                  )
+                                )}
+                          </div>
+                          <div className="mb-3">
+                              {plant_details.acf.characteristics.spore_description && (
+                                <div >
+                                  <p>
+                                    <strong>Spore Description: &nbsp;</strong>
+                                  </p>
+                                  <div className="rtc-content">
+                                    {ReactHtmlParser(plant_details.acf.characteristics.spore_description)}
+                                  </div>
+                                </div>
+                              )}
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
+                )}
+
+                {plant_details.acf.characteristics.stems
+                              .length !== 0 && (
+                              <div className="d-flex label-value-section">
+                                <p>
+                                  <strong>Stems and/or Twigs: &nbsp;</strong>
+                                </p>
+                                {plant_details.acf.characteristics.stems.map(
+                                  (item, index) => (
+                                    <div className="d-flex" key={index}>
+                                      <p>
+                                        {api.capitalizeFirstLetter(item)}
+                                        {index + 1 === plant_details.acf.characteristics.stems.length ? '' : ","} &nbsp;
+                                      </p>
+                                    </div>
+                                  )
+                                )}
+                              </div>
                 )}
 
                 {plant_details.acf.characteristics.position_of_hairs && (
@@ -892,63 +1203,18 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                     </p>
                   </div>
                 )}
-                {/* FRUIT TYPE */}
-                {router.query.type !== "Fern" && (
-                  <div className="accordion mb-3" id="accordion3">
-                    <div className="accordion-item">
-                      <h2 className="accordion-header" id="headingThree">
-                        <button
-                          className="accordion-button"
-                          type="button"
-                          data-bs-toggle="collapse"
-                          data-bs-target="#collapseThree"
-                          aria-expanded="true"
-                          aria-controls="collapseThree">
-                          <strong>Fruit type</strong>
-                        </button>
-                      </h2>
-                      <div
-                        id="collapseThree"
-                        className="accordion-collapse show"
-                        aria-labelledby="headingThree"
-                        data-bs-parent="#accordion3">
-                        <div className="accordion-body">
-                          <div className="d-flex flex-wrap">
-                            {plant_details.acf.characteristics.fruit_type
-                              .length !== 0 &&
-                              plant_details.acf.characteristics.fruit_type.map(
-                                (item, index) => (
-                                  <div
-                                    className="d-flex label-value-section"
-                                    key={index}>
-                                    <p>
-                                      <strong>Fruit Type: &nbsp;</strong>
-                                    </p>
-                                    <div>
-                                      <p>
-                                        {api.capitalizeFirstLetter(item)} &nbsp;
-                                      </p>
-                                    </div>
-                                  </div>
-                                )
-                              )}
-                            {plant_details.acf.characteristics.fruit_length && (
-                              <div className="d-flex label-value-section">
-                                <p>
-                                  <strong>Fruit Size: &nbsp;</strong>
-                                </p>
-                                {api.capitalizeFirstLetter(
-                                  plant_details.acf.characteristics.fruit_length
-                                )}
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      </div>
+                {plant_details.acf.varieties && (
+                <div>
+                  <p>
+                    <strong>Varieties, Subspecies, and Hybrids: &nbsp;</strong>
+                  </p>
+                  <div className="d-flex flex-column">
+                    <div className="rtc-content">
+                      {ReactHtmlParser(plant_details.acf.varieties)}
                     </div>
                   </div>
-                )}
-
+                </div>
+               )}
                 {/* {plant_details.acf.characteristics.wildlife_benefits && (
                   <div className="d-flex label-value-section">
                     <p>
@@ -1084,6 +1350,12 @@ const PlantSpeciesDetails = ({ plant_details }) => {
             }
           }
         }
+        .familyLink{
+          color: #0e9d47;
+          font-style: italic;
+          font-weight: bold;
+          cursor: pointer
+        }
         .slider {
           position: relative;
           h2[name="prev"]:hover,
@@ -1179,4 +1451,4 @@ const PlantSpeciesDetails = ({ plant_details }) => {
   )
 }
 
-export default PlantSpeciesDetails;
+export default PlantSpeciesDetails

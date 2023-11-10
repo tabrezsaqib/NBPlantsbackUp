@@ -15,18 +15,22 @@ const SideNavContent = ({
   flower_colour,
   lip_shape,
   fruit_type,
+  fruit_color,
   leaf_blade_edges,
   leaf_type,
   leaf_arrangement,
   leaf_duration,
   leaf_divisions,
   spore_location,
+  spore_under_leaf,
   spore_shape,
+  spore_covering,
   native_or_introduced_or_invasive,
   leaf_shape,
   petal_symmetry,
   inflorescence,
   stems,
+  growth_form,
   // new_brunswick_county,
   onSelectorChange,
   handleOnChange,
@@ -36,6 +40,7 @@ const SideNavContent = ({
   triggerToolTip,
 }) => {
   const router = useRouter()
+  console.log(options,flower_colour, type)
   const optionNames = [
     {
       key: "plant_type",
@@ -44,7 +49,7 @@ const SideNavContent = ({
     },
     {
       key: "type",
-      group: "none",
+      group: "last",
       value: "Type",
     },
     {
@@ -54,7 +59,7 @@ const SideNavContent = ({
     },
     {
       key: "flower_colour",
-      group: "flowers",
+      group: (plant_type[1] === false) && "flowers",
       value: "Flower Colour",
     },
     {
@@ -64,12 +69,12 @@ const SideNavContent = ({
     },
     {
       key: "lip_shape",
-      group: "flowers",
+      group: (plant_type[1] === false) && "flowers",
       value: "Lip Shape",
     },
     {
       key: "petal_symmetry",
-      group: "flowers",
+      group: (plant_type[1] === false) && "flowers",
       value: "Petal Symmetry",
     },
     {
@@ -79,38 +84,48 @@ const SideNavContent = ({
     },
     {
       key: "leaf_blade_edges",
-      group: "leaves",
-      value: "Leaf Blade Edges",
+      group: (plant_type[1] === false) && "leaves",
+      value: "Leaf Edge",
     },
     {
       key: "leaf_shape",
-      group: "leaves",
+      group: (plant_type[0] === false && plant_type[1] === false && fruit_type[9] === false) && "leaves",
       value: "Leaf Shape",
     },
     {
       key: "leaf_type",
-      group: "leaves",
+      group: (plant_type[1] === false) && "leaves",
       value: "Leaf Type",
     },
-    // {
-    //   key: "leaf_duration",
-    //   group: router.query.type == "Woody" && "leaves",
-    //   value: "Leaf Duration",
-    // },
+    {
+      key: "leaf_duration",
+      group: (router.query.type == "Woody" || plant_type[2] === true || plant_type[1] === false) && "leaves",
+      value: "Leaf Duration",
+    },
     {
       key: "spore_location",
-      group: router.query.type == "Fern" && "spores",
+      group: (router.query.type == "Fern" || plant_type[0] === true || fruit_type[9] === true) && "spores",
       value: "Spore Location",
     },
     {
+      key: "spore_under_leaf",
+      group: ((router.query.type == "Fern" || plant_type[0] === true || fruit_type[9] === true) && (spore_location[2] === true) ) && "spores",
+      value: "Spore Position",
+    },
+    {
       key: "spore_shape",
-      group: router.query.type == "Fern" && "spores",
+      group: (router.query.type == "Fern" || plant_type[0] === true || fruit_type[9] === true) && "spores",
       value: "Spore Shape",
+    },
+    {
+      key: "spore_covering",
+      group: (router.query.type == "Fern" || plant_type[0] === true || fruit_type[9] === true) && "spores",
+      value: "Spore Covering",
     },
     {
       key: "leaf_divisions",
       group:
-        (router.query.type == "Woody" || router.query.type == "Fern") &&
+        (router.query.type == "Woody" || router.query.type == "Fern"|| plant_type[0] === true || plant_type[2] === true || fruit_type[9] === true) &&
         "leaves",
       value: "Leaflet Divisions",
     },
@@ -120,9 +135,19 @@ const SideNavContent = ({
       value: "Stems and/or Twigs",
     },
     {
+      key: "growth_form",
+      group: (plant_type[1] === false) && "initial",
+      value: "Growth Form",
+    },
+    {
       key: "fruit_type",
-      group: "none",
+      group: "fruits",
       value: "Fruit Type",
+    },
+    {
+      key: "fruit_color",
+      group: "fruits",
+      value: "Fruit Color",
     },
     // {
     //   key: "native_or_introduced_or_invasive",
@@ -153,6 +178,10 @@ const SideNavContent = ({
       label: "white",
     },
     {
+      color: "../../images/oy.png",
+      label: "yellow to orange",
+    },
+    {
       color: "../../images/pr.png",
       label: "pink to red",
     },
@@ -164,12 +193,25 @@ const SideNavContent = ({
       color: "../../images/dn.png",
       label: "doesn't apply",
     },
+    {
+      color: "../../images/brwn.png",
+      label: "brown",
+    },
+    {
+      color: "../../images/green.png",
+      label: "green",
+    },
+    {
+      color: "../../images/black.png",
+      label: "black",
+    },
   ]
 
   let id = 0
   const dispatch = useDispatch()
   const getOption = (key) => {
     const option = options[key].map((data, index) => {
+      console.log("data",data)
       return (
         <div className="form-check" key={index}>
           <input
@@ -197,6 +239,8 @@ const SideNavContent = ({
                 ? lip_shape[index]
                 : key == "fruit_type"
                 ? fruit_type[index]
+                : key == "fruit_color"
+                ? fruit_color[index]
                 : key == "leaf_duration"
                 ? leaf_duration[index]
                 : key == "leaf_divisions"
@@ -207,12 +251,18 @@ const SideNavContent = ({
                 ? spore_shape[index]
                 : key == "spore_location"
                 ? spore_location[index]
+                : key == "spore_covering"
+                ? spore_covering[index]
+                : key == "spore_under_leaf"
+                ? spore_under_leaf[index]
                 : // : key == "native_or_introduced_or_invasive"
                 // ? native_or_introduced_or_invasive[index]
                 key == "leaf_shape"
                 ? leaf_shape[index]
                 : key == "stems"
                 ? stems[index]
+                : key == "growth_form"
+                ? growth_form[index]
                 : key == "petal_symmetry"
                 ? petal_symmetry[index]
                 : key == "inflorescence"
@@ -226,16 +276,17 @@ const SideNavContent = ({
               <div key={index} className="color-value">
                 <img
                   src={value.color}
+                  style={{borderRadius:'7px'}}
                   className={
-                    data == value.label && key == "flower_colour" ? "" : "hide"
+                    data == value.label && (key == "flower_colour" || "fruit_color") ? "" : "hide"
                   }
                   width="15px"
                   alt="color values"
                 />
               </div>
             ))}
-            {key == "flower_colour" ? <span>&nbsp;&nbsp;</span> : <span></span>}
-            {api.capitalizeFirstLetter(data)}
+            {key == "flower_colour" || "fruit_color" ? <span>&nbsp;&nbsp;</span> : <span></span>}
+            {api.capitalizeFirstLetter(data === 'Fern'? 'Fern / Fern Ally':data === 'Non-woody'?'All Other Plants': data)}
           </label>
         </div>
       )
@@ -253,13 +304,14 @@ const SideNavContent = ({
         {optionNames.map((item) => (
           <div key={item.key}>
             {item.group == "all" && (
-              <div>
+              <div id={item.key}>
                 <h6 className="selector-heading">
                   <i className="bi bi-check2-square" />
                   &nbsp;&nbsp;
                   <strong>{item.value}</strong>
                 </h6>
-                <div className="d-flex flex-wrap">{getOption(item.key)}</div>
+                <div className="d-flex flex-wrap">{getOption(item.key)}
+                </div>
               </div>
             )}
           </div>
@@ -281,7 +333,7 @@ const SideNavContent = ({
           </div>
         ))}
       </div>
-      {router.query.type !== "Fern" && (
+      {(router.query.type === "Fern" || plant_type[0] === true || fruit_type[9] === true) ? '' : (
         <div className="accordion mt-2 mb-2" id="accordion1">
           <div className="accordion-item">
             <h2 className="accordion-header" id="headingOne">
@@ -324,7 +376,7 @@ const SideNavContent = ({
                             )}
                           </div>
                           {item.key == "inflorescence" ? (
-                            <div id="four-column" className="d-flex flex-wrap">
+                            <div id="three-column" className="d-flex flex-wrap">
                               {getOption(item.key)}
                             </div>
                           ) : (
@@ -383,7 +435,50 @@ const SideNavContent = ({
           </div>
         </div>
       </div>
-      {router.query.type == "Fern" && (
+      {(router.query.type === "Fern" || plant_type[0] === true || fruit_type[9] === true) ? '' : (
+        <div className="accordion mt-2 mb-2" id="accordion2">
+          <div className="accordion-item">
+            <h2 className="accordion-header" id="heading3">
+              <button
+                className="accordion-button"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#fruits"
+                aria-expanded="true"
+                aria-controls="fruits">
+                Fruits
+              </button>
+            </h2>
+            <div
+              id="fruits"
+              className="accordion-collapse collapse show"
+              aria-labelledby="heading3"
+              data-bs-parent="#accordion2">
+              <div className="accordion-body">
+                <div>
+                  {optionNames.map((item) => (
+                    <div key={item.key}>
+                      {item.group == "fruits" && (
+                        <div>
+                          <h6 className="selector-heading">
+                            <i className="bi bi-check2-square" />
+                            &nbsp;&nbsp;
+                            <strong>{item.value}</strong>
+                          </h6>
+                          <div className="d-flex flex-wrap">
+                            {getOption(item.key)}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {(router.query.type === "Fern" || plant_type[0] === true || fruit_type[9] === true) && (
         <div className="accordion mt-2 mb-2" id="accordion2">
           <div className="accordion-item">
             <h2 className="accordion-header" id="heading3">
@@ -430,6 +525,22 @@ const SideNavContent = ({
         {optionNames.map((item) => (
           <div key={item.key}>
             {item.group == "none" && (
+              <div>
+                <h6 className="selector-heading">
+                  <i className="bi bi-check2-square" />
+                  &nbsp;&nbsp;
+                  <strong>{item.value}</strong>
+                </h6>
+                <div className="d-flex flex-wrap">{getOption(item.key)}</div>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+      <div>
+        {optionNames.map((item) => (
+          <div key={item.key}>
+            {item.group == "last" && (
               <div>
                 <h6 className="selector-heading">
                   <i className="bi bi-check2-square" />

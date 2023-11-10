@@ -10,12 +10,6 @@ const Layout = ({ children, authentication_state }) => {
   const dispatch = useDispatch();
   return (
     <>
-        {/* <Header />
-        <Navbar />
-        <div className="container-fluid">
-          <main>{children}</main>
-        </div>
-        <Footer /> */}
         {authentication_state?
         <>
         <Header />
@@ -25,9 +19,6 @@ const Layout = ({ children, authentication_state }) => {
         <div className="container-fluid">
           <main>{children}</main>
         </div>
-        {/* {authentication_state?
-        <Footer />
-        : null} */}
     </>
   )
 }
@@ -39,4 +30,3 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps)(Layout);
-

@@ -16,13 +16,15 @@ const PlantSpecies = ({ plant }) => {
       ) : router.pathname == `/plants` && router.query.type == `Fern` ? (
         <>
           {/* {console.log("Non Woody: ", plant)} */}
-          <PlantItem plant={plant} />
+          <PlantItem plant={plant} /> 
         </>
       ) : router.pathname == "/plants" && router.query.type == `Woody` ? (
         <>
           <PlantItem plant={plant} />
         </>
       ) : router.query.type == "all" ? (
+        <PlantItem plant={plant} />
+      ) : router.pathname.includes("/plantFamilyDetails") ? (
         <PlantItem plant={plant} />
       ) : (
         <div

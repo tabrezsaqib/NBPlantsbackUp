@@ -1,8 +1,14 @@
 import { useState, useEffect } from "react"
+import dynamic from 'next/dynamic'
+
 import { connect, useDispatch } from "react-redux"
 import * as options from "../../data/sideNavListDataArray"
 import * as localStore from "../../generics/localStore"
-import SideNavContent from "./SideNavContent"
+const SideNavContent = dynamic(
+  () => import('./SideNavContent'),
+  { ssr: false }
+)
+import styles from "../../styles/SideNav.module.css"
 
 import {
   togglePlantTypeData,
@@ -14,15 +20,19 @@ import {
   toggleLeafArrangementData,
   toggleLipShape,
   toggleFruits,
+  toggleFruitColor,
   toggleInflorescence,
   toggleLeafShapeData,
   toggleNative,
   toggleStemsData,
+  toggleGrowthForm,
   togglePetalSymmetry,
   toggleLeafDuration,
   toggleLeafletDivisions,
   toggleSporeShape,
   toggleSporeLocation,
+  toggleSporeCovering,
+  toggleSporeUnderLeaf
 } from "../../redux/actions/toggleSelectorAction"
 import {
   getPopoverData,
@@ -40,6 +50,7 @@ const SideNav = ({
   flower_colour,
   lip_shape,
   fruit_type,
+  fruit_color,
   leaf_blade_edges,
   leaf_type,
   leaf_arrangement,
@@ -47,11 +58,14 @@ const SideNav = ({
   leaf_divisions,
   spore_shape,
   spore_location,
+  spore_covering,
+  spore_under_leaf,
   new_brunswick_county,
   activeFilterList,
   // native_or_introduced_or_invasive,
   leaf_shape,
   stems,
+  growth_form,
   petal_symmetry,
   inflorescence,
   isLoading,
@@ -107,6 +121,12 @@ const SideNav = ({
         )
         dispatch(toggleFruits(updatedFruits))
         break
+      case "fruit_color":
+        const updatedFruitColor = fruit_color.map((item, index) =>
+          index === position ? !item : item
+        )
+        dispatch(toggleFruitColor(updatedFruitColor))
+        break
       case "leaf_arrangement":
         const updatedLeafArrangement = leaf_arrangement.map((item, index) =>
           index === position ? !item : item
@@ -156,6 +176,18 @@ const SideNav = ({
         )
         dispatch(toggleSporeLocation(updatedSporeLocation))
         break
+      case "spore_covering":
+        const updatedSporeCovering = spore_covering.map(
+          (item, index) => (index === position ? !item : item) //if index === position then !item i.e. true, otherwise false, since initially item is false...
+        )
+        dispatch(toggleSporeCovering(updatedSporeCovering))
+        break
+      case "spore_under_leaf":
+        const updatedSporeUnderLeaf = spore_under_leaf.map(
+          (item, index) => (index === position ? !item : item) //if index === position then !item i.e. true, otherwise false, since initially item is false...
+        )
+        dispatch(toggleSporeUnderLeaf(updatedSporeUnderLeaf))
+        break
       // case "new_brunswick_county":
       //   const updatedCounty = new_brunswick_county.map((item, index) =>
       //     index === position ? !item : item
@@ -168,6 +200,12 @@ const SideNav = ({
           index === position ? !item : item
         )
         dispatch(toggleStemsData(updatedStems))
+        break
+      case "growth_form":
+        const updatedGrowthForm = growth_form.map((item, index) =>
+          index === position ? !item : item
+        )
+        dispatch(toggleGrowthForm(updatedGrowthForm))
         break
       case "native_or_introduced_or_invasive":
         const updatedNative = native_or_introduced_or_invasive.map(
@@ -193,12 +231,12 @@ const SideNav = ({
   }
 
   const onSelectorChange = (filter) => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
+    // window.scrollTo({
+    //   top: 0,
+    //   behavior: "smooth",
       /* you can also use 'auto' behaviour
          in place of 'smooth' */
-    })
+    // })
     if (activeFilterList.includes(filter)) {
       const filterIndex = activeFilterList.indexOf(filter)
       const newFilter = [...activeFilterList]
@@ -214,8 +252,8 @@ const SideNav = ({
   }
 
   return (
-    <div className="sidebar d-flex flex-column justify-content-between">
-      <div className={isLoading == true ? "disable-sidebar" : "options"}>
+    <div className={[styles.sidebar, "sidebar d-flex flex-column justify-content-between"].join(" ")}>
+      <div className={isLoading == true ? [styles.disableSidebar, "disable-sidebar"].join(" ") : "options"}>
         <SideNavContent
           options={options}
           plant_type={plant_type}
@@ -225,16 +263,20 @@ const SideNav = ({
           lip_shape={lip_shape}
           leaf_blade_edges={leaf_blade_edges}
           fruit_type={fruit_type}
+          fruit_color={fruit_color}
           leaf_type={leaf_type}
           leaf_arrangement={leaf_arrangement}
           leaf_duration={leaf_duration}
           leaf_divisions={leaf_divisions}
           spore_location={spore_location}
           spore_shape={spore_shape}
+          spore_covering={spore_covering}
+          spore_under_leaf={spore_under_leaf}
           // new_brunswick_county={new_brunswick_county}
           // native_or_introduced_or_invasive={native_or_introduced_or_invasive}
           leaf_shape={leaf_shape}
           stems={stems}
+          growth_form={growth_form}
           petal_symmetry={petal_symmetry}
           inflorescence={inflorescence}
           onSelectorChange={onSelectorChange}
@@ -245,21 +287,6 @@ const SideNav = ({
           popoverStatus={popoverStatus}
         />
       </div>
-      <style jsx>{`
-        .sidebar {
-          border-radius: 10px;
-          padding: 10px;
-          margin-top: 0px;
-          height: auto;
-          margin-bottom: 25px;
-          padding-bottom: 25px;
-        }
-        .disable-sidebar {
-          filter: grayscale(100%);
-          opacity: 0.4;
-          pointer-events: none;
-        }
-      `}</style>
     </div>
   )
 }
@@ -271,6 +298,7 @@ const mapStateToProps = (state) => {
     habitat: state.selector.habitat,
     flower_colour: state.selector.flower_colour,
     fruit_type: state.selector.fruit_type,
+    fruit_color: state.selector.fruit_color,
     lip_shape: state.selector.lip_shape,
     leaf_blade_edges: state.selector.leaf_blade_edges,
     leaf_type: state.selector.leaf_type,
@@ -279,11 +307,14 @@ const mapStateToProps = (state) => {
     leaf_divisions: state.selector.leaf_divisions,
     spore_location: state.selector.spore_location,
     spore_shape: state.selector.spore_shape,
+    spore_covering: state.selector.spore_covering,
+    spore_under_leaf: state.selector.spore_under_leaf,
     // new_brunswick_county: state.selector.new_brunswick_county,
     // native_or_introduced_or_invasive:
     //   state.selector.native_or_introduced_or_invasive,
     leaf_shape: state.selector.leaf_shape,
     stems: state.selector.stems,
+    growth_form: state.selector.growth_form,
     petal_symmetry: state.selector.petal_symmetry,
     inflorescence: state.selector.inflorescence,
     activeFilterList: state.selector.activeFilterList,

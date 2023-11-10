@@ -4,6 +4,8 @@ import Router from "next/router"
 import SearchForm from "../search/SearchForm"
 import { useDispatch } from "react-redux"
 import { togglePagination } from "../../redux/actions/paginationAction"
+import React, {Component} from "react"
+import styles from "../../styles/Navbar.module.css"
 
 const Navbar = () => {
   const dispatch = useDispatch()
@@ -19,11 +21,12 @@ const Navbar = () => {
   }
   return (
     <div>
-      <nav className="navbar navbar-expand-lg fixed-top navbar-light bg-light">
+      <nav className={[styles.navContainer, "navbar", "navbar-expand-lg", "fixed-top", "navbar-light", "bg-light"].join(" ")}>
         <div className="container-fluid">
-          <a className="navbar-brand" href="/">
-            <div className="logo-container">
+          <a className="navbar-brand" href="/home">
+            <div className={[styles.logoContainer, "logo-container"].join(" ")}>
               <img
+                className={styles.logoImg}
                 src="../../images/logo.png"
                 alt="new brunswick plants logo"
               />
@@ -42,23 +45,21 @@ const Navbar = () => {
           <div
             className="collapse navbar-collapse justify-content-end"
             id="navbarScroll">
-            <ul className="navbar-nav">
-              <li className="nav-item">
+            <ul className={[styles.navbarNav, "navbar-nav"].join(" ")}>
+              <li className={[styles.navItem, "nav-item"].join(" ")}>
                 <a className="nav-link active" aria-current="page" href="/home">
                   Home
                 </a>
               </li>
-              <li className="nav-item" onClick={refresh}>
+              <li className={[styles.navItem, "nav-item"].join(" ")} onClick={refresh}>
                 <a className="nav-link">Species</a>
               </li>
-              <li className="nav-item">
+              <li className={[styles.navItem, "nav-item"].join(" ")} >
+                <a className="nav-link" aria-current="page" href="/plantFamilies">Families</a>
+              </li>
+              <li className={[styles.navItem, "nav-item"].join(" ")}>
                 <a className="nav-link" href="/about" tabIndex="-1">
                   About
-                </a>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link" href="/contact" tabIndex="-1">
-                  Contact Us
                 </a>
               </li>
             </ul>
@@ -66,29 +67,6 @@ const Navbar = () => {
           </div>
         </div>
       </nav>
-      <style jsx>{`
-        nav {
-          border-bottom: 1px solid #e0e1e3;
-          background-color: #ffffff !important;
-          padding-top: 0px !important;
-          padding-bottom: 0px !important;
-        }
-        .logo-container {
-          overflow: hidden;
-          width: 100%;
-          img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-          }
-        }
-        .nav-item:hover {
-          cursor: pointer;
-        }
-        .navbar-nav {
-          margin-right: 20px;
-        }
-      `}</style>
     </div>
   )
 }

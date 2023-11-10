@@ -1,10 +1,11 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 /* eslint-disable @next/next/no-img-element */
-import React from "react"
+import React, {Component} from "react"
 import Router from "next/router"
 import { useDispatch } from "react-redux"
 import { togglePagination } from "../../redux/actions/paginationAction"
 import styles from "../../styles/Global.module.scss"
+import localstyles from "../../styles/Footer.module.css"
 
 const Footer = () => {
   const dispatch = useDispatch()
@@ -18,12 +19,12 @@ const Footer = () => {
     })
   }
   return (
-    <section className="footer">
+    <section className={[localstyles.footer, "footer"].join(" ")}>
       <div className="container">
         <div className="row d-flex">
           <div className="col-lg-1">
-            <div className="footer-brief">
-              <a href="/">
+            <div className={[localstyles.footerBrief, "footer-brief"].join(" ")}>
+              <a href="/home">
                 <img
                   src="../../images/logo-dark.png"
                   alt="newbrunswick plants logo"
@@ -33,12 +34,13 @@ const Footer = () => {
           </div>
           <div className="col-lg-7">
             <div className="sponsor d-flex justify-content-between align-items-start mb-4">
-              <div className="logo-container">
+              <div className={[localstyles.logoContainer, "logo-container"].join(" ")}>
                 <a
                   href="https://www.frederictonbotanicgarden.com/"
                   target="_blank"
                   rel="noreferrer">
                   <img
+                  className={localstyles.imgContent}
                     src="../../images/botanic-garden-dark.png"
                     height="47"
                     alt="logo"
@@ -46,25 +48,25 @@ const Footer = () => {
                 </a>
               </div>
               <div className="d-flex flex-column align-items-center text-center">
-                <div className="logo-container">
+                <div className={[localstyles.logoContainer, "logo-container"].join(" ")}>
                   <a
                     href="https://www2.gnb.ca/content/gnb/en/services/services_renderer.13136.Environmental_Trust_Fund.html"
                     target="_blank"
                     rel="noreferrer">
-                    <img src="../../images/nb-logo.png" alt="logo" />
+                    <img className={localstyles.imgContent} src="../../images/nb-logo.png" alt="logo" />
                   </a>
                 </div>
-                <span className="partnership-tagline">
+                <span className={[localstyles.partnershipTagline, "partnership-tagline"].join(" ")}>
                   Your Environmental Trust Fund at Work
                 </span>
               </div>
               <div>
-                <p className="logo-header">
+                <p className={[localstyles.logoHeader, "logo-header"].join(" ")}>
                   <strong>In Partnership with</strong>
                 </p>
-                <div className="logo-container">
+                <div className={[localstyles.logoContainer, "logo-container"].join(" ")}>
                   <a href="http://accdc.com//" target="_blank" rel="noreferrer">
-                    <img src="../../images/logoACCDC2014.png" alt="logo" />
+                    <img className={localstyles.imgContent} src="../../images/logoACCDC2014.png" alt="logo" />
                   </a>
                 </div>
               </div>
@@ -72,114 +74,31 @@ const Footer = () => {
           </div>
           <div className="col-lg-4 d-flex justify-content-around">
             <div
-              className={[styles.footer_media_query, "footer-nav"].join(" ")}>
-              <ul className="d-flex flex-column flex-wrap">
-                <li>
-                  <a href="/">Home</a>
+              className={[styles.footer_media_query, localstyles.footerNav, "footer-nav"].join(" ")}>
+              <ul className={[localstyles.footerList, "d-flex", "flex-column", "flex-wrap"].join(" ")}>
+                <li className={localstyles.footerListItem}>
+                  <a className={localstyles.footerLink} href="/home">Home</a>
                 </li>
-                <li onClick={refresh}>
-                  <a>Species</a>
+                <li className={localstyles.footerListItem} onClick={refresh}>
+                  <a className={localstyles.footerLink}>Species</a>
                 </li>
-                <li>
-                  <a href="/glossary">Glossary</a>
+                <li className={localstyles.footerListItem}>
+                  <a className={localstyles.footerLink} href="/glossary">Glossary</a>
                 </li>
-                <li>
-                  <a href="/about">About Us</a>
+                <li className={localstyles.footerListItem}>
+                  <a className={localstyles.footerLink} href="/contact">Contact Us</a>
                 </li>
-                <li>
-                  <a href="/contact">Contact Us</a>
+                <li className={localstyles.footerListItem}>
+                  <a className={localstyles.footerLink} href="/families">Plant Families</a>
                 </li>
-                <li>
-                  <a href="/resources">Resources</a>
+                <li className={localstyles.footerListItem}>
+                  <a className={localstyles.footerLink} href="/resources">Resources</a>
                 </li>
-                {/* <li>
-                  <a href="/families">Plant Families</a>
-                </li> */}
               </ul>
             </div>
-            {/* <div className="social-links">
-              <h5>Follow Us</h5>
-              <div className="d-flex justify-content-between">
-                <h4>
-                  <a href="#">
-                    <i className="lni lni-facebook" />
-                  </a>
-                </h4>
-                <h4>
-                  <a href="#">
-                    <i className="lni lni-instagram" />
-                  </a>
-                </h4>
-                <h4>
-                  <a href="#">
-                    <i className="lni lni-twitter" />
-                  </a>
-                </h4>
-              </div>
-            </div> */}
           </div>
         </div>
       </div>
-      <style jsx>{`
-        .footer {
-          background-color: #f6f7f9;
-          padding-top: 30px;
-          border-top: 1px solid #e0e1e3;
-          .footer-brief {
-            p {
-              font-size: 14px;
-            }
-          }
-          h5 {
-            font-size: 15px;
-            font-weight: bold;
-          }
-          h4 {
-            font-size: 18px;
-            font-weight: bold;
-          }
-          .footer-nav {
-            width: 100%;
-            ul {
-              list-style: none;
-              padding: 0px;
-              li a {
-                font-size: 14px;
-              }
-            }
-          }
-          .logo-container {
-            overflow: hidden;
-            width: auto;
-            img {
-              width: 100%;
-              height: 100%;
-              object-fit: contain;
-            }
-          }
-          .social-links {
-            h4 {
-              padding-top: 5px;
-            }
-            a:first-of-type {
-              padding-left: 0px;
-            }
-            a {
-              padding: 0px 15px;
-            }
-          }
-        }
-        .logo-header {
-          margin-bottom: 0px;
-          font-size: 12px;
-        }
-        .partnership-tagline {
-          margin-top: 5px;
-          width: 150px;
-          font-size: 12px;
-          font-weight: 700;
-        }
-      `}</style>
     </section>
   )
 }

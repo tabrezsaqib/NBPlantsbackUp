@@ -38,6 +38,12 @@ export const toggleFruits = (option) => async (dispatch) => {
     payload: option,
   })
 }
+export const toggleFruitColor = (option) => async (dispatch) => {
+  dispatch({
+    type: types.TOGGLE_FRUIT_COLOR,
+    payload: option,
+  })
+}
 export const toggleLeafBladeEdgesData = (option) => async (dispatch) => {
   dispatch({
     type: types.TOGGLE_LEAF_BLADE_EDGES,
@@ -80,6 +86,18 @@ export const toggleSporeLocation = (option) => async (dispatch) => {
     payload: option,
   })
 }
+export const toggleSporeCovering = (option) => async (dispatch) => {
+  dispatch({
+    type: types.TOGGLE_SPORE_COVERING,
+    payload: option,
+  })
+}
+export const toggleSporeUnderLeaf = (option) => async (dispatch) => {
+  dispatch({
+    type: types.TOGGLE_SPORE_UNDER_LEAF,
+    payload: option,
+  })
+}
 // export const toggleCountyData = (option) => async (dispatch) => {
 //   dispatch({
 //     type: types.TOGGLE_COUNTY,
@@ -108,6 +126,12 @@ export const toggleNative = (option) => async (dispatch) => {
 export const toggleStemsData = (option) => async (dispatch) => {
   dispatch({
     type: types.TOGGLE_STEMS,
+    payload: option,
+  })
+}
+export const toggleGrowthForm = (option) => async (dispatch) => {
+  dispatch({
+    type: types.TOGGLE_GROWTH_FORM,
     payload: option,
   })
 }

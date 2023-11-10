@@ -7,7 +7,7 @@ const SearchFormValidate = ({ submitSearchQuery, search_bar }) => {
   return (
     <>
       <Formik
-        initialValues={{ search: "" }}
+        initialValues={{ search: "" }}z
         onSubmit={(values, { setSubmitting }) => {
           submitSearchQuery(values["search"])
 

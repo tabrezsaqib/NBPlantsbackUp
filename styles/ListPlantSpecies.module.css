@@ -1,0 +1,23 @@
+.boxContainer {
+    background-color: #ffffff;
+    margin: 10px 10px 20px;
+    border-radius: 15px;
+    border: 1px solid #e0e1e3;
+    flex-grow: 1;
+    width: 240px;
+  }
+  .infoSection {
+    height: 100%;
+    width: 100%;
+  }
+  .imgContainer {
+    .imgContent {
+      top: 50%;
+      left: 58%;
+      width: 80px;
+    }
+  }
+
+  :global(.thumbnails:hover) {
+    color: #1d9d47 !important;
+  }

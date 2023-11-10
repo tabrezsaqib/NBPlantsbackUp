@@ -1,10 +1,7 @@
-const API_URL = process.env.API_URL
 import SearchResults from "../components/search/SearchResults"
-
 import Footer from "../components/layouts/Footer";
 import Header from "../components/layouts/Header";
 import Navbar from "../components/layouts/Navbar";
-
 
 const search = () => {
   return (

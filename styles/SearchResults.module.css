@@ -1,0 +1,10 @@
+.imgContainer {
+    padding-top: 20%;
+    padding-bottom: 20%;
+    .imgContent {
+      width: 80px;
+    }
+  }
+  .searchArea {
+    height: 400px;
+  }
