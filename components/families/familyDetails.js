@@ -64,7 +64,7 @@ const FamilyDetails = () => {
                             <ListPlantSpecies filteredList={plantFamily} isLoading={isLoading} />
                         </div>
                         <div className="site-in-progress">
-                            Site in progress. Not all species yet available.
+                            Site in progress. All species may not be available yet.
                         </div>
                     </div> : ''}
             <style jsx>{`
