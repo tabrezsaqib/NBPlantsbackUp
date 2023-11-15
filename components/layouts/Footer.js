@@ -89,7 +89,7 @@ const Footer = () => {
                   <a className={localstyles.footerLink} href="/contact">Contact Us</a>
                 </li>
                 <li className={localstyles.footerListItem}>
-                  <a className={localstyles.footerLink} href="/families">Plant Families</a>
+                  <a className={localstyles.footerLink} href="/plantFamilies">Families</a>
                 </li>
                 <li className={localstyles.footerListItem}>
                   <a className={localstyles.footerLink} href="/resources">Resources</a>
