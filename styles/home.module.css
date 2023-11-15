@@ -1,8 +1,6 @@
-.main {
-    height: 72.5vh;
-    display: flex;
-    align-items: center;
-    .selectionArea {
-      width: 100%;
-    }
-  }
+.flexContent {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
