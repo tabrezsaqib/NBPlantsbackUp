@@ -55,7 +55,7 @@ const SideNav = ({
   leaf_type,
   leaf_arrangement,
   leaf_duration,
-  leaf_divisions,
+  leaflet_divisions,
   spore_shape,
   spore_location,
   spore_covering,
@@ -158,8 +158,8 @@ const SideNav = ({
         )
         dispatch(toggleLeafDuration(updatedLeafDuration))
         break
-      case "leaf_divisions":
-        const updatedLeafletDivisions = leaf_divisions.map(
+      case "leaflet_divisions":
+        const updatedLeafletDivisions = leaflet_divisions.map(
           (item, index) => (index === position ? !item : item) //if index === position then !item i.e. true, otherwise false, since initially item is false...
         )
         dispatch(toggleLeafletDivisions(updatedLeafletDivisions))
@@ -267,7 +267,7 @@ const SideNav = ({
           leaf_type={leaf_type}
           leaf_arrangement={leaf_arrangement}
           leaf_duration={leaf_duration}
-          leaf_divisions={leaf_divisions}
+          leaflet_divisions={leaflet_divisions}
           spore_location={spore_location}
           spore_shape={spore_shape}
           spore_covering={spore_covering}
@@ -304,7 +304,7 @@ const mapStateToProps = (state) => {
     leaf_type: state.selector.leaf_type,
     leaf_arrangement: state.selector.leaf_arrangement,
     leaf_duration: state.selector.leaf_duration,
-    leaf_divisions: state.selector.leaf_divisions,
+    leaflet_divisions: state.selector.leaflet_divisions,
     spore_location: state.selector.spore_location,
     spore_shape: state.selector.spore_shape,
     spore_covering: state.selector.spore_covering,

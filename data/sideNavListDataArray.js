@@ -86,7 +86,7 @@ const fruit_color = [
 ]
 
 const leaf_duration = ["deciduous", "evergreen"]
-const leaf_divisions = ["0", "1", "2", "3"]
+const leaflet_divisions = ["0", "1", "2", "3", "4-9", "10 or more"]
 const spore_shape = ["irregular", "kidney", "oblong", "oval", "round"]
 const spore_location = ["separate stalk", "tip of plant", "underside of leaf", "other"]
 const spore_covering = ["absent", "present"]
@@ -142,7 +142,7 @@ export {
   fruit_color,
   petal_symmetry,
   leaf_duration,
-  leaf_divisions,
+  leaflet_divisions,
   spore_shape,
   spore_location,
   spore_covering,

@@ -10,7 +10,7 @@ const initialState = {
   leaf_blade_edges: new Array(options.leaf_blade_edges.length).fill(false),
   leaf_type: new Array(options.leaf_type.length).fill(false),
   leaf_duration: new Array(options.leaf_duration.length).fill(false),
-  leaf_divisions: new Array(options.leaf_divisions.length).fill(false),
+  leaflet_divisions: new Array(options.leaflet_divisions.length).fill(false),
   leaf_arrangement: new Array(options.leaf_arrangement.length).fill(false),
   // new_brunswick_county: new Array(options.new_brunswick_county.length).fill(
   //   false
@@ -84,7 +84,7 @@ export const selectorsReducer = (state = initialState, action) => {
     case types.TOGGLE_LEAFLET_DIVISIONS:
       return {
         ...state,
-        leaf_divisions: action.payload,
+        leaflet_divisions: action.payload,
       }
     case types.TOGGLE_SPORE_SHAPE:
       return {

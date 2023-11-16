@@ -20,7 +20,7 @@ const SideNavContent = ({
   leaf_type,
   leaf_arrangement,
   leaf_duration,
-  leaf_divisions,
+  leaflet_divisions,
   spore_location,
   spore_under_leaf,
   spore_shape,
@@ -123,7 +123,7 @@ const SideNavContent = ({
       value: "Spore Covering",
     },
     {
-      key: "leaf_divisions",
+      key: "leaflet_divisions",
       group:
         (router.query.type == "Woody" || router.query.type == "Fern"|| plant_type[0] === true || plant_type[2] === true || fruit_type[9] === true) &&
         "leaves",
@@ -243,8 +243,8 @@ const SideNavContent = ({
                 ? fruit_color[index]
                 : key == "leaf_duration"
                 ? leaf_duration[index]
-                : key == "leaf_divisions"
-                ? leaf_divisions[index]
+                : key == "leaflet_divisions"
+                ? leaflet_divisions[index]
                 : key == "leaf_blade_edges"
                 ? leaf_blade_edges[index]
                 : key == "spore_shape"
