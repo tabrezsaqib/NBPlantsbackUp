@@ -43,7 +43,7 @@ const Families = () => {
                 <div style={{ margin: '10px' }}>
                     <h2 style={{ textAlign: 'center', marginBottom: '30px' }}>Plant Families</h2>
                     <div className="row " >
-                        {Object.keys(plantFamily).map((family, i) => (
+                        {Object.keys(plantFamily).slice().sort().map((family, i) => (
                             <>  <div key={i} className="listOfPlants  col-sm-12 col-md-12  col-lg-6 ">
                                 <span className="familyLink"
                                     onClick={() => loadPlantFamily(plantFamily[family][0]['acf']['plant_family'])}>
