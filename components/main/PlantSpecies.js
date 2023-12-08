@@ -26,6 +26,8 @@ const PlantSpecies = ({ plant }) => {
         <PlantItem plant={plant} />
       ) : router.pathname.includes("/plantFamilyDetails") ? (
         <PlantItem plant={plant} />
+      ) : router.pathname == '/plants/[id]' ? (
+        <PlantItem plant={plant} />
       ) : (
         <div
           className={

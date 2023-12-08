@@ -231,12 +231,13 @@ const SideNav = ({
   }
 
   const onSelectorChange = (filter) => {
-    // window.scrollTo({
-    //   top: 0,
-    //   behavior: "smooth",
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
       /* you can also use 'auto' behaviour
          in place of 'smooth' */
-    // })
+    })
+    
     if (activeFilterList.includes(filter)) {
       const filterIndex = activeFilterList.indexOf(filter)
       const newFilter = [...activeFilterList]

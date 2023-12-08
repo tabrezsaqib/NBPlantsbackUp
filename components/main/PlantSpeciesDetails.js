@@ -14,6 +14,7 @@ import Navbar from "../layouts/Navbar"
 import Footer from "../layouts/Footer"
 import Link from "next/link"
 import { useDispatch } from "react-redux"
+import FamilyDetails from "../families/familyDetails"
 
 const PlantSpeciesDetails = ({ plant_details }) => {
   const [slide, setSlide] = useState(false)
@@ -204,7 +205,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
               <div>
                   {plant_details.acf.distribution_map_id ? <>
                   <p>
-                  <strong>Distribution </strong><span style={{float:'right', fontSize:'12px'}}>&copy;ACCDC</span> 
+                  <strong>Distribution </strong><span style={{float:'right', fontSize:'12px'}}>Source: AC CDC 2019</span> 
                   </p>
                   <div className="row">
                     <div className="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -231,6 +232,14 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                     </div>
                   </div></>:""}
               </div>
+              {plant_details.acf.similar_species &&
+                    <div>
+                      <br></br>
+                      <p><strong>Explore Similar Plants</strong></p>
+                      <FamilyDetails plant_id={plant_details.acf.similar_species} />
+                      {/* <ListPlantSpecies filteredList={plantFamily} isLoading={isLoading} /> */}
+                    </div>
+              }
               <div
                 className="modal fade"
                 id="exampleModal"
@@ -356,7 +365,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                                 alt="Distribution map"
                               />
                               <p className="img-caption">
-                               <span>&copy;</span> ACCDC
+                               <span>Source: </span>AC CDC 2019
                               </p>
                             </div>
                           )}
@@ -407,7 +416,6 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                   )}
                 </div>
               </div>
-              <div className="d-flex">
                 {plant_details.acf.wolastoqey && (
                   <div className="d-flex">
                     <p>
@@ -416,7 +424,6 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                     <p>{ReactHtmlParser(plant_details.acf.wolastoqey)}</p>
                   </div>
                 )}
-                &nbsp;&nbsp;
                 {plant_details.acf.migmaq && (
                   <div className="d-flex">
                     <p>
@@ -425,7 +432,6 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                     <p>{ReactHtmlParser(plant_details.acf.migmaq)}</p>
                   </div>
                 )}
-              </div>
               {plant_details.acf.plant_family && (
                 <div className="d-flex label-value-section">
                   <p>
@@ -435,7 +441,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                   {plant_details.acf.family_english?<span>&#x3B;&nbsp;</span> : ""}
                   {plant_details.acf.family_english && (
                     <div className="d-flex">
-                      {plant_details.acf.family_english}
+                      <span className="familyLink" onClick={() => loadPlantFamily(plant_details.acf.plant_family)}> {ReactHtmlParser(plant_details.acf.family_english)}</span>
                     </div>
                   )}
                 </div>
@@ -782,7 +788,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                 { ( plant_details.acf.characteristics.leaf_duration.length !== 0 || plant_details.acf.characteristics.leaf_type.length !== 0 ||
                   plant_details.acf.characteristics.leaf_arrangement.length !== 0 || plant_details.acf.characteristics.leaf_blade_edges.length !== 0 ||
                   plant_details.acf.characteristics.leaf_shape.length !== 0 || plant_details.acf.characteristics.leaf_number || 
-                  plant_details.acf.characteristics.leaflet_divisions  || plant_details.acf.characteristics.leaves_per_node || 
+                  plant_details.acf.characteristics.leaflet_divisions.length !==0  || plant_details.acf.characteristics.leaves_per_node || 
                   plant_details.acf.characteristics.leaf_description) &&
                 <div className="accordion mb-3" id="accordion2">
                   <div className="accordion-item">
@@ -923,7 +929,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                             </div>
                           )}
                           {plant_details.acf.characteristics
-                            .leaflet_divisions && (
+                            .leaflet_divisions.length>0 && (
                             <div className="d-flex label-value-section">
                               <p>
                                 <strong>Leaflet Divisions: &nbsp;</strong>

@@ -5,7 +5,7 @@ import styles from "../../styles/SearchItem.module.css"
 
 const SearchItem = ({ plant }) => {
   return (
-    <>
+    <>{plant.acf.common_name &&
       <div className={[styles.contentBox, "content-box"].join(" ")}>
         <div className={[styles.imgContainer, "img-container"].join(" ")}>
           <img
@@ -59,7 +59,7 @@ const SearchItem = ({ plant }) => {
             </div>
           </div>
         </div>
-      </div>
+      </div>}
     </>
   )
 }
