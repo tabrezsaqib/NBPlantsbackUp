@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux"
 import { useRouter } from "next/router"
 import SideNavPopover from "./SideNavPopover"
 import React, {useState} from "react"
+import { useEffect } from "react"
 
 const SideNavContent = ({
   options,
@@ -40,7 +41,21 @@ const SideNavContent = ({
   triggerToolTip,
 }) => {
   const router = useRouter()
-  console.log(options,flower_colour, type)
+  
+  const [selector, setSelector] = useState(options)
+
+  useEffect(() => {
+    if (router.query.type == "Fern" || plant_type[0] === true) {
+      setSelector({ ...options, 'leaflet_divisions': options.leaflet_divisions.slice(0, 3), 'stems': options.stems.slice(0, 3) })
+    }
+    else if (router.query.type == "Woody" || plant_type[2] === true) {
+      setSelector({ ...options, 'leaf_type': options.leaf_type.slice(0, 3), 'growth_form': [...options.growth_form.slice(0,1),...options.growth_form.slice(2)], 'habitat': options.habitat.slice(1,3),  'stems': [...options.stems.slice(0, 1), ...options.stems.slice(2,4)]})
+    }
+    else{
+      setSelector(options)
+    }
+  }, [options, router.query.type, plant_type])
+
   const optionNames = [
     {
       key: "plant_type",
@@ -89,13 +104,20 @@ const SideNavContent = ({
     },
     {
       key: "leaf_shape",
-      group: (plant_type[0] === false && plant_type[1] === false && fruit_type[9] === false) && "leaves",
+      group: (router.query.type != "Fern" && plant_type[0] === false && plant_type[1] === false && fruit_type[9] === false) && "leaves",
       value: "Leaf Shape",
     },
     {
       key: "leaf_type",
       group: (plant_type[1] === false) && "leaves",
       value: "Leaf Type",
+    },
+    {
+      key: "leaflet_divisions",
+      group:
+        (router.query.type == "Woody" || router.query.type == "Fern"|| plant_type[0] === true || plant_type[2] === true || fruit_type[9] === true) &&
+        "leaves",
+      value: "Leaflet Divisions",
     },
     {
       key: "leaf_duration",
@@ -123,20 +145,13 @@ const SideNavContent = ({
       value: "Spore Covering",
     },
     {
-      key: "leaflet_divisions",
-      group:
-        (router.query.type == "Woody" || router.query.type == "Fern"|| plant_type[0] === true || plant_type[2] === true || fruit_type[9] === true) &&
-        "leaves",
-      value: "Leaflet Divisions",
-    },
-    {
       key: "stems",
       group: "none",
       value: "Stems and/or Twigs",
     },
     {
       key: "growth_form",
-      group: (plant_type[1] === false) && "initial",
+      group: (router.query.type != "Fern" && plant_type[0] === false && plant_type[1] === false) && "initial",
       value: "Growth Form",
     },
     {
@@ -206,91 +221,90 @@ const SideNavContent = ({
       label: "black",
     },
   ]
-
+  
   let id = 0
   const dispatch = useDispatch()
   const getOption = (key) => {
-    const option = options[key].map((data, index) => {
-      console.log("data",data)
-      return (
-        <div className="form-check" key={index}>
-          <input
-            className="form-check-input"
-            type="checkbox"
-            value={data}
-            id={id}
-            onClick={(e) => onSelectorChange(data)}
-            checked={
-              // item.key == "new_brunswick_county"
-              //   ? new_brunswick_county[index]
-              key == "leaf_arrangement"
-                ? leaf_arrangement[index]
-                : key == "leaf_type"
-                ? leaf_type[index]
-                : key == "habitat"
-                ? habitat[index]
-                : key == "plant_type"
-                ? plant_type[index]
-                : key == "type"
-                ? type[index]
-                : key == "flower_colour"
-                ? flower_colour[index]
-                : key == "lip_shape"
-                ? lip_shape[index]
-                : key == "fruit_type"
-                ? fruit_type[index]
-                : key == "fruit_color"
-                ? fruit_color[index]
-                : key == "leaf_duration"
-                ? leaf_duration[index]
-                : key == "leaflet_divisions"
-                ? leaflet_divisions[index]
-                : key == "leaf_blade_edges"
-                ? leaf_blade_edges[index]
-                : key == "spore_shape"
-                ? spore_shape[index]
-                : key == "spore_location"
-                ? spore_location[index]
-                : key == "spore_covering"
-                ? spore_covering[index]
-                : key == "spore_under_leaf"
-                ? spore_under_leaf[index]
-                : // : key == "native_or_introduced_or_invasive"
-                // ? native_or_introduced_or_invasive[index]
-                key == "leaf_shape"
-                ? leaf_shape[index]
-                : key == "stems"
-                ? stems[index]
-                : key == "growth_form"
-                ? growth_form[index]
-                : key == "petal_symmetry"
-                ? petal_symmetry[index]
-                : key == "inflorescence"
-                ? inflorescence[index]
-                : false
-            }
-            onChange={(e) => handleOnChange(index, key)}
-          />
-          <label className="form-check-label" htmlFor={id}>
-            {colorValues.map((value, index) => (
-              <div key={index} className="color-value">
-                <img
-                  src={value.color}
-                  style={{borderRadius:'7px'}}
-                  className={
-                    data == value.label && (key == "flower_colour" || "fruit_color") ? "" : "hide"
-                  }
-                  width="15px"
-                  alt="color values"
-                />
-              </div>
-            ))}
-            {key == "flower_colour" || "fruit_color" ? <span>&nbsp;&nbsp;</span> : <span></span>}
-            {api.capitalizeFirstLetter(data === 'Fern'? 'Fern / Fern Ally':data === 'Non-woody'?'All Other Plants': data)}
-          </label>
-        </div>
-      )
-    })
+      const option = selector[key].map((data, index) => {
+        return (
+          <div className="form-check" key={index}>
+            <input
+              className="form-check-input"
+              type="checkbox"
+              value={data}
+              id={id}
+              onClick={(e) => onSelectorChange(data)}
+              checked={
+                // item.key == "new_brunswick_county"
+                //   ? new_brunswick_county[index]
+                key == "leaf_arrangement"
+                  ? leaf_arrangement[index]
+                  : key == "leaf_type"
+                  ? leaf_type[index]
+                  : key == "habitat"
+                  ? habitat[index]
+                  : key == "plant_type"
+                  ? plant_type[index]
+                  : key == "type"
+                  ? type[index]
+                  : key == "flower_colour"
+                  ? flower_colour[index]
+                  : key == "lip_shape"
+                  ? lip_shape[index]
+                  : key == "fruit_type"
+                  ? fruit_type[index]
+                  : key == "fruit_color"
+                  ? fruit_color[index]
+                  : key == "leaf_duration"
+                  ? leaf_duration[index]
+                  : key == "leaflet_divisions"
+                  ? leaflet_divisions[index]
+                  : key == "leaf_blade_edges"
+                  ? leaf_blade_edges[index]
+                  : key == "spore_shape"
+                  ? spore_shape[index]
+                  : key == "spore_location"
+                  ? spore_location[index]
+                  : key == "spore_covering"
+                  ? spore_covering[index]
+                  : key == "spore_under_leaf"
+                  ? spore_under_leaf[index]
+                  : // : key == "native_or_introduced_or_invasive"
+                  // ? native_or_introduced_or_invasive[index]
+                  key == "leaf_shape"
+                  ? leaf_shape[index]
+                  : key == "stems"
+                  ? stems[index]
+                  : key == "growth_form"
+                  ? growth_form[index]
+                  : key == "petal_symmetry"
+                  ? petal_symmetry[index]
+                  : key == "inflorescence"
+                  ? inflorescence[index]
+                  : false
+              }
+              onChange={(e) => handleOnChange(index, key)}
+            />
+            <label className="form-check-label" htmlFor={id}>
+              {colorValues.map((value, index) => (
+                <div key={index} className="color-value">
+                  <img
+                    src={value.color}
+                    style={{borderRadius:'7px'}}
+                    className={
+                      data == value.label && (key == "flower_colour" || "fruit_color") ? "" : "hide"
+                    }
+                    width="15px"
+                    alt="color values"
+                  />
+                </div>
+              ))}
+              {key == "flower_colour" || "fruit_color" ? <span>&nbsp;&nbsp;</span> : <span></span>}
+              {api.capitalizeFirstLetter(data === 'Fern'? 'Ferns / Fern Allies':data === 'Non-woody'?'All Other Plants': data)}
+            </label>
+          </div>
+        )
+      })
     return option
   }
 

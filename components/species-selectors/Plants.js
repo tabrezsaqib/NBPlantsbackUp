@@ -19,6 +19,7 @@ import {
   setPageCount,
 } from "../../redux/actions/paginationAction"
 import { resetPageCount } from "../../redux/actions/paginationAction"
+import TablePagination from '@mui/material/TablePagination';
 import ListPlantSpecies from "../main/ListPlantSpecies"
 import SideNav from "../side-nav/SideNav"
 import * as options from "../../data/sideNavListDataArray"
@@ -54,6 +55,21 @@ const Plants = ({
   const [currentPage, setCurrentPage] = useState(false)
 
   const [currentPageNumber, setCurrentPageNumber] = useState(0)
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(20);
+
+  const handleChangePage = (event, newPage) => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    })
+    setPage(newPage);
+  }
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   const router = useRouter()
   let filteredList = useRef(new Array())
@@ -61,6 +77,7 @@ const Plants = ({
 
   //Sidebar Selector filtering
   const filterPlantsTypeData = (plant_data) => {
+    setPage(0);
     filteredList.current = plant_data
     try {
       if (activeFilterList.length === 0) {
@@ -104,20 +121,20 @@ const Plants = ({
     }
   }
 
-  const paginationEngine = () => {
-    const endOffset = itemOffset + itemsPerPage
-    setCurrentItems(filteredList.current.slice(itemOffset, endOffset))
-    dispatch(
-      setPageCount(Math.ceil(filteredList.current.length / itemsPerPage))
-    )
-    const newOffset =
-      (resetCount == true
-        ? 0
-        : currentPage == true && currentSelectedPage.current * itemsPerPage) %
-      filteredList.current.length
+  // const paginationEngine = () => {
+  //   const endOffset = itemOffset + itemsPerPage
+  //   setCurrentItems(filteredList.current.slice(itemOffset, endOffset))
+  //   dispatch(
+  //     setPageCount(Math.ceil(filteredList.current.length / itemsPerPage))
+  //   )
+  //   const newOffset =
+  //     (resetCount == true
+  //       ? 0
+  //       : currentPage == true && currentSelectedPage.current * itemsPerPage) %
+  //     filteredList.current.length
 
-    dispatch(setItemOffset(newOffset))
-  }
+  //   dispatch(setItemOffset(newOffset))
+  // }
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
@@ -141,7 +158,7 @@ const Plants = ({
       dispatch(fetchAllPlantPosts(router.query.type))
 
       filterPlantsTypeData(all_plants)
-      paginationEngine()
+      // paginationEngine()
       let localStoreValue = localStore.getCurrentPage()
       localStoreValue && setCurrentPageNumber(localStore.getCurrentPage())
       const newOffset =
@@ -152,7 +169,7 @@ const Plants = ({
     if (router.query.type == "Woody") {
       dispatch(fetchWoodyPlantPosts(router.query.type))
       filterPlantsTypeData(woody_plants)
-      paginationEngine()
+      // paginationEngine()
       let localStoreValue = localStore.getCurrentPage()
       localStoreValue && setCurrentPageNumber(localStore.getCurrentPage())
       const newOffset =
@@ -164,7 +181,7 @@ const Plants = ({
     if (router.query.type == "Non-woody") {
       dispatch(fetchNonWoodyPlantPosts(router.query.type))
       filterPlantsTypeData(nonwoody_plants)
-      paginationEngine()
+      // paginationEngine()
       let localStoreValue = localStore.getCurrentPage()
       localStoreValue && setCurrentPageNumber(localStore.getCurrentPage())
 
@@ -177,7 +194,7 @@ const Plants = ({
     if (router.query.type == "Fern") {
       dispatch(fetchFernPosts(router.query.type))
       filterPlantsTypeData(ferns)
-      paginationEngine()
+      // paginationEngine()
       let localStoreValue = localStore.getCurrentPage()
       localStoreValue && setCurrentPageNumber(localStore.getCurrentPage())
 
@@ -214,7 +231,7 @@ const Plants = ({
   const handleItemsPerPageChange = (event) => {
     const newItemsPerPage = parseInt(event.target.value)
     itemsPerPage = newItemsPerPage
-    paginationEngine(itemsPerPage)
+    // paginationEngine(itemsPerPage)
   }
 
   return (
@@ -247,44 +264,21 @@ const Plants = ({
         }>
         {/* <h4>Non Woody Plants..</h4> */}
         <div className="grid-container">
-          <ListPlantSpecies filteredList={currentItems} isLoading={isLoading} />
-          {isLoading === true ? ""
-            :
-            <div
-            // className="d-flex flex-row justify-content-center align-items-center align-self-center"
-            >
-              <span className={localstyles.itemsLabel}>Species Per Page:</span>
-              <select
-                className={localstyles.displayDropdown}
-                onChange={handleItemsPerPageChange}>
-                {dropDownValues.map((option, index) => (
-                  <option className={localstyles.optionContent} key={index} value={option}>{option}</option>
-                ))}
-              </select>
-            </div>
-          }
-          <ReactPaginate
-            className={toggle_pagination === true ? localstyles.hide : ""}
-            nextLabel="next >"
-            onPageChange={handlePageClick}
-            pageRangeDisplayed={5}
-            forcePage={resetCount == true ? 0 : currentPageNumber - 0}
-            // forcePage={currentPageNumber - 0}
-            pageCount={pageCount}
-            previousLabel="< previous"
-            pageClassName="page-item"
-            pageLinkClassName="page-link"
-            previousClassName="page-item"
-            previousLinkClassName="page-link"
-            nextClassName="page-item"
-            nextLinkClassName="page-link"
-            breakLabel="..."
-            breakClassName="page-item"
-            breakLinkClassName="page-link"
-            containerClassName="pagination"
-            activeClassName="active"
-            renderOnZeroPageCount={null}
-          />
+          <ListPlantSpecies filteredList={filteredList.current} pg={page} rpg={rowsPerPage} isLoading={isLoading} />
+          {filteredList.current.length >0 && <div style={{ float: 'left' }}>
+          <TablePagination
+              component="div"
+              count={filteredList.current.length}
+              page={page}
+              onPageChange={handleChangePage}
+              rowsPerPage={rowsPerPage}
+              showFirstButton
+              showLastButton
+              labelRowsPerPage="Species Per Page:"
+              rowsPerPageOptions={[20, 50, 100]}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </div>}
         </div>
       </div>
     </div>

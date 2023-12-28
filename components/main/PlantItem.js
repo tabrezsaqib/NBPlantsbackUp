@@ -20,7 +20,7 @@ const PlantItem = ({ plant }) => {
                   : plant.acf.image_url.full_image_url
                 : "../images/no_result_found.png"
             }
-            alt=""
+            alt="" onContextMenu={(e)=>e.preventDefault()}
           />
         </div>
         <div className="description">

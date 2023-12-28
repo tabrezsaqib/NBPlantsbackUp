@@ -1,17 +1,95 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
 import * as api from "../../generics/api";
 import ReactHtmlParser from "react-html-parser"
 import { useRouter } from 'next/router'
 import ListPlantSpecies from '../main/ListPlantSpecies'
 import styles from "../../styles/SearchResults.module.css"
+import Collapse from '@mui/material/Collapse';
 
 const SEARCH_URL = process.env.SEARCH_URL
+
+const API_POST_URL = process.env.API_POST_URL
+
+const ClampedDiv = ({ children }) => {
+    const [open, setOpen] = useState(false);
+    const ref = useRef(null);
+
+    // This is where I'd do the line number calculation, but it's just
+    // using a placeholder instead.
+    const [showLink, setShowLink] = useState(false);
+
+    useLayoutEffect(() => {
+        console.log(ref.current.clientHeight)
+        if (ref.current && ref.current.clientHeight > 30) {
+            setShowLink(true)
+        }
+    }, [ref])
+
+    let textClass = "text";
+    if (open) {
+        textClass += " open";
+    }
+
+    return <div className="rtc-content ">
+        <div>
+            <span className={textClass} ref={ref}>{children}</span>
+            {showLink && !open && (
+                <div className="moreLink" onClick={() => setOpen(true)}>...Read more</div>
+            )}
+        </div><style jsx>{`
+        .text {
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            max-height: calc(4 * 2.75 * 15px);
+            font-size: 14px;
+            line-height: 1.5;
+          }
+          .moreLink{
+            cursor: pointer;
+            -webkit-text-decoration: underline;
+            text-decoration: underline;
+            color: #0e9d47;
+          }
+          .open {
+            -webkit-line-clamp: unset;
+            max-height: none;
+          }
+          
+          .container {
+            background-color: crimson;
+            color: white;
+            margin-bottom: 15px;
+            padding: 15px;
+          }
+        .site-in-progress{
+          margin-top: 30px;
+          margin-bottom:50px;
+          text-align: center;
+          font-size: 20px;
+        }
+        .center-align{
+            margin-left: 50%;
+        }
+        .rtc-content {
+          background-color: #f6f7f9;
+          padding: 15px 20px;
+          border-radius: 10px;
+          font-size: 15px;
+        }`}</style>
+    </div>
+};
+
 
 const FamilyDetails = ({ plant_id }) => {
     const [plantFamily, setPlantFamily] = useState([]);
     const [isLoading, setLoading] = useState(true)
     const router = useRouter()
+    const [isReadMore, setIsReadMore] = useState(true);
+    const toggleReadMore = () => { setIsReadMore(!isReadMore) };
+    const [readMore, setReadMore] = useState(false);
 
     useEffect(() => {
 
@@ -71,13 +149,13 @@ const FamilyDetails = ({ plant_id }) => {
                             </div>
                         </div>
                         <div className="d-flex flex-column">
-                            <div className="rtc-content">
-                                {ReactHtmlParser(plantFamily[0].acf.family_description)}
+                            <div>
+                                <ClampedDiv>
+                                    {ReactHtmlParser(plantFamily[0].acf.family_description)}
+                                </ClampedDiv>
+                                <ListPlantSpecies filteredList={plantFamily} isLoading={isLoading} />
                             </div>
                         </div></>}
-                        <div >
-                            <ListPlantSpecies filteredList={plantFamily} isLoading={isLoading} />
-                        </div>
                         {!plant_id &&
                         <div className="site-in-progress">
                             Site in progress. All species may not be available yet.

@@ -15,7 +15,7 @@ const SearchItem = ({ plant }) => {
                 ? plant.acf.gallery_view_image.sizes.medium
                 : "../images/no_result_found.png"
             }
-            alt=""
+            alt="" onContextMenu={(e)=>e.preventDefault()}
           />
         </div>
         <div className="description">

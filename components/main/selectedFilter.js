@@ -222,26 +222,26 @@ export default function SelectedFilter() {
     const handleClearAll = () => {
         dispatch(togglePlantTypeData(new Array(options.plant_type.length).fill(false)))
         dispatch(toggleTypeData(new Array(options.type.length).fill(false)))
-        dispatch(toggleFlowerPetalColorData(new Array(options.habitat.length).fill(false)))
-        dispatch(toggleFruitColor(new Array(options.flower_colour.length).fill(false)))
-        dispatch(toggleFruits(new Array(options.lip_shape.length).fill(false)))
-        dispatch(toggleGrowthForm(new Array(options.leaf_blade_edges.length).fill(false)))
-        dispatch(toggleHabitatData(new Array(options.leaf_type.length).fill(false)))
-        dispatch(toggleInflorescence(new Array(options.leaf_duration.length).fill(false)))
-        dispatch(toggleLeafArrangementData(new Array(options.leaflet_divisions.length).fill(false)))
-        dispatch(toggleLeafBladeEdgesData(new Array(options.leaf_arrangement.length).fill(false)))
-        dispatch(toggleLeafDuration(new Array(options.leaf_shape.length).fill(false)))
-        dispatch(toggleLeafShapeData(new Array(options.spore_shape.length).fill(false)))
-        dispatch(toggleLeafTypeData(new Array(options.spore_location.length).fill(false)))
-        dispatch(toggleLeafletDivisions(new Array(options.spore_covering.length).fill(false)))
-        dispatch(toggleLipShape(new Array(options.spore_under_leaf.length).fill(false)))
-        dispatch(toggleNative(new Array(options.stems.length).fill(false)))
-        dispatch(togglePetalSymmetry(new Array(options.growth_form.length).fill(false)))
-        dispatch(toggleSporeCovering(new Array(options.petal_symmetry.length).fill(false)))
-        dispatch(toggleSporeLocation(new Array(options.inflorescence.length).fill(false)))
-        dispatch(toggleSporeShape(new Array(options.fruit_type.length).fill(false)))
-        dispatch(toggleSporeUnderLeaf(new Array(options.fruit_color.length).fill(false)))
-        dispatch(toggleStemsData(new Array(options.fruit_color.length).fill(false)))
+        dispatch(toggleFlowerPetalColorData(new Array(options.flower_colour.length).fill(false)))
+        dispatch(toggleFruitColor(new Array(options.fruit_color.length).fill(false)))
+        dispatch(toggleFruits(new Array(options.fruit_type.length).fill(false)))
+        dispatch(toggleGrowthForm(new Array(options.growth_form.length).fill(false)))
+        dispatch(toggleHabitatData(new Array(options.habitat.length).fill(false)))
+        dispatch(toggleInflorescence(new Array(options.inflorescence.length).fill(false)))
+        dispatch(toggleLeafArrangementData(new Array(options.leaf_arrangement.length).fill(false)))
+        dispatch(toggleLeafBladeEdgesData(new Array(options.leaf_blade_edges.length).fill(false)))
+        dispatch(toggleLeafDuration(new Array(options.leaf_duration.length).fill(false)))
+        dispatch(toggleLeafShapeData(new Array(options.leaf_shape.length).fill(false)))
+        dispatch(toggleLeafTypeData(new Array(options.leaf_type.length).fill(false)))
+        dispatch(toggleLeafletDivisions(new Array(options.leaflet_divisions.length).fill(false)))
+        dispatch(toggleLipShape(new Array(options.lip_shape.length).fill(false)))
+        // dispatch(toggleNative(new Array(options.native_or_introduced_or_invasive.length).fill(false)))
+        dispatch(togglePetalSymmetry(new Array(options.petal_symmetry.length).fill(false)))
+        dispatch(toggleSporeCovering(new Array(options.spore_covering.length).fill(false)))
+        dispatch(toggleSporeLocation(new Array(options.spore_location.length).fill(false)))
+        dispatch(toggleSporeShape(new Array(options.spore_shape.length).fill(false)))
+        dispatch(toggleSporeUnderLeaf(new Array(options.spore_under_leaf.length).fill(false)))
+        dispatch(toggleStemsData(new Array(options.stems.length).fill(false)))
         dispatch(activeFilterData([]))
     };
 
@@ -263,6 +263,9 @@ export default function SelectedFilter() {
                         color:  #198754;
                         cursor: pointer;
                         margin-left: 5px;
+                }
+                .MuiStack-root {
+                    margin-bottom: 7px!important;
                 }`}
             </style>
         </div>

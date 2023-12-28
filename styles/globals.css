@@ -132,3 +132,7 @@ p {
 .accordion-button.jsx-2615534029:not(.collapsed){
   background-color: #ffffff !important;
 }
+
+.MuiTablePagination-selectLabel , .MuiTablePagination-displayedRows{
+  margin: auto;
+}

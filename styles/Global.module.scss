@@ -1,249 +1,306 @@
 @import 'mixins';
 
-.responsive_selection_blocks{
-    @include xs{
+.responsive_selection_blocks {
+    @include xs {
         width: 100%;
     }
-    @include sm{
+
+    @include sm {
         width: 100%;
     }
-    @include md{
+
+    @include md {
         width: 100%;
     }
-    @include lg{
+
+    @include lg {
         width: 55%;
     }
-    
-    
+
+
 }
-.label_value_media{
-    @include xs{
+
+.label_value_media {
+    @include xs {
         width: 100%;
     }
-    @include md{
+
+    @include md {
         width: 50%;
     }
-    @include lg{
+
+    @include lg {
         width: 50%;
     }
-    @include xl{
+
+    @include xl {
         width: 50%;
-    } 
-}
-.intro_media_mobile{
-    @include xs{
-        display: block;
-    }
-    @include md{
-        display: none;
-    }
-    @include lg{
-        display: none;
-    }
-    @include xl{
-        display: none;
     }
 }
-.intro_media_desktop{
-    @include xs{
+
+.intro_media_mobile {
+    @include xs {
+        display: block;
+    }
+
+    @include md {
         display: none;
     }
-    @include md{
+
+    @include lg {
+        display: none;
+    }
+
+    @include xl {
+        display: none;
+    }
+}
+
+.intro_media_desktop {
+    @include xs {
+        display: none;
+    }
+
+    @include md {
         display: block;
     }
-    @include lg{
+
+    @include lg {
         display: block;
     }
-    @include xl{
+
+    @include xl {
         display: block;
     }
 }
 
-.sidebar_view_media{
-    h4{
+.sidebar_view_media {
+    h4 {
         display: flex;
-        span{
+
+        span {
             font-size: 17px;
             font-weight: bold;
             align-self: center;
         }
-        @include xs{
+
+        @include xs {
             display: block;
         }
-        @include md{
+
+        @include md {
             display: block;
         }
-        @include lg{
+
+        @include lg {
             display: none;
         }
-        @include xl{
+
+        @include xl {
             display: none;
         }
     }
-    h4:hover{
+
+    h4:hover {
         cursor: pointer;
     }
-   .toggle_sidebar_view{
-        @include xs{
+
+    .toggle_sidebar_view {
+        @include xs {
             display: none;
         }
-        @include md{
+
+        @include md {
             display: none;
         }
-        @include lg{
+
+        @include lg {
             display: block;
         }
-   }
-   
-}
-.content_section_media_query{
-    @include xs{
-        padding: 15px 15px;
     }
-    @include md{
-        padding: 15px 15px;
-    }
-    @include lg{
-        padding: 15px 30px;
-    }
-    @include xl{
-        padding: 15px 30px;
-    }  
-}
-.footer_media_query{
-    @include xs{
-        ul{
-            height: 65px;
-            width: 100%;
-        }
-    }
-    @include md{
-        ul{
-            height: 65px;
-            width: 100%;
-        }
-    }
-    @include lg{
-        ul{
-            height: 75px;
-            width: 200px;
-        }
-    }
-    @include xl{
-        ul{
-            height: 75px;
-            width: 200px;
-        }
-    } 
-}
-.error_bg_media_query{
-    @include xs{
-        width: 100%;
-    }
-    @include sm{
-        width: 100%;
-    }
-    @include md{
-        width: 75%;
-    }
-    @include lg{
-        width: 75%;
-    }
-    @include xl{
-        width: 75%;
-    }  
-}
-.image_loader_media_query{
-    @include xs{
-        margin: 0 auto;
-        img{
-            position: relative;
-        }
-    }
-    @include sm{
-        img{
-            position: relative;
-        }
-    }
-    @include md{
-        img{
-            position: relative;
-        }
-    }
-    @include lg{
-        img{
-            top: 50%;
-            left: 58%;
-            position: absolute;
-        }
-    }
-    @include xl{
-        img{
-            top: 50%;
-            left: 58%;
-            position: absolute;
-        }
-    }  
+
 }
 
-.box_container_media_query{
-    @include xs{
+.content_section_media_query {
+    @include xs {
+        padding: 15px 15px;
+    }
+
+    @include md {
+        padding: 15px 15px;
+    }
+
+    @include lg {
+        padding: 15px 15px;
+    }
+
+    @include xl {
+        padding: 15px 15px;
+    }
+}
+
+.footer_media_query {
+    @include xs {
+        ul {
+            height: 65px;
+            width: 100%;
+        }
+    }
+
+    @include md {
+        ul {
+            height: 65px;
+            width: 100%;
+        }
+    }
+
+    @include lg {
+        ul {
+            height: 75px;
+            width: 200px;
+        }
+    }
+
+    @include xl {
+        ul {
+            height: 75px;
+            width: 200px;
+        }
+    }
+}
+
+.error_bg_media_query {
+    @include xs {
+        width: 100%;
+    }
+
+    @include sm {
+        width: 100%;
+    }
+
+    @include md {
+        width: 75%;
+    }
+
+    @include lg {
+        width: 75%;
+    }
+
+    @include xl {
+        width: 75%;
+    }
+}
+
+.image_loader_media_query {
+    @include xs {
+        margin: 0 auto;
+
+        img {
+            position: relative;
+        }
+    }
+
+    @include sm {
+        img {
+            position: relative;
+        }
+    }
+
+    @include md {
+        img {
+            position: relative;
+        }
+    }
+
+    @include lg {
+        img {
+            top: 50%;
+            left: 58%;
+            position: absolute;
+        }
+    }
+
+    @include xl {
+        img {
+            top: 50%;
+            left: 58%;
+            position: absolute;
+        }
+    }
+}
+
+.box_container_media_query {
+    @include xs {
         max-width: 100%;
     }
-    @include sm{
-        max-width: 45%; 
+
+    @include sm {
+        max-width: 45%;
     }
-    @include md{
-        max-width: 45%; 
+
+    @include md {
+        max-width: 45%;
     }
-    @include lg{
-        max-width: 265px; 
+
+    @include lg {
+        max-width: 265px;
     }
-    @include xl{
-       max-width: 265px; 
-    }   
+
+    @include xl {
+        max-width: 265px;
+    }
 }
-.img_container_media{
-    @include xs{
+
+.img_container_media {
+    @include xs {
         width: 180px;
         height: 180px;
     }
-    @include sm{
+
+    @include sm {
         width: 140px;
         height: 140px;
-    } 
-    @include md{
+    }
+
+    @include md {
         width: 121px;
         height: 121px;
     }
-    @include lg{
+
+    @include lg {
         width: 121px;
         height: 121px;
     }
-    @include xl{
+
+    @include xl {
         width: 140px;
         height: 140px;
-    } 
+    }
 }
-.featured_image_media{
-    @include xs{
+
+.featured_image_media {
+    @include xs {
         width: 100%;
         height: 180px;
     }
-    @include sm{
+
+    @include sm {
         width: 100%;
         height: 140px;
-    } 
-    @include md{
+    }
+
+    @include md {
         width: 200px;
         height: 200px;
     }
-    @include lg{
+
+    @include lg {
         width: 200px;
         height: 200px;
     }
-    @include xl{
+
+    @include xl {
         width: 200px;
         height: 200px;
-    }  
+    }
 }

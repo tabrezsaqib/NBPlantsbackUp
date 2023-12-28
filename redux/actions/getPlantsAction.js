@@ -124,18 +124,18 @@ export const searchByKeyword = (slug) => async (dispatch) => {
     `${SEARCH_URL}search?keyword=${slug}&per_page=50`
   )
 //  console.log(response)
-
-  if (response.data == null) {
-    dispatch({
-      type: types.GET_SEARCH_RESULTS,
-      payload: response,
-    })
-  } else {
-    dispatch({
-      type: types.GET_SEARCH_RESULTS,
-      payload: response.data,
-    })
-  }
+    const filteredRes = response.data.filter((data) => data.acf.common_name)
+    if (filteredRes == null) {
+      dispatch({
+        type: types.GET_SEARCH_RESULTS,
+        payload: filteredRes,
+      })
+    } else {
+      dispatch({
+        type: types.GET_SEARCH_RESULTS,
+        payload: filteredRes,
+      })
+    }
 }
 
 // export const getAllPlantsCount = () => async (dispatch) => {
