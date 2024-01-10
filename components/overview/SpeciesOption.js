@@ -62,8 +62,10 @@ const SpeciesOption = () => {
         <a className={localstyles.speciesLink} onClick={() => optionSelector("Fern")}>
           <Ferns />
         </a>
-        <a className={localstyles.speciesLink} onClick={() => optionSelector("Grass")} 
-        // className="disabled"
+        <a
+        // className={localstyles.speciesLink} 
+        // onClick={() => optionSelector("Grass")} 
+        className={localstyles.disabled}
         >
           <GrassLike />
         </a>
