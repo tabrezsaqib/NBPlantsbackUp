@@ -64,6 +64,10 @@ const PlantSpeciesDetails = ({ plant_details }) => {
     }
   }
 
+  const capitalizeAfterColon = (inputString) => {
+    return inputString.replace(/(:\s*\w)/g, match => match.toUpperCase());
+  }
+
   const refresh = () => {
     let route = localStorage.getItem("route")
     Router.push({
@@ -496,7 +500,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                             (item, index) => (
                               <div className="d-flex" key={index}>
                                 <p>
-                                  {api.capitalizeFirstLetter(formatCase(item))}
+                                  {api.capitalizeFirstLetter(formatCase(capitalizeAfterColon(item)))}
                                   {item !==
                                     plant_details.acf.conservation_rank
                                       .slice(-1)

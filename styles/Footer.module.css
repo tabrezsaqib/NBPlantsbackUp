@@ -1,47 +1,48 @@
 .footer {
-    background-color: #f6f7f9;
-    padding-top: 30px;
-    border-top: 1px solid #e0e1e3;
-    .footerBrief {
-      .paraContent {
+  background-color: #f6f7f9;
+  padding-top: 30px;
+  border-top: 1px solid #e0e1e3;
+  .footerBrief {
+    .paraContent {
+      font-size: 14px;
+    }
+  }
+  .h5Content {
+    font-size: 15px;
+    font-weight: bold;
+  }
+  .h4Content {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  .footerNav {
+    width: 100%;
+    .footerList {
+      list-style: none;
+      padding: 0px;
+      .footerListItem .footerLink {
         font-size: 14px;
+        margin-right: 15px;
       }
     }
-    .h5Content {
-      font-size: 15px;
-      font-weight: bold;
-    }
-    .h4Content {
-      font-size: 18px;
-      font-weight: bold;
-    }
-    .footerNav {
+  }
+  .logoContainer {
+    overflow: hidden;
+    width: auto;
+    .imgContent {
       width: 100%;
-      .footerList {
-        list-style: none;
-        padding: 0px;
-        .footerListItem .footerLink {
-          font-size: 14px;
-        }
-      }
-    }
-    .logoContainer {
-      overflow: hidden;
-      width: auto;
-      .imgContent {
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-      }
+      height: 100%;
+      object-fit: contain;
     }
   }
-  .logoHeader {
-    margin-bottom: 0px;
-    font-size: 12px;
-  }
-  .partnershipTagline {
-    margin-top: 5px;
-    width: 150px;
-    font-size: 12px;
-    font-weight: 700;
-  }
+}
+.logoHeader {
+  margin-bottom: 0px;
+  font-size: 12px;
+}
+.partnershipTagline {
+  margin-top: 5px;
+  width: 150px;
+  font-size: 12px;
+  font-weight: 700;
+}

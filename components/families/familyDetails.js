@@ -5,7 +5,7 @@ import ReactHtmlParser from "react-html-parser"
 import { useRouter } from 'next/router'
 import ListPlantSpecies from '../main/ListPlantSpecies'
 import styles from "../../styles/SearchResults.module.css"
-import Collapse from '@mui/material/Collapse';
+import BrokenPageAlert from "../../generics/brokenPageAlert";
 
 const SEARCH_URL = process.env.SEARCH_URL
 
@@ -14,13 +14,9 @@ const API_POST_URL = process.env.API_POST_URL
 const ClampedDiv = ({ children }) => {
     const [open, setOpen] = useState(false);
     const ref = useRef(null);
-
-    // This is where I'd do the line number calculation, but it's just
-    // using a placeholder instead.
     const [showLink, setShowLink] = useState(false);
 
     useLayoutEffect(() => {
-        console.log(ref.current.clientHeight)
         if (ref.current && ref.current.clientHeight > 30) {
             setShowLink(true)
         }
@@ -86,10 +82,8 @@ const ClampedDiv = ({ children }) => {
 const FamilyDetails = ({ plant_id }) => {
     const [plantFamily, setPlantFamily] = useState([]);
     const [isLoading, setLoading] = useState(true)
+    const [isError, setIsError] = useState(false)
     const router = useRouter()
-    const [isReadMore, setIsReadMore] = useState(true);
-    const toggleReadMore = () => { setIsReadMore(!isReadMore) };
-    const [readMore, setReadMore] = useState(false);
 
     useEffect(() => {
 
@@ -116,14 +110,24 @@ const FamilyDetails = ({ plant_id }) => {
     const fetchDetails = async (char, type) => {
         const response = await api.get(`${SEARCH_URL}search?keyword=${char.replace(/\s+/g, "")}&per_page=50`)
         setLoading(false)
-        if (type === 'plant') {
-            const filtered = response.data.filter((res) => res.acf.plantsnb_id === char.replace(/\s+/g, ""))
-            return filtered
+        if (response) {
+            try {
+
+                if (type === 'plant') {
+                    const filtered = response.data.filter((res) => res.acf.plantsnb_id === char.replace(/\s+/g, ""))
+                    return filtered
+                } else {
+                    response.data.shift();
+                    setPlantFamily(response.data.length > 0 ? response.data : [])
+                }
+
+            } catch (error) {
+                setIsError(true)
+            }
         } else {
-            response.data.shift();
-            setLoading(false)
-            setPlantFamily(response.data.length > 0 ? response.data : [])
+            setIsError(true)
         }
+        
     }
 
     return (
@@ -131,7 +135,7 @@ const FamilyDetails = ({ plant_id }) => {
             {isLoading ? (
                 <div className={[styles.imgContainer, "d-flex", 'center-align'].join(" ")}>
                     <img className={styles.imgContent} src="../../images/loading.gif" alt="loader" />
-                </div>) :
+                </div>) : isError ? <div style={{ margin: '5% 15% 20%' }}><BrokenPageAlert />  </div> :
                 plantFamily.length > 0 ?
                     <div style={{ margin: '10px' }}>
                         {!plant_id && <>
@@ -156,6 +160,7 @@ const FamilyDetails = ({ plant_id }) => {
                                 <ListPlantSpecies filteredList={plantFamily} isLoading={isLoading} />
                             </div>
                         </div></>}
+                        {plant_id && <ListPlantSpecies filteredList={plantFamily} isLoading={isLoading} />}
                         {!plant_id &&
                         <div className="site-in-progress">
                             Site in progress. All species may not be available yet.

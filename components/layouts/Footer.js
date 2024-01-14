@@ -94,6 +94,9 @@ const Footer = () => {
                 <li className={localstyles.footerListItem}>
                   <a className={localstyles.footerLink} href="/resources">Resources</a>
                 </li>
+                <li className={localstyles.footerListItem} >
+                  <a className={localstyles.footerLink} href="/conservationRank" >Conservation Rank</a>
+                </li>
               </ul>
             </div>
           </div>

@@ -1,35 +1,52 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
-import ReactHtmlParser from "react-html-parser"
 import Router from "next/router"
 import styles from "../../styles/SearchResults.module.css"
-
 import * as api from "../../generics/api"
 const API_URL = process.env.API_URL
+const API_POST_URL = process.env.API_POST_URL
 
-const Families = () => {
+const ConservationRank = () => {
     const [plantFamily, setPlantFamily] = useState({});
     const [isLoading, setLoading] = useState(true)
+    
     useEffect(() => {
         fetchDetails();
     }, [])
 
     const fetchDetails = async () => {
         const response = await api.get(`${API_URL}plants_db`)
-        const a = Object.groupBy(response.data, data => (data.acf.plant_family));
+        let arr = []
+        for (let i = 0; i < response.data.length; i++) {
+            arr.push(...response.data[i].acf.conservation_rank)
+        }
+        const uniqueArr = new Set(arr)
+        const sortedArr = [...uniqueArr].sort();
         setLoading(false)
-        setPlantFamily(a);
+        setPlantFamily(sortedArr);
     }
 
     const loadPlantFamily = async (param) => {
         if (param) {
             Router.push({
-                pathname: "/plantFamilyDetails",
+                pathname: "/conservationRankDetails",
                 query: { keyword: param },
             }).then(() => {
                 Router.reload()
             })
         }
+    }
+
+    const formatCase = (data) => {
+        if (data.search('sna') >= 0 || data.search('Sna') >= 0) {
+            return data.replace(/sna/ig, 'SNA')
+        } else {
+            return data
+        }
+    }
+
+    const capitalizeAfterColon = (inputString) => {
+        return inputString.replace(/(:\s*\w)/g, match => match.toUpperCase());
     }
 
     return (
@@ -39,19 +56,15 @@ const Families = () => {
                     <img className={styles.imgContent} src="../../images/loading.gif" alt="loader" />
                 </div>) :
                 Object.keys(plantFamily).length > 0 &&
-                <div style={{ margin: '10px' }}>
-                    <h2 style={{ textAlign: 'center', marginBottom: '30px' }}>Plant Families</h2>
+                <div style={{ margin: '10px', height: '65vh' }}>
+                    <h2 style={{ textAlign: 'center', marginBottom: '30px' }}>Conservation Rank</h2>
                     <div className="row " >
-                        {Object.keys(plantFamily).slice().sort().map((family, i) => (
-                            <>  <div key={i} className="listOfPlants  col-sm-12 col-md-12  col-lg-6 ">
+                        {plantFamily.map((family, i) => (
+                            <>  <div key={i} className="listOfPlants  col-sm-12 col-md-12  col-lg-12">
                                 <span className="familyLink"
-                                    onClick={() => loadPlantFamily(plantFamily[family][0]['acf']['plant_family'])}>
-                                    {ReactHtmlParser(plantFamily[family][0]['acf']['plant_family'])}
-                                </span>
-                                /
-                                <span className="familyEnglish"
-                                    onClick={() => loadPlantFamily(plantFamily[family][0]['acf']['plant_family'])}>
-                                    {plantFamily[family][0]['acf']['family_english'] ? plantFamily[family][0]['acf']['family_english'] : '-'}
+                                    onClick={() => loadPlantFamily(family)}>
+
+                                    {api.capitalizeFirstLetter(formatCase(capitalizeAfterColon(family)))}
                                 </span>
                             </div></>))
                         }</div>
@@ -70,13 +83,9 @@ const Families = () => {
         .listOfPlants{
             text-align:center;
             margin: 10px 0;
-        }
-        .familyEnglish{
-            margin-left:8px;
-            cursor: pointer
         }`}</style>
         </>
     )
 }
 
-export default Families
+export default ConservationRank

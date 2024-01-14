@@ -31,6 +31,11 @@ const PlantItem = ({ plant }) => {
             </span>
             <div className="d-flex flex-wrap tags">
               {plant.acf.characteristics ? <>
+                {plant.acf.characteristics.invasive &&
+                  <span>
+                    <span style={{ color: 'red' }}>Invasive</span>, &nbsp;
+                  </span>
+                }
                 {plant.acf.characteristics.habitat.map((val, index) => (
                   <span key={index}>
                     {api.capitalizeFirstLetter(val)}, &nbsp;

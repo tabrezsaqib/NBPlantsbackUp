@@ -26,6 +26,8 @@ const PlantSpecies = ({ plant }) => {
         <PlantItem plant={plant} />
       ) : router.pathname.includes("/plantFamilyDetails") ? (
         <PlantItem plant={plant} />
+      ) : router.pathname.includes("/conservationRankDetails") ? (
+        <PlantItem plant={plant} />
       ) : router.pathname == '/plants/[id]' ? (
         <PlantItem plant={plant} />
       ) : (
@@ -41,6 +43,9 @@ const PlantSpecies = ({ plant }) => {
             <div className="d-flex flex-column text-center">
               <img src="../images/no_result_found.png" alt="" />
               <h3>Oops! No data found!</h3>
+              <div className="site-in-progress">
+                            Site in progress. All species may not be available yet.
+              </div>
             </div>
           </div>
         </div>
@@ -63,6 +68,12 @@ const PlantSpecies = ({ plant }) => {
             height: 100%;
             object-fit: cover;
           }
+        }
+        .site-in-progress{
+          margin-top: 30px;
+          margin-bottom:50px;
+          text-align: center;
+          font-size: 20px;
         }
         .hidden {
           display: none;

@@ -12,7 +12,7 @@ export async function get(url) {
       return await response
     })
     .catch((err) => {
-      return err.response.data
+      console.log(err)
     })
 }
 
