@@ -11,8 +11,8 @@ const SearchItem = ({ plant }) => {
           <img
             className={styles.imgContent}
             src={
-              plant.acf.image_url !== undefined && plant.acf.gallery_view_image
-                ? plant.acf.gallery_view_image.sizes.medium
+              plant.acf.gallery_view_image !== undefined && plant.acf.gallery_view_image
+                ? plant.acf.gallery_view_image.url
                 : "../images/no_result_found.png"
             }
             alt="" onContextMenu={(e)=>e.preventDefault()}

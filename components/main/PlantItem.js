@@ -14,10 +14,8 @@ const PlantItem = ({ plant }) => {
         <div className="img-container">
           <img
             src={
-              Object.hasOwn(plant.acf, "image_url") == true
-                ? plant.acf.image_url.length > 0
-                  ? plant.acf.image_url[0].full_image_url
-                  : plant.acf.image_url.full_image_url
+              plant.acf.gallery_view_image !== undefined && plant.acf.gallery_view_image
+              ? plant.acf.gallery_view_image.url
                 : "../images/no_result_found.png"
             }
             alt="" onContextMenu={(e)=>e.preventDefault()}
