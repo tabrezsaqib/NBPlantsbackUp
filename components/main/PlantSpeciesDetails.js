@@ -645,28 +645,31 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                                 )}
                               </div>
                             )}
-
                             {plant_details.acf.characteristics.inflorescence
-                              .length !== 0 &&
-                              plant_details.acf.characteristics.inflorescence.map(
+                            .length !== 0 && (
+                            <div className="d-flex label-value-section">
+                              <p>
+                                <strong>Flower Arrangement: &nbsp;</strong>
+                              </p>
+                              {plant_details.acf.characteristics.inflorescence.map(
                                 (item, index) => (
-                                  <div
-                                    className="d-flex label-value-section"
-                                    key={index}>
+                                  <div className="d-flex" key={index}>
                                     <p>
-                                      <strong>
-                                        Flower Arrangement: &nbsp;
-                                      </strong>
+                                      {api.capitalizeFirstLetter(item)}
+                                      {item !==
+                                      plant_details.acf.characteristics.inflorescence
+                                        .slice(-1)
+                                        .pop() ? (
+                                        <span>, &nbsp;</span>
+                                      ) : (
+                                        ""
+                                      )}
                                     </p>
-                                    <div>
-                                      <p>
-                                        {api.capitalizeFirstLetter(item)}
-                                        &nbsp;
-                                      </p>
-                                    </div>
                                   </div>
                                 )
                               )}
+                            </div>
+                          )}
                               {plant_details.acf.characteristics
                                 .petal_symmetry !== 0 &&
                                 plant_details.acf.characteristics.petal_symmetry.map(
