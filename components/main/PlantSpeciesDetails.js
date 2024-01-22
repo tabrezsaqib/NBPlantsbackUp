@@ -669,7 +669,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                                 )
                               )}
                             </div>
-                          )}
+                            )}
                               {plant_details.acf.characteristics
                                 .petal_symmetry !== 0 &&
                                 plant_details.acf.characteristics.petal_symmetry.map(
