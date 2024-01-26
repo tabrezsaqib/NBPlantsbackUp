@@ -18,7 +18,6 @@ const grass = () => {
           type: "Woody",
         },
       }).then(() => {
-        // Router.reload()
       })
     }
     if (type == "Non-woody") {
@@ -29,7 +28,6 @@ const grass = () => {
           type: "Non-woody",
         },
       }).then(() => {
-        // Router.reload()
       })
     }
     if (type == "Fern") {
@@ -40,7 +38,6 @@ const grass = () => {
           type: "Fern",
         },
       }).then(() => {
-        // Router.reload()
       })
     }
   }

@@ -32,7 +32,6 @@ const ConservationRank = () => {
                 pathname: "/conservationRankDetails",
                 query: { keyword: param },
             }).then(() => {
-                // Router.reload()
             })
         }
     }

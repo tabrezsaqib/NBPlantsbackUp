@@ -85,7 +85,7 @@ const Footer = () => {
                     <a className={localstyles.footerLink}>Home</a>
                   </Link>
                 </li>
-                <li className={localstyles.footerListItem} onClick={refresh}>
+                <li className={localstyles.footerListItem}>
                   <Link href='/plants/?type=all' as={`/plants/?type=all`} legacyBehavior>
                     <a className={localstyles.footerLink}>Species</a>
                   </Link>

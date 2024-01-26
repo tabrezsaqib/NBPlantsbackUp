@@ -78,7 +78,7 @@ const Navbar = () => {
               </li>
               <li className={[styles.navItem, "nav-item"].join(" ")}>
                 <Link href='/about' as={`/about`} legacyBehavior>
-                  <a className="nav-link acyive">
+                  <a className="nav-link active">
                     About
                   </a>
                 </Link>

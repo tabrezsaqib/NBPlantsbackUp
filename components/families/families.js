@@ -1,35 +1,24 @@
 /* eslint-disable @next/next/no-img-element */
 import React, { useEffect, useState } from "react";
 import ReactHtmlParser from "react-html-parser"
-import Router from "next/router"
 import styles from "../../styles/SearchResults.module.css"
 
-import * as api from "../../generics/api"
-const API_URL = process.env.API_URL
+import { useSelector } from "react-redux";
+import Link from "next/link";
 
 const Families = () => {
     const [plantFamily, setPlantFamily] = useState({});
     const [isLoading, setLoading] = useState(true)
+    const { all_plants } = useSelector(state => state.post)
+
     useEffect(() => {
         fetchDetails();
     }, [])
 
     const fetchDetails = async () => {
-        const response = await api.get(`${API_URL}plants_db`)
-        const a = Object.groupBy(response.data, data => (data.acf.plant_family));
+        const a = Object.groupBy(all_plants, data => (data.acf.plant_family));
         setLoading(false)
         setPlantFamily(a);
-    }
-
-    const loadPlantFamily = async (param) => {
-        if (param) {
-            Router.push({
-                pathname: "/plantFamilyDetails",
-                query: { keyword: param },
-            }).then(() => {
-                Router.reload()
-            })
-        }
     }
 
     return (
@@ -42,17 +31,17 @@ const Families = () => {
                 <div style={{ margin: '10px' }}>
                     <h2 style={{ textAlign: 'center', marginBottom: '30px' }}>Plant Families</h2>
                     <div className="row " >
-                        {Object.keys(plantFamily).slice().sort().map((family, i) => (
+                        {Object.keys(plantFamily).map((family, i) => (
                             <>  <div key={i} className="listOfPlants  col-sm-12 col-md-12  col-lg-6 ">
-                                <span className="familyLink"
-                                    onClick={() => loadPlantFamily(plantFamily[family][0]['acf']['plant_family'])}>
-                                    {ReactHtmlParser(plantFamily[family][0]['acf']['plant_family'])}
-                                </span>
+                                <Link href={`/plantFamilyDetails/?keyword=${plantFamily[family][0]['acf']['plant_family']}`}
+                                    as={`/plantFamilyDetails/?keyword=${plantFamily[family][0]['acf']['plant_family']}`} legacyBehavior>
+                                    <a className="familyLink">  {ReactHtmlParser(plantFamily[family][0]['acf']['plant_family'])}</a>
+                                </Link>
                                 /
-                                <span className="familyEnglish"
-                                    onClick={() => loadPlantFamily(plantFamily[family][0]['acf']['plant_family'])}>
-                                    {plantFamily[family][0]['acf']['family_english'] ? plantFamily[family][0]['acf']['family_english'] : '-'}
-                                </span>
+                                <Link href={`/plantFamilyDetails/?keyword=${plantFamily[family][0]['acf']['plant_family']}`}
+                                    as={`/plantFamilyDetails/?keyword=${plantFamily[family][0]['acf']['plant_family']}`} legacyBehavior>
+                                    <a className="familyEnglish">  {plantFamily[family][0]['acf']['family_english'] ? plantFamily[family][0]['acf']['family_english'] : '-'}</a>
+                                </Link>
                             </div></>))
                         }</div>
                 </div>}
