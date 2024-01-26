@@ -3,22 +3,22 @@ import React, { useEffect, useState } from "react";
 import Router from "next/router"
 import styles from "../../styles/SearchResults.module.css"
 import * as api from "../../generics/api"
-const API_URL = process.env.API_URL
-const API_POST_URL = process.env.API_POST_URL
+import { useSelector } from "react-redux";
+
 
 const ConservationRank = () => {
     const [plantFamily, setPlantFamily] = useState({});
     const [isLoading, setLoading] = useState(true)
+    const { all_plants } = useSelector(state => state.post)
     
     useEffect(() => {
         fetchDetails();
     }, [])
 
     const fetchDetails = async () => {
-        const response = await api.get(`${API_URL}plants_db`)
         let arr = []
-        for (let i = 0; i < response.data.length; i++) {
-            arr.push(...response.data[i].acf.conservation_rank)
+        for (let i = 0; i < all_plants.length; i++) {
+            arr.push(...all_plants[i].acf.conservation_rank)
         }
         const uniqueArr = new Set(arr)
         const sortedArr = [...uniqueArr].sort();
@@ -32,7 +32,7 @@ const ConservationRank = () => {
                 pathname: "/conservationRankDetails",
                 query: { keyword: param },
             }).then(() => {
-                Router.reload()
+                // Router.reload()
             })
         }
     }

@@ -6,9 +6,20 @@ import { useDispatch } from "react-redux"
 import { togglePagination } from "../../redux/actions/paginationAction"
 import React, {Component} from "react"
 import styles from "../../styles/Navbar.module.css"
+import Link from "next/link"
+import { fetchAllPlantPosts } from "../../redux/actions/getPlantsAction"
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const dispatch = useDispatch()
+  const { all_plants } = useSelector(state => state.post)
+
+  useEffect(() => {
+    if (all_plants.length <= 0)
+      dispatch(fetchAllPlantPosts())
+  }, [])
+
   const refresh = () => {
     localStorage.setItem("route", "all")
     dispatch(togglePagination(true))
@@ -23,15 +34,17 @@ const Navbar = () => {
     <div>
       <nav className={[styles.navContainer, "navbar", "navbar-expand-lg", "fixed-top", "navbar-light", "bg-light"].join(" ")}>
         <div className="container-fluid">
-          <a className="navbar-brand" href="/home">
-            <div className={[styles.logoContainer, "logo-container"].join(" ")}>
-              <img
-                className={styles.logoImg}
-                src="../../images/logo.png"
-                alt="new brunswick plants logo"
-              />
-            </div>
-          </a>
+          <Link href="/home" as="/home" legacyBehavior>
+            <a className="navbar-brand">
+              <div className={[styles.logoContainer, "logo-container"].join(" ")}>
+                <img
+                  className={styles.logoImg}
+                  src="../../images/logo.png"
+                  alt="new brunswick plants logo"
+                />
+              </div>
+            </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -47,20 +60,28 @@ const Navbar = () => {
             id="navbarScroll">
             <ul className={[styles.navbarNav, "navbar-nav"].join(" ")}>
               <li className={[styles.navItem, "nav-item"].join(" ")}>
-                <a className="nav-link active" aria-current="page" href="/home">
-                  Home
-                </a>
-              </li>
-              <li className={[styles.navItem, "nav-item"].join(" ")} onClick={refresh}>
-                <a className="nav-link">Species</a>
-              </li>
-              <li className={[styles.navItem, "nav-item"].join(" ")} >
-                <a className="nav-link" aria-current="page" href="/plantFamilies">Families</a>
+                <Link href='/home' as={`/home`} legacyBehavior>
+                  <a className="nav-link active">
+                    Home
+                  </a>
+                </Link>
               </li>
               <li className={[styles.navItem, "nav-item"].join(" ")}>
-                <a className="nav-link" href="/about" tabIndex="-1">
-                  About
-                </a>
+                <Link href='/plants/?type=all' as={`/plants/?type=all`} legacyBehavior>
+                  <a className="nav-link active">Species</a>
+                </Link>
+              </li>
+              <li className={[styles.navItem, "nav-item"].join(" ")} >
+                <Link href='/plantFamilies' as={`/plantFamilies`} legacyBehavior>
+                  <a className="nav-link active">Families</a>
+                </Link>
+              </li>
+              <li className={[styles.navItem, "nav-item"].join(" ")}>
+                <Link href='/about' as={`/about`} legacyBehavior>
+                  <a className="nav-link acyive">
+                    About
+                  </a>
+                </Link>
               </li>
             </ul>
             <SearchForm />

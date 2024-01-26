@@ -13,7 +13,7 @@ const SearchForm = () => {
       pathname: "/search",
       query: { keyword: value },
     }).then(() => {
-      Router.reload()
+      // Router.reload()
       dispatch(searchByKeyword(value))
     })
 
