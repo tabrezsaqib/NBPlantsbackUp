@@ -15,6 +15,13 @@ export const fetchAllPlantPosts = () => async (dispatch) => {
   })
 }
 
+export const setLoader = () => async (dispatch) => {
+  dispatch({
+    type: types.IS_LOADING,
+    payload: true,
+  })
+}
+
 export const fetchNonWoodyPlantPosts = (type) => async (dispatch) => {
   const response = await api.get(`${API_URL}plants_db?plant_type=${type}`)
   dispatch({
@@ -118,24 +125,23 @@ export const setPlantFamilyDetails = (data) => async (dispatch) => {
     payload: data,
   })
 }
-
 export const searchByKeyword = (slug) => async (dispatch) => {
   const response = await api.get(
     `${SEARCH_URL}search?keyword=${slug}&per_page=50`
   )
-//  console.log(response)
-    // const filteredRes = response.data.filter((data) => data.acf.common_name)
-    if (response == null) {
-      dispatch({
-        type: types.GET_SEARCH_RESULTS,
-        payload: response.data,
-      })
-    } else {
-      dispatch({
-        type: types.GET_SEARCH_RESULTS,
-        payload: response.data,
-      })
-    }
+ /// const filtered = response.data.filter((res) => res.acf.plantsnb_id === char.replace(/\s+/g, ""))
+  // const filteredRes = response.data.filter((data) => data.acf.common_name && (data.acf.family_english.indexOf(slug) !== -1))
+  if (response == null) {
+    dispatch({
+      type: types.GET_SEARCH_RESULTS,
+      payload: response.data,
+    })
+  } else {
+    dispatch({
+      type: types.GET_SEARCH_RESULTS,
+      payload: response.data,
+    })
+  }
 }
 
 // export const getAllPlantsCount = () => async (dispatch) => {

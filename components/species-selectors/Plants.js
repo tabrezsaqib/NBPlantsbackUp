@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react"
 import { connect, useDispatch } from "react-redux"
 import { useRouter } from "next/router"
-import { fetchNonWoodyPlantPosts, fetchWoodyPlantPosts, fetchFernPosts , fetchAllPlantPosts} from "../../redux/actions/getPlantsAction"
+import { fetchNonWoodyPlantPosts, fetchWoodyPlantPosts, fetchFernPosts, fetchAllPlantPosts, setLoader } from "../../redux/actions/getPlantsAction"
 import TablePagination from '@mui/material/TablePagination';
 import ListPlantSpecies from "../main/ListPlantSpecies"
 import SideNav from "../side-nav/SideNav"
@@ -9,7 +9,7 @@ import * as options from "../../data/sideNavListDataArray"
 import styles from "../../styles/Global.module.scss"
 import localstyles from "../../styles/Plants.module.css"
 
-const Plants = ({ all_plants, nonwoody_plants,woody_plants, ferns, isLoading, activeFilterList, allType, }) => {
+const Plants = ({ all_plants, nonwoody_plants, woody_plants, ferns, isLoading, activeFilterList, allType }) => {
 
   const dispatch = useDispatch()
 
@@ -86,6 +86,7 @@ const Plants = ({ all_plants, nonwoody_plants,woody_plants, ferns, isLoading, ac
       if (router.query.type == "all") {
         console.log("all")
         if (all_plants.length === 0) {
+          await dispatch(setLoader())
           await dispatch(fetchAllPlantPosts(router.query.type))
         } else {
           filterPlantsTypeData(all_plants)
@@ -93,6 +94,7 @@ const Plants = ({ all_plants, nonwoody_plants,woody_plants, ferns, isLoading, ac
       }
       else if (router.query.type == "Woody") {
         if (woody_plants.length === 0) {
+          await dispatch(setLoader())
           await dispatch(fetchWoodyPlantPosts(router.query.type))
         } else {
           console.log("Woody", woody_plants)
@@ -102,6 +104,7 @@ const Plants = ({ all_plants, nonwoody_plants,woody_plants, ferns, isLoading, ac
       }
       else if (router.query.type == "Non-woody") {
         if (nonwoody_plants.length === 0) {
+          await dispatch(setLoader())
           await dispatch(fetchNonWoodyPlantPosts(router.query.type))
         } else {
           await filterPlantsTypeData(nonwoody_plants)
@@ -109,6 +112,7 @@ const Plants = ({ all_plants, nonwoody_plants,woody_plants, ferns, isLoading, ac
       }
       else if (router.query.type == "Fern") {
         if (ferns.length === 0) {
+          await dispatch(setLoader())
           await dispatch(fetchFernPosts(router.query.type))
         } else {
           filterPlantsTypeData(ferns)
