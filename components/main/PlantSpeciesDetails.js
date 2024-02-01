@@ -227,7 +227,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                           </div>
                         ) : (
                           <img
-                            src={`../../images/maps/${plant_details.acf.distribution_map_id}.jpg`}
+                            src={`../../images/maps/${plant_details.acf.distribution_map_id}.png`}
                             alt="Distribution map" onContextMenu={(e)=>e.preventDefault()}
                           />
                         )}
@@ -364,7 +364,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                           ) : (
                             <div>
                               <img
-                                src={`../../images/maps/${plant_details.acf.distribution_map_id}.jpg`}
+                                src={`../../images/maps/${plant_details.acf.distribution_map_id}.png`}
                                 alt="Distribution map" onContextMenu={(e)=>e.preventDefault()}
                               />
                               <p className="img-caption">
