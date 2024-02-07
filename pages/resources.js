@@ -18,7 +18,7 @@ const resources = () => {
       <div className={styles.resourcesPageContainer}>
         <iframe 
         className={styles.resourcesPageContent}
-        src="https://api-v2.newbrunswickplants.ca/resources/">
+        src="https://api-v3.newbrunswickplants.ca/resources/">
         </iframe>
       </div>
     </div>

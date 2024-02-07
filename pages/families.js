@@ -17,7 +17,7 @@ const families = () => {
       <div className={styles.familiesPageContainer}>
         <iframe 
         className={styles.familiesPageContent}
-        src="https://api-v2.newbrunswickplants.ca/plant-families/">
+        src="https://api-v3.newbrunswickplants.ca/plant-families/">
         </iframe>
       </div>
       <style jsx>
