@@ -18,7 +18,7 @@ const about = () => {
       <div className={styles.aboutPageContainer}>
         <iframe 
         className={styles.aboutPageContent}
-        src="https://devsite-nbplants.api-v2.newbrunswickplants.ca/elementor-7299/">
+        src="https://api-v3.newbrunswickplants.ca/elementor-7299/">
         </iframe>
       </div>
     </div>
