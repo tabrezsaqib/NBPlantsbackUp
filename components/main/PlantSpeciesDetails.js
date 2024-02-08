@@ -208,7 +208,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
               <div>
                   {plant_details.acf.distribution_map_id ? <>
                   <p>
-                    <strong>Distribution </strong><span style={{float:'right', fontSize:'12px'}}>Source: AC CDC, 2023</span> 
+                    <strong>Distribution </strong><span style={{float:'right', fontSize:'12px'}}>Source: AC CDC 2019</span> 
                   </p>
                   <div className="row">
                     <div className="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -368,7 +368,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                                 alt="Distribution map" onContextMenu={(e)=>e.preventDefault()}
                               />
                               <p className="img-caption">
-                               <span>Source: </span>AC CDC, 2023
+                               <span>Source: </span>AC CDC 2019
                               </p>
                             </div>
                           )}

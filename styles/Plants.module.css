@@ -1,32 +1,32 @@
 .hide {
-    display: none;
+  display: none;
+}
+.errorBg {
+  background-color: #ffffff;
+  margin-top: 16px;
+  margin-bottom: 27px;
+  border: 1px solid #e0e1e3;
+  border-radius: 15px;
+}
+.itemsLabel{
+  color: #333333;
+  background: #ffffff;
+  margin: 0px 0px 0px 0px;
+  padding: 6px 12px;
+}
+.displayDropDown{
+  color: #333333;
+  background: #ffffff;
+  margin: 0px 0px 0px 0px;
+  padding: 6px 12px;
+  font-size: 16px;
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  .optionContent:hover::after{
+    background: #1D9D47;
+    color: #ffffff;
   }
-  .errorBg {
-    background-color: #ffffff;
-    margin-top: 16px;
-    margin-bottom: 27px;
-    border: 1px solid #e0e1e3;
-    border-radius: 15px;
+  .optionContent:hover{
+    cursor:pointer;
   }
-  .itemsLabel{
-    color: #333333;
-    background: #ffffff;
-    margin: 0px 0px 0px 0px;
-    padding: 6px 12px;
-  }
-  .displayDropDown{
-    color: #333333;
-    background: #ffffff;
-    margin: 0px 0px 0px 0px;
-    padding: 6px 12px;
-    font-size: 16px;
-    border: 1px solid #dee2e6;
-    border-radius: 0.25rem;
-    .optionContent:hover::after{
-      background: #1D9D47;
-      color: #ffffff;
-    }
-    .optionContent:hover{
-      cursor:pointer;
-    }
-  }
+}

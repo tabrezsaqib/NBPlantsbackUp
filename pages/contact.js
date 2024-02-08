@@ -18,7 +18,7 @@ const contact = () => {
       <div className={styles.contactPageContainer}>
         <iframe 
         className={styles.contactPageContent}
-        src="https://api-v3.newbrunswickplants.ca/contact-us/">
+        src="https://devsite-nbplants.api-v2.newbrunswickplants.ca/contact-us/">
         </iframe>
       </div>
     </div>
