@@ -368,7 +368,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                                 alt="Distribution map" onContextMenu={(e)=>e.preventDefault()}
                               />
                               <p className="img-caption">
-                               <span>Source: </span>AC CDC 2023
+                               <span>Source: </span>AC CDC, 2023
                               </p>
                             </div>
                           )}
