@@ -44,7 +44,7 @@ const PlantSpecies = ({ plant }) => {
               <img src="../images/no_result_found.png" alt="" />
               <h3>Oops! No data found!</h3>
               <div className="site-in-progress">
-                            Site in progress. All species may not be available yet.
+                            Site in progress. Not all species are available yet.
               </div>
             </div>
           </div>

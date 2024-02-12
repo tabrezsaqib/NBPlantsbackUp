@@ -97,7 +97,7 @@ const SearchResults = ({ search_results }) => {
           <div className="flex-column d-flex align-items-center justify-content-center">
             <h2>Sorry! No Results Found</h2>
             <div className="site-in-progress">
-                            Site in progress. All species may not be available yet.
+                            Site in progress. Not all species are available yet.
             </div>
             <img
               src="../../images/data_not_found.png"

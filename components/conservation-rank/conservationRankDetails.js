@@ -75,7 +75,7 @@ const ConservationRankDetails = ({ plant_id }) => {
                         </div> </>
                     {plantFamily.length > 0 ?
                         <ListPlantSpecies filteredList={plantFamily} isLoading={isLoading} /> :
-                        <div className="NoData">No Data. Site in progress. All species may not be available yet.</div>}
+                        <div className="NoData">No Data. Site in progress. Not all species are available yet.</div>}
                     <div className="d-flex">
                         <TablePagination
                             component="div"
@@ -91,7 +91,7 @@ const ConservationRankDetails = ({ plant_id }) => {
                             sx={{ padding: 0 }}
                         /></div>
                     <div className="site-in-progress">
-                        Site in progress. All species may not be available yet.
+                        Site in progress. Not all species are available yet.
                     </div>
                 </div>}
             <style jsx>{`
