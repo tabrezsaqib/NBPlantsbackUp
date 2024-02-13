@@ -208,7 +208,16 @@ const PlantSpeciesDetails = ({ plant_details }) => {
               <div>
                   {plant_details.acf.distribution_map_id ? <>
                   <p>
-                    <strong>Distribution </strong><span style={{float:'right', fontSize:'12px'}}>Source: AC CDC, 2023</span> 
+                    <strong>Distribution </strong>
+                    <span style={{float:'right', fontSize:'12px', display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
+                      Source: AC CDC, 2023
+                      <span style={{ float: 'right', fontSize: '12px' }}>
+                          <span className="grey-dot"></span>
+                          Recent (&gt;= 2000)
+                          <span className="green-dot"></span>
+                          Historic (&lt; 2000)
+                      </span>
+                    </span> 
                   </p>
                   <div className="row">
                     <div className="col-sm-12 col-md-12 col-lg-12 col-xl-12">
@@ -1454,6 +1463,22 @@ const PlantSpeciesDetails = ({ plant_details }) => {
           font-weight: bold;
           text-align: right;
           color: #0e9d47;
+        }
+        .grey-dot {
+          height: 10px;
+          width: 10px;
+          background-color: grey;
+          border-radius: 48%;
+          display: inline-block;
+          margin-right: 5px;
+        }
+        .green-dot {
+          height: 10px;
+          width: 10px;
+          background-color: green;
+          border-radius: 48%;
+          display: inline-block;
+          margin: 0 5px;
         }
       `}</style>
     </div>
