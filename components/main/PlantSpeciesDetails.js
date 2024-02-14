@@ -209,15 +209,15 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                   {plant_details.acf.distribution_map_id ? <>
                   <p>
                     <strong>Distribution </strong>
-                    <span style={{float:'right', fontSize:'12px', display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
+                    <span style={{float:'right', fontSize:'12px' , display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
                       Source: AC CDC, 2023
-                      <span style={{ float: 'right', fontSize: '12px' }}>
+                        <span style={{ float: 'right', fontSize: '12px' }}>
                           <span className="grey-dot"></span>
                           Recent (&gt;= 2000)
                           <span className="green-dot"></span>
                           Historic (&lt; 2000)
+                        </span>
                       </span>
-                    </span> 
                   </p>
                   <div className="row">
                     <div className="col-sm-12 col-md-12 col-lg-12 col-xl-12">

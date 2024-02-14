@@ -126,9 +126,7 @@ export const setPlantFamilyDetails = (data) => async (dispatch) => {
   })
 }
 export const searchByKeyword = (slug) => async (dispatch) => {
-  const response = await api.get(
-    `${SEARCH_URL}search?keyword=${slug}&per_page=50`
-  )
+  const response = await api.get(`${API_URL}plants_db_search?plant_type=${slug}`);
  /// const filtered = response.data.filter((res) => res.acf.plantsnb_id === char.replace(/\s+/g, ""))
   // const filteredRes = response.data.filter((data) => data.acf.common_name && (data.acf.family_english.indexOf(slug) !== -1))
   if (response == null) {
