@@ -13,7 +13,7 @@ const Families = () => {
 
     useEffect(() => {
         fetchDetails();
-    }, [])
+    }, [all_plants])
 
     const fetchDetails = async () => {
         const a = Object.groupBy(all_plants, data => (data.acf.plant_family));
