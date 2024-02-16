@@ -56,7 +56,7 @@ const ConservationRank = () => {
                 </div>) :
                 Object.keys(plantFamily).length > 0 &&
                 <div style={{ margin: '10px', height: '65vh' }}>
-                    <h2 style={{ textAlign: 'center', marginBottom: '30px' }}>Conservation Rank</h2>
+                    <h2 style={{ textAlign: 'center', marginBottom: '30px' }}>Plants by Conservation Rank</h2>
                     <div className="row " >
                         {plantFamily.map((family, i) => (
                             <>  <div key={i} className="listOfPlants  col-sm-12 col-md-12  col-lg-12">
