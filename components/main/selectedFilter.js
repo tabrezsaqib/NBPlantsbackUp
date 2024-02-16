@@ -248,7 +248,7 @@ export default function SelectedFilter() {
     return (
         <div style={{ marginLeft: '10px' }}>
             {activeFilterList.length >= 1 &&
-                <div style={{ marginBottom: '10px', fontSize:'14px' }}> {activeFilterList.length} item(s) Selected.
+                <div style={{ marginBottom: '10px', fontSize:'14px' }}> {activeFilterList.length} item(s) selected.
                     <span className='linklike' onClick={handleClearAll} ><b>Clear All</b></span></div>}
             <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap' }}>
                 {Object.keys(listOfSelector).map((option, index) => (
