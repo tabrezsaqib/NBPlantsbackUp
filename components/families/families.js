@@ -12,7 +12,8 @@ const Families = () => {
     const { all_plants } = useSelector(state => state.post)
 
     useEffect(() => {
-        fetchDetails();
+        if (all_plants.length > 0)
+            fetchDetails();
     }, [all_plants])
 
     const fetchDetails = async () => {
