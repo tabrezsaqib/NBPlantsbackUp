@@ -86,7 +86,7 @@ const ConservationRankDetails = ({ plant_id }) => {
                             showFirstButton
                             showLastButton
                             labelRowsPerPage="Species Per Page:"
-                            rowsPerPageOptions={[20, 30, 50]}
+                            rowsPerPageOptions={[20, 50, 100]}
                             onRowsPerPageChange={handleChangeRowsPerPage}
                             sx={{ padding: 0 }}
                         /></div>
