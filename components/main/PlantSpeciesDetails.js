@@ -945,16 +945,29 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                               {plant_details.acf.characteristics.leaf_number}
                             </div>
                           )}
-                          {plant_details.acf.characteristics
-                            .leaflet_divisions.length>0 && (
+                          {plant_details.acf.characteristics.leaflet_divisions
+                            .length !== 0 && (
                             <div className="d-flex label-value-section">
                               <p>
                                 <strong>Leaflet Divisions: &nbsp;</strong>
                               </p>
-                              {
-                                plant_details.acf.characteristics
-                                  .leaflet_divisions
-                              }
+                              {plant_details.acf.characteristics.leaflet_divisions.map(
+                                (item, index) => (
+                                  <div className="d-flex" key={index}>
+                                    <p>
+                                      {api.capitalizeFirstLetter(item)}
+                                      {item !==
+                                      plant_details.acf.characteristics.leaflet_divisions
+                                        .slice(-1)
+                                        .pop() ? (
+                                        <span>, &nbsp;</span>
+                                      ) : (
+                                        ""
+                                      )}
+                                    </p>
+                                  </div>
+                                )
+                              )}
                             </div>
                           )}
                           {plant_details.acf.characteristics
