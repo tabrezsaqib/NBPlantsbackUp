@@ -14,7 +14,7 @@ const ConservationRankDetails = ({ plant_id }) => {
     const [isLoading, setLoading] = useState(true)
     const router = useRouter();
     const [page, setPage] = useState(1);
-    const [rowsPerPage, setRowsPerPage] = useState(20);
+    const [rowsPerPage, setRowsPerPage] = useState(50);
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -88,7 +88,14 @@ const ConservationRankDetails = ({ plant_id }) => {
                             labelRowsPerPage="Species Per Page:"
                             rowsPerPageOptions={[20, 50, 100]}
                             onRowsPerPageChange={handleChangeRowsPerPage}
-                            sx={{ padding: 0 }}
+                            sx={{ padding: 0,
+                                '& .MuiTablePagination-displayedRows': {
+                                    display: 'none',
+                                },
+                                '& .MuiInputBase-root': {
+                                    marginRight: 0
+                                } 
+                            }}
                         /></div>
                     <div className="site-in-progress">
                         Site in progress. Not all species are available yet.
@@ -98,6 +105,9 @@ const ConservationRankDetails = ({ plant_id }) => {
         .heading {
           font-size: 2rem;
           color: #0e9d47;
+        }
+        .MuiTablePagination-displayedRows{
+            display: none;
         }
         .NoData{
             text-align: center;

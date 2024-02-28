@@ -135,9 +135,10 @@ export const searchByKeyword = (slug) => async (dispatch) => {
       payload: response.data,
     })
   } else {
+    let sorted =  response.data.sort((a, b) => a.acf.latin.localeCompare(b.acf.latin))
     dispatch({
       type: types.GET_SEARCH_RESULTS,
-      payload: response.data,
+      payload: sorted,
     })
   }
 }

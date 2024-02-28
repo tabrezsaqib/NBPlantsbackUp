@@ -63,7 +63,6 @@ const SearchResults = ({ search_results }) => {
     // dispatch(fetchPlantPost)
   }
 
-  console.log(search_results)
 
   return (
     <>
