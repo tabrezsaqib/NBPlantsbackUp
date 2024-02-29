@@ -16,7 +16,7 @@ const PlantItem = ({ plant }) => {
             src={
               plant.acf.gallery_view_image !== undefined && plant.acf.gallery_view_image
               ? plant.acf.gallery_view_image.url
-                : "../images/no_result_found.png"
+                : "../../images/no_result_found.png"
             }
             alt="" onContextMenu={(e)=>e.preventDefault()}
           />
