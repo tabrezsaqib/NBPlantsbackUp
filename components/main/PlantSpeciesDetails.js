@@ -95,7 +95,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
               <div className={styles.intro_media_mobile}>
                 <div className="d-flex justify-content-between">
                   <span>&nbsp;</span>
-                  <a className="d-flex back-arrow" onClick={() => refresh()}>
+                  <a className="d-flex back-arrow" onClick={() => router.back()}>
                     <h4>
                       <i className="bi bi-arrow-left"></i>
                     </h4>
@@ -399,7 +399,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
               <div className={styles.intro_media_desktop}>
                 <div className="d-flex justify-content-between">
                   <span>&nbsp;</span>
-                  <a className="d-flex back-arrow" onClick={() => refresh()}>
+                  <a className="d-flex back-arrow" onClick={() => router.back()}>
                     <h4>
                       <i className="bi bi-arrow-left"></i>
                     </h4>
