@@ -1,6 +1,7 @@
 import * as types from "../types"
 const initialState = {
   all_plants: [],
+  group_by_c_rank: [],
   woody_plants: [],
   ferns: [],
   grass_like_plants: [],
@@ -13,7 +14,9 @@ const initialState = {
   woody_plants_count: 0,
   popoverData: [],
   popoverStatus: false,
-  plantFamily: []
+  plantFamily: [],
+  plantsError:false,
+  searchError: false
 }
 export const getPlantsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -21,26 +24,43 @@ export const getPlantsReducer = (state = initialState, action) => {
       return {
         ...state,
         all_plants: action.payload,
+        plantsError: false
+      }
+    case types.IS_ERROR:
+      return {
+        ...state,
+        plantsError: true,
+        isLoading: false,
+      }
+    case types.IS_ERROR_SEARCH:
+      return {
+        ...state,
+        searchError: true,
+        isLoading: false,
       }
     case types.GET_NONWOODY_PLANTS:
       return {
         ...state,
         nonwoody_plants: action.payload,
+        plantsError: false
       }
     case types.GET_WOODY_PLANTS:
       return {
         ...state,
         woody_plants: action.payload,
+        plantsError: false
       }
     case types.GET_FERNS_DATA:
       return {
         ...state,
         ferns: action.payload,
+        plantsError: false
       }
     case types.GET_GRASS_LIKE_PLANTS:
       return {
         ...state,
         grass_like_plants: action.payload,
+        plantsError: false
       }
     case types.GET_PLANT:
       return {
@@ -51,11 +71,13 @@ export const getPlantsReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoading: action.payload,
+        plantsError: false
       }
     case types.GET_SEARCH_RESULTS:
       return {
         ...state,
         search_results: action.payload,
+        searchError: false
       }
     case types.GET_ALL_PLANTS_COUNT:
       return {

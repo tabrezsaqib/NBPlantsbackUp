@@ -7,6 +7,7 @@ import { useRouter } from "next/router"
 import Router from "next/router"
 import ReactHtmlParser from "react-html-parser"
 import styles from "../../styles/Global.module.scss"
+import BrokenPageAlert from "../../generics/brokenPageAlert";
 
 
 import Header from "../layouts/Header"
@@ -88,7 +89,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
     <Header />
     <Navbar />
     <div className="mt-3">
-      {plant_details.length !== 0 ? (
+      {plant_details? (
         <div className="row" key={plant_details.id}>
           <div className="col-lg-3" style={{borderRight: '1px solid #e0e1e3'}}> 
             <div className="side-bar">
@@ -183,13 +184,13 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                   <div className="col-sm-12 col-md-12 col-lg-12 col-xl-6">
                     <div
                       className={
-                        plant_details.featured_image.image_url !== null
+                        plant_details.featured_image.image_url !== false || plant_details.featured_image.image_url !== null
                           ? "featured-image"
                           : "featured-image disable-pointer-events"
                       }
                       data-bs-toggle="modal"
                       data-bs-target="#featured-image">
-                      {plant_details.featured_image.image_url == null ? (
+                      {plant_details.featured_image.image_url == false || plant_details.featured_image.image_url == null ? (
                         <div className="d-flex flex-column text-center stock-img-container">
                           <img src="../../images/no_result_found.png" alt="" onContextMenu={(e)=>e.preventDefault()} />
                           <span>Oops! No images found!</span>
@@ -534,37 +535,63 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                   </div>
                 )}
                 <div className="d-flex">
-                  {plant_details.acf.characteristics.habitat.length !== 0 && (
-                    <div className="d-flex">
-                      <p>
-                        <strong>Habitat: &nbsp;</strong>
-                      </p>
-                      {plant_details.acf.characteristics.habitat.map(
-                        (item, index) => (
-                          <div className="d-flex" key={index}>
-                            <p>
-                              {api.capitalizeFirstLetter(item)}
-                              {item !==
-                              plant_details.acf.characteristics.habitat
-                                .slice(-1)
-                                .pop() ? (
-                                <span>, &nbsp;</span>
-                              ) : (
-                                ""
-                              )}
-                            </p>
+                    {plant_details.acf.characteristics.habitat ?
+                      plant_details.acf.characteristics.habitat.length !== 0 ?
+                        <div className="d-flex">
+                          <p>
+                            <strong>Habitat: &nbsp;</strong>
+                          </p>
+                          {plant_details.acf.characteristics.habitat.map(
+                            (item, index) => (
+                              <div className="d-flex" key={index}>
+                                <p>
+                                  {api.capitalizeFirstLetter(item)}
+                                  {item !==
+                                    plant_details.acf.characteristics.habitat
+                                      .slice(-1)
+                                      .pop() ? (
+                                    <span>, &nbsp;</span>
+                                  ) : (
+                                    ""
+                                  )}
+                                </p>
+                              </div>
+                            )
+                          )}
+
+                          {plant_details.acf.characteristics.habitat_description && (
+                            <div className="d-flex">
+                              <span>&#x3B;&nbsp;</span>
+                              {plant_details.acf.characteristics.habitat_description}
+                            </div>
+                          )}
+                        </div> :
+                        <div className="d-flex">
+                          <p>
+                            <strong>Habitat: &nbsp;</strong>
+                          </p>
+                          {plant_details.acf.characteristics.habitat_description && (
+                            <div className="d-flex">
+                              {plant_details.acf.characteristics.habitat_description}
+                            </div>
+                          )
+                          }
+                        </div>
+                      :
+                      <div className="d-flex">
+                        <p>
+                          <strong>Habitat: &nbsp;</strong>
+                        </p>
+                        {plant_details.acf.characteristics.habitat_description && (
+                          <div className="d-flex">
+                            {plant_details.acf.characteristics.habitat_description}
                           </div>
                         )
-                      )}
-                    </div>
-                  )}
-                  <span>&#x3B;&nbsp;</span>
-                  {plant_details.acf.characteristics.habitat_description && (
-                    <div className="d-flex">
-                      {plant_details.acf.characteristics.habitat_description}
-                    </div>
-                  )}
-                </div>
+                        }
+                      </div>
+                    }
+                  </div>
+
                 {plant_details.acf.characteristics.growth_form
                           .length !== 0 && (
                             <div className="d-flex label-value-section">
@@ -1276,13 +1303,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
           </div>
         </div>
       ) : (
-        <div className="row">
-          <div className="col-lg-12 d-flex align-items-center justify-content-center">
-            <div className="loader d-flex align-items-center">
-              <img src="../../images/loading.gif" alt="loader" />
-            </div>
-          </div>
-        </div>
+        <div style={{ margin: '5% 0 20% 0', padding: '0 5%' }}> <BrokenPageAlert /> </div>
       )}
       <style jsx>{`
         .heading {

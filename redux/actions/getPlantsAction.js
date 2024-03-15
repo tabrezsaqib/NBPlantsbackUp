@@ -4,15 +4,21 @@ const API_URL = process.env.API_URL
 const SEARCH_URL = process.env.SEARCH_URL
 
 export const fetchAllPlantPosts = () => async (dispatch) => {
-  const response = await api.get(`${API_URL}plants_db`)
-  dispatch({
-    type: types.GET_ALL_PLANTS,
-    payload: response.data,
-  })
-  dispatch({
-    type: types.IS_LOADING,
-    payload: false,
-  })
+  try {
+    const response = await api.get(`${API_URL}plants_db`)
+    dispatch({
+      type: types.GET_ALL_PLANTS,
+      payload: response.data,
+    })
+    dispatch({
+      type: types.IS_LOADING,
+      payload: false,
+    })
+  } catch (error) {
+    dispatch({
+      type: types.IS_ERROR,
+    })
+  }
 }
 
 export const setLoader = () => async (dispatch) => {
@@ -23,59 +29,89 @@ export const setLoader = () => async (dispatch) => {
 }
 
 export const fetchNonWoodyPlantPosts = (type) => async (dispatch) => {
-  const response = await api.get(`${API_URL}plants_db?plant_type=${type}`)
-  dispatch({
-    type: types.GET_NONWOODY_PLANTS,
-    payload: response.data,
-  })
-  dispatch({
-    type: types.IS_LOADING,
-    payload: false,
-  })
+  try {
+    const response = await api.get(`${API_URL}plants_db?plant_type=${type}`)
+    dispatch({
+      type: types.GET_NONWOODY_PLANTS,
+      payload: response.data,
+    })
+    dispatch({
+      type: types.IS_LOADING,
+      payload: false,
+    })
+  } catch (error) {
+    dispatch({
+      type: types.IS_ERROR,
+    })
+  }
 }
 
 export const fetchWoodyPlantPosts = (type) => async (dispatch) => {
-  const response = await api.get(`${API_URL}plants_db?plant_type=${type}`)
-  dispatch({
-    type: types.GET_WOODY_PLANTS,
-    payload: response.data,
-  })
-  dispatch({
-    type: types.IS_LOADING,
-    payload: false,
-  })
+  try {
+    const response = await api.get(`${API_URL}plants_db?plant_type=${type}`)
+    dispatch({
+      type: types.GET_WOODY_PLANTS,
+      payload: response.data,
+    })
+    dispatch({
+      type: types.IS_LOADING,
+      payload: false,
+    })
+  } catch (error) {
+    dispatch({
+      type: types.IS_ERROR,
+    })
+  }
 }
 
 export const fetchFernPosts = (type) => async (dispatch) => {
-  const response = await api.get(`${API_URL}plants_db?plant_type=${type}`)
-  dispatch({
-    type: types.GET_FERNS_DATA,
-    payload: response.data,
-  })
-  dispatch({
-    type: types.IS_LOADING,
-    payload: false,
-  })
+  try {
+    const response = await api.get(`${API_URL}plants_db?plant_type=${type}`)
+    dispatch({
+      type: types.GET_FERNS_DATA,
+      payload: response.data,
+    })
+    dispatch({
+      type: types.IS_LOADING,
+      payload: false,
+    })
+  } catch (error) {
+    dispatch({
+      type: types.IS_ERROR,
+    })
+  }
 }
 
 export const fetchGrassLikePosts = (type) => async (dispatch) => {
-  const response = await api.get(`${API_URL}plants_db?plant_type=${type}`)
-  dispatch({
-    type: types.GET_GRASS_LIKE_PLANTS,
-    payload: response.data,
-  })
-  dispatch({
-    type: types.IS_LOADING,
-    payload: false,
-  })
+  try {
+    const response = await api.get(`${API_URL}plants_db?plant_type=${type}`)
+    dispatch({
+      type: types.GET_GRASS_LIKE_PLANTS,
+      payload: response.data,
+    })
+    dispatch({
+      type: types.IS_LOADING,
+      payload: false,
+    })
+  } catch (error) {
+    dispatch({
+      type: types.IS_ERROR,
+    })
+  }
 }
 
 export const fetchPlantPost = (id) => async (dispatch) => {
-  const response = await api.get(`${API_URL}plants_db/${id}`)
-  dispatch({
-    type: types.GET_PLANT,
-    payload: response.data,
-  })
+  try {
+    const response = await api.get(`${API_URL}plants_db/${id}`)
+    dispatch({
+      type: types.GET_PLANT,
+      payload: response.data,
+    })
+  } catch (error) {
+    dispatch({
+      type: types.IS_ERROR,
+    })
+  }
 }
 
 export const toggleLoader = (option) => async (dispatch) => {
@@ -127,18 +163,24 @@ export const setPlantFamilyDetails = (data) => async (dispatch) => {
 }
 export const searchByKeyword = (slug) => async (dispatch) => {
   const response = await api.get(`${API_URL}plants_db_search?plant_type=${slug}`);
- /// const filtered = response.data.filter((res) => res.acf.plantsnb_id === char.replace(/\s+/g, ""))
+  /// const filtered = response.data.filter((res) => res.acf.plantsnb_id === char.replace(/\s+/g, ""))
   // const filteredRes = response.data.filter((data) => data.acf.common_name && (data.acf.family_english.indexOf(slug) !== -1))
-  if (response == null) {
+  try {
+    if (response == null) {
+      dispatch({
+        type: types.GET_SEARCH_RESULTS,
+        payload: response.data,
+      })
+    } else {
+      let sorted = response.data.sort((a, b) => a.acf.latin.localeCompare(b.acf.latin))
+      dispatch({
+        type: types.GET_SEARCH_RESULTS,
+        payload: sorted,
+      })
+    }
+  } catch (error) {
     dispatch({
-      type: types.GET_SEARCH_RESULTS,
-      payload: response.data,
-    })
-  } else {
-    let sorted =  response.data.sort((a, b) => a.acf.latin.localeCompare(b.acf.latin))
-    dispatch({
-      type: types.GET_SEARCH_RESULTS,
-      payload: sorted,
+      type: types.IS_ERROR_SEARCH,
     })
   }
 }

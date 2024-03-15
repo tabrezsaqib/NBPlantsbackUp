@@ -3,13 +3,14 @@ import { connect, useDispatch } from "react-redux"
 import { useRouter } from "next/router"
 import { fetchNonWoodyPlantPosts, fetchWoodyPlantPosts, fetchFernPosts, fetchAllPlantPosts, setLoader } from "../../redux/actions/getPlantsAction"
 import TablePagination from '@mui/material/TablePagination';
+import BrokenPageAlert from "../../generics/brokenPageAlert";
 import ListPlantSpecies from "../main/ListPlantSpecies"
 import SideNav from "../side-nav/SideNav"
 import * as options from "../../data/sideNavListDataArray"
 import styles from "../../styles/Global.module.scss"
 import localstyles from "../../styles/Plants.module.css"
 
-const Plants = ({ all_plants, nonwoody_plants, woody_plants, ferns, isLoading, activeFilterList, allType }) => {
+const Plants = ({ all_plants, nonwoody_plants, woody_plants, ferns, isLoading, activeFilterList, allType, plantsError }) => {
 
   const dispatch = useDispatch()
 
@@ -128,41 +129,43 @@ const Plants = ({ all_plants, nonwoody_plants, woody_plants, ferns, isLoading, a
 
   return (
     <div className="row">
-      <div className="col-lg-3 col-sm-12">
-        <div className={styles.sidebar_view_media}>
-          <a
-            className="d-flex back-arrow"
-            onClick={() => toggleSidebarVisibility()}>
-            <h4> <i className={!sidebarVisibility ? "bi bi-toggle-off align-self-center" : "bi bi-toggle-on"}></i>
-              <span>&nbsp;View Filters</span>
-            </h4>
-          </a>
-          <div className={!sidebarVisibility && styles.toggle_sidebar_view}>
-            <SideNav />
+      {plantsError ?<div style={{margin: '5% 0 20% 0', padding:'0 5%'}}> <BrokenPageAlert /> </div>:
+      <>
+        <div className="col-lg-3 col-sm-12">
+          <div className={styles.sidebar_view_media}>
+            <a
+              className="d-flex back-arrow"
+              onClick={() => toggleSidebarVisibility()}>
+              <h4> <i className={!sidebarVisibility ? "bi bi-toggle-off align-self-center" : "bi bi-toggle-on"}></i>
+                <span>&nbsp;View Filters</span>
+              </h4>
+            </a>
+            <div className={!sidebarVisibility && styles.toggle_sidebar_view}>
+              <SideNav />
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        className={filteredList.length == 0 ? [styles.error_bg_media_query, localstyles.errorBg, "col-lg-9"].join(" ") : "col-lg-9 col-sm-12"}>
-        {/* <h4>Non Woody Plants..</h4> */}
-        <div className="grid-container">
-          <ListPlantSpecies filteredList={filteredList} pg={page} rpg={rowsPerPage} isLoading={isLoading} />
-          {filteredList.length > 0 && <div style={{ float: 'left' }}>
-            <TablePagination
-              component="div"
-              count={filteredList.length}
-              page={page}
-              onPageChange={handleChangePage}
-              rowsPerPage={rowsPerPage}
-              showFirstButton
-              showLastButton
-              labelRowsPerPage="Species Per Page:"
-              rowsPerPageOptions={[20, 50, 100]}
-              onRowsPerPageChange={handleChangeRowsPerPage}
-            />
-          </div>}
-        </div>
-      </div>
+        <div
+          className={filteredList.length == 0 ? [styles.error_bg_media_query, localstyles.errorBg, "col-lg-9"].join(" ") : "col-lg-9 col-sm-12"}>
+          {/* <h4>Non Woody Plants..</h4> */}
+          <div className="grid-container">
+            <ListPlantSpecies filteredList={filteredList} pg={page} rpg={rowsPerPage} isLoading={isLoading} />
+            {filteredList.length > 0 && <div style={{ float: 'left' }}>
+              <TablePagination
+                component="div"
+                count={filteredList.length}
+                page={page}
+                onPageChange={handleChangePage}
+                rowsPerPage={rowsPerPage}
+                showFirstButton
+                showLastButton
+                labelRowsPerPage="Species Per Page:"
+                rowsPerPageOptions={[20, 50, 100]}
+                onRowsPerPageChange={handleChangeRowsPerPage}
+              />
+            </div>}
+          </div>
+        </div></>}
     </div>
   )
 }
@@ -178,6 +181,7 @@ const mapStateToProps = (state) => {
     activeFilterList: state.selector.activeFilterList,
     allType: state.selector,
     plant_type: state.selector.plant_type,
+    plantsError: state.post.plantsError
   }
 }
 

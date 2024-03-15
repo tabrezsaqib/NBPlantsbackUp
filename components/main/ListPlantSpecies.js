@@ -8,6 +8,7 @@ import loaderStyles from "../../styles/Loader.module.scss"
 import LoaderThumbnail from "./LoaderThumbnail"
 import SelectedFilter from "./selectedFilter"
 import { useEffect, useState } from "react"
+import { Alert, AlertTitle } from "@mui/material"
 
 const ListPlantSpecies = ({
   activeFilterList,
@@ -32,6 +33,7 @@ const ListPlantSpecies = ({
         {filteredListSorted.length > 0 ? (
           ((rpg && pg >= 0) ? filteredListSorted.slice(pg * rpg, pg * rpg + rpg) : filteredListSorted).map((data, index) => {
             return (
+            data ?
               <div
                 key={data.id}
                 className={[
@@ -47,7 +49,12 @@ const ListPlantSpecies = ({
                     <PlantSpecies plant={data} />
                   </a>
                 </Link>
-              </div>
+              </div> :
+                <div>
+                <Alert severity="error" >
+                <AlertTitle>Plant Not Found </AlertTitle>
+            </Alert>
+                </div>
             )
           })
         ) : isLoading == true ? (

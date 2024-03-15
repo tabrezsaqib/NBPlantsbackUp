@@ -10,8 +10,9 @@ import SearchFormValidate from "./SearchFormValidate"
 import * as localStore from "../../generics/localStore"
 import styles from "../../styles/SearchResults.module.css"
 import TablePagination from '@mui/material/TablePagination';
+import BrokenPageAlert from "../../generics/brokenPageAlert";
 
-const SearchResults = ({ search_results }) => {
+const SearchResults = ({ search_results, searchError }) => {
 
   const [hasSearchKeyword, setHasSearchKeyWord] = useState(false)
   const [isLoading, setLoading] = useState(true)
@@ -65,7 +66,7 @@ const SearchResults = ({ search_results }) => {
 
 
   return (
-    <>
+    <>{searchError? <div style={{margin: '5% 0 20% 0', padding:'0 5%'}}> <BrokenPageAlert /> </div> : <>
       <div>
         <span className="breadcrumb">
           {hasSearchKeyword && search_results.length > 0 && `${search_results.length} results found for ${router.query.keyword}`}
@@ -133,13 +134,14 @@ const SearchResults = ({ search_results }) => {
           onRowsPerPageChange={handleChangeRowsPerPage}
           sx={{ padding: 0 }}
         /></div>}
-    </>
+    </>}</>
   )
 }
 
 const mapStateToProps = (state) => {
   return {
     search_results: state.post.search_results,
+    searchError: state.post.searchError,
   }
 }
 export default connect(mapStateToProps)(SearchResults)
