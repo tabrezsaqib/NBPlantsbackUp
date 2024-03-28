@@ -1,39 +1,31 @@
-/* eslint-disable @next/next/no-img-element */
-/* eslint-disable @next/next/no-html-link-for-pages */
-import Router from "next/router"
-import SearchForm from "../search/SearchForm"
-import { useDispatch } from "react-redux"
-import { togglePagination } from "../../redux/actions/paginationAction"
-import React, {Component} from "react"
-import styles from "../../styles/Navbar.module.css"
-import Link from "next/link"
-import { fetchAllPlantPosts } from "../../redux/actions/getPlantsAction"
-import { useEffect } from "react";
-import { useSelector } from "react-redux";
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable camelcase */
 
-const Navbar = () => {
+import { useDispatch, useSelector } from "react-redux"
+import React, { useEffect } from "react"
+import Link from "next/link"
+import styles from "../../styles/Navbar.module.css"
+import { fetchAllPlantPosts } from "../../redux/actions/getPlantsAction"
+
+
+import SearchForm from "../search/SearchForm"
+
+function Navbar() {
   const dispatch = useDispatch()
   const { all_plants } = useSelector(state => state.post)
 
   useEffect(() => {
     if (all_plants.length <= 0)
       dispatch(fetchAllPlantPosts())
+      // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const refresh = () => {
-    localStorage.setItem("route", "all")
-    dispatch(togglePagination(true))
-    Router.push({
-      pathname: "/plants",
-      query: { type: "all" },
-    }).then(() => {
-      Router.reload()
-    })
-  }
+
   return (
     <div>
       <nav className={[styles.navContainer, "navbar", "navbar-expand-lg", "fixed-top", "navbar-light", "bg-light"].join(" ")}>
         <div className="container-fluid">
+
           <Link href="/home" as="/home" legacyBehavior>
             <a className="navbar-brand">
               <div className={[styles.logoContainer, "logo-container"].join(" ")}>
@@ -53,7 +45,7 @@ const Navbar = () => {
             aria-controls="navbarScroll"
             aria-expanded="false"
             aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon" />
           </button>
           <div
             className="collapse navbar-collapse justify-content-end"

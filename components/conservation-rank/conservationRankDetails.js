@@ -1,16 +1,19 @@
-/* eslint-disable @next/next/no-img-element */
+/* eslint-disable camelcase */
+/* eslint-disable react/no-unknown-property */
+/* eslint-disable no-nested-ternary */
+
 import React, { useEffect, useState } from "react";
-import * as api from "../../generics/api";
 import { useRouter } from 'next/router'
-import ListPlantSpecies from '../main/ListPlantSpecies'
-import styles from "../../styles/SearchResults.module.css"
 import TablePagination from '@mui/material/TablePagination';
 import { useSelector } from "react-redux";
+import * as api from "../../generics/api";
+import ListPlantSpecies from '../main/ListPlantSpecies'
+import styles from "../../styles/SearchResults.module.css"
 import BrokenPageAlert from "../../generics/brokenPageAlert";
 
-const SEARCH_URL = process.env.SEARCH_URL
 
-const ConservationRankDetails = ({ plant_id }) => {
+
+function ConservationRankDetails() {
     const [plantFamily, setPlantFamily] = useState([]);
     const [isLoading, setLoading] = useState(true)
     const [isError, setIsError] = useState(false)
@@ -20,7 +23,6 @@ const ConservationRankDetails = ({ plant_id }) => {
     const { all_plants } = useSelector(state => state.post)
 
     const handleChangePage = (event, newPage) => {
-       // document.querySelector('.mdl-layout__content').scrollTop = 0;
        setPage(newPage);
     };
 
@@ -28,6 +30,22 @@ const ConservationRankDetails = ({ plant_id }) => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
+
+    const fetchDetails = async (char) => {
+        setLoading(true)
+        const arr = []
+        try {
+            // eslint-disable-next-line no-plusplus
+            for (let i = 0; i < all_plants.length; i++) {
+                if (all_plants[i].acf.conservation_rank.includes(char))
+                    arr.push(all_plants[i])
+            }
+        } catch (error) {
+            setIsError(true)
+        }
+        setLoading(false)
+        setPlantFamily(arr)
+    }
 
     useEffect(() => {
         async function fetch() {
@@ -39,23 +57,6 @@ const ConservationRankDetails = ({ plant_id }) => {
         fetch()
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [router, router.isReady, router.query.keyword])
-
-    const fetchDetails = async (char) => {
-        setLoading(true)
-        let arr = []
-        try {
-            for (let i = 0; i < all_plants.length; i++) {
-                if (all_plants[i].acf.conservation_rank.includes(char))
-                    arr.push(all_plants[i])
-            }
-        } catch (error) {
-            setIsError(true)
-        }
-        // const response = await api.get(`${SEARCH_URL}search?keyword=${char}&per_page=${rpg}&page=${pg}`)
-        setLoading(false)
-        // const filtered = response.data.filter((res) => { console.log(res.acf.conservation_rank); if (res.acf.conservation_rank) return res.acf.conservation_rank.includes(char) })
-        setPlantFamily(arr)
-    }
 
     const formatCase = (data) => {
         if (data.search('sna') >= 0 || data.search('Sna') >= 0) {
@@ -77,14 +78,13 @@ const ConservationRankDetails = ({ plant_id }) => {
                 </div>) :  isError ? <div style={{ margin: '5% 15% 20%' }}><BrokenPageAlert />  </div> :
                 plantFamily.length > 0 ?
                 <div style={{ margin: '10px' }}>
-                    <>
                         <div className="d-flex flex-column mt-2">
                             <div className="d-flex">
                                 <h2 className="heading">
                                     <i>{api.capitalizeFirstLetter(formatCase(capitalizeAfterColon(router.query.keyword)))}</i>
                                 </h2>
                             </div>
-                        </div> </>
+                        </div>
                     {plantFamily.length > 0 ?
                         <ListPlantSpecies filteredList={plantFamily} pg={page} rpg={rowsPerPage} isLoading={isLoading} /> :
                         <div className="NoData">No Data. Site in progress. Not all species are available yet.</div>}

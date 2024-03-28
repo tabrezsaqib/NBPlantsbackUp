@@ -1,27 +1,23 @@
-import * as localStore from "./localStore"
 import jwt from "jsonwebtoken"
+import * as localStore from "./localStore"
 export default class AuthService {
   loggedIn = () => {
     // Checks if there is a saved token and it's still valid
-    let token = localStore.getToken()
+    const token = localStore.getToken()
     return !!token && !this.isTokenExpired(token)
   }
 
+  // eslint-disable-next-line class-methods-use-this
   logOut = () => {
     localStore.removeItem()
   }
 
-  // getTokenExpirationDate = (token) => {
-  //   if (!token.expiry) return null
-  //   const date = new Date(0)
-  //   date.setUTCSeconds(token.expiry)
-  //   return date
-  // }
-
+  // eslint-disable-next-line class-methods-use-this
   isTokenExpired(token) {
     let isExpired = false
-    var decodedToken = jwt.decode(token, { complete: true })
-    var dateNow = new Date()
+    const decodedToken = jwt.decode(token, { complete: true })
+    const dateNow = new Date()
+    // eslint-disable-next-line no-unused-vars
     if (decodedToken.exp < dateNow.getTime()) isExpired = true
 
     return false

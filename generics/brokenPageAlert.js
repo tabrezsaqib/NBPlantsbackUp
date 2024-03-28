@@ -1,3 +1,4 @@
+/* eslint-disable no-irregular-whitespace */
 import Alert from '@mui/material/Alert';
 import { AlertTitle } from "@mui/material";
 

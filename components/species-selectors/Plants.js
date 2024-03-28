@@ -78,6 +78,7 @@ const Plants = ({ all_plants, nonwoody_plants, woody_plants, ferns, isLoading, a
     } catch (error) {
       console.log(error.message)
     }
+    // eslint-disable-next-line react-hooks/exhaustiv
   }, [activeFilterList])
 
 
@@ -121,6 +122,7 @@ const Plants = ({ all_plants, nonwoody_plants, woody_plants, ferns, isLoading, a
       }
     }
     fetch()
+    // eslint-disable-next-line react-hooks/exhaustiv
   }, [allType, woody_plants, ferns, all_plants, nonwoody_plants, router, activeFilterList])
 
   const toggleSidebarVisibility = () => {

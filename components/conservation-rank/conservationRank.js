@@ -1,23 +1,25 @@
-/* eslint-disable @next/next/no-img-element */
+/* eslint-disable react/no-unknown-property */
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable no-plusplus */
+/* eslint-disable camelcase */
+
 import React, { useEffect, useState } from "react";
 import Router from "next/router"
+import { useSelector } from "react-redux";
 import styles from "../../styles/SearchResults.module.css"
 import * as api from "../../generics/api"
-import { useSelector } from "react-redux";
 
 
-const ConservationRank = () => {
+function ConservationRank() {
     const [plantFamily, setPlantFamily] = useState({});
     const [isLoading, setLoading] = useState(true)
     const { all_plants } = useSelector(state => state.post)
     
-    useEffect(() => {
-        if (all_plants.length > 0)
-            fetchDetails();
-    }, [all_plants])
 
     const fetchDetails = async () => {
-        let arr = []
+        const arr = []
         for (let i = 0; i < all_plants.length; i++) {
             arr.push(...all_plants[i].acf.conservation_rank)
         }
@@ -36,13 +38,18 @@ const ConservationRank = () => {
             })
         }
     }
+    useEffect(() => {
+        if (all_plants.length > 0)
+            fetchDetails();
+
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [all_plants])
 
     const formatCase = (data) => {
         if (data.search('sna') >= 0 || data.search('Sna') >= 0) {
             return data.replace(/sna/ig, 'SNA')
-        } else {
-            return data
         }
+            return data
     }
 
     const capitalizeAfterColon = (inputString) => {

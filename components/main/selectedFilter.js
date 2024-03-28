@@ -1,3 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable consistent-return */
+/* eslint-disable array-callback-return */
+/* eslint-disable import/namespace */
+/* eslint-disable react/no-unknown-property */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable no-undef */
+/* eslint-disable no-case-declarations */
+/* eslint-disable camelcase */
 import * as React from 'react';
 import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
@@ -39,9 +49,37 @@ export default function SelectedFilter() {
     const dispatch = useDispatch();
 
     const [listOfSelector, setListOfSelector] = React.useState({})
+    const handleClearAll = () => {
+        dispatch(togglePlantTypeData(new Array(options.plant_type.length).fill(false)))
+        dispatch(toggleTypeData(new Array(options.type.length).fill(false)))
+        dispatch(toggleFlowerPetalColorData(new Array(options.flower_colour.length).fill(false)))
+        dispatch(toggleFruitColor(new Array(options.fruit_color.length).fill(false)))
+        dispatch(toggleFruits(new Array(options.fruit_type.length).fill(false)))
+        dispatch(toggleGrowthForm(new Array(options.growth_form.length).fill(false)))
+        dispatch(toggleHabitatData(new Array(options.habitat.length).fill(false)))
+        dispatch(toggleInflorescence(new Array(options.inflorescence.length).fill(false)))
+        dispatch(toggleLeafArrangementData(new Array(options.leaf_arrangement.length).fill(false)))
+        dispatch(toggleLeafBladeEdgesData(new Array(options.leaf_blade_edges.length).fill(false)))
+        dispatch(toggleLeafDuration(new Array(options.leaf_duration.length).fill(false)))
+        dispatch(toggleLeafShapeData(new Array(options.leaf_shape.length).fill(false)))
+        dispatch(toggleLeafTypeData(new Array(options.leaf_type.length).fill(false)))
+        dispatch(toggleLeafletDivisions(new Array(options.leaflet_divisions.length).fill(false)))
+        dispatch(toggleLipShape(new Array(options.lip_shape.length).fill(false)))
+        // dispatch(toggleNative(new Array(options.native_or_introduced_or_invasive.length).fill(false)))
+        dispatch(togglePetalSymmetry(new Array(options.petal_symmetry.length).fill(false)))
+        dispatch(toggleSporeCovering(new Array(options.spore_covering.length).fill(false)))
+        dispatch(toggleSporeLocation(new Array(options.spore_location.length).fill(false)))
+        dispatch(toggleSporeShape(new Array(options.spore_shape.length).fill(false)))
+        dispatch(toggleSporeUnderLeaf(new Array(options.spore_under_leaf.length).fill(false)))
+        dispatch(toggleStemsData(new Array(options.stems.length).fill(false)))
+        dispatch(activeFilterData([]))
+    };
+    React.useEffect(() => () => {
+        handleClearAll()
+    }, []);
 
     React.useEffect(() => {
-        let filter = []
+        const filter = []
         Object.entries(allType).map((item) => {
             if (Array.isArray(item[1])) {
                 if (item[1].includes(true)) {
@@ -49,7 +87,7 @@ export default function SelectedFilter() {
                     return item[1].map((data, index) => { if (data === true) filter[item[0]].push({ name: options[item[0]][index], indexx: index }) })
                 }
             }
-            return
+
         })
         setListOfSelector(filter)
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -219,42 +257,16 @@ export default function SelectedFilter() {
         }
     }
 
-    const handleClearAll = () => {
-        dispatch(togglePlantTypeData(new Array(options.plant_type.length).fill(false)))
-        dispatch(toggleTypeData(new Array(options.type.length).fill(false)))
-        dispatch(toggleFlowerPetalColorData(new Array(options.flower_colour.length).fill(false)))
-        dispatch(toggleFruitColor(new Array(options.fruit_color.length).fill(false)))
-        dispatch(toggleFruits(new Array(options.fruit_type.length).fill(false)))
-        dispatch(toggleGrowthForm(new Array(options.growth_form.length).fill(false)))
-        dispatch(toggleHabitatData(new Array(options.habitat.length).fill(false)))
-        dispatch(toggleInflorescence(new Array(options.inflorescence.length).fill(false)))
-        dispatch(toggleLeafArrangementData(new Array(options.leaf_arrangement.length).fill(false)))
-        dispatch(toggleLeafBladeEdgesData(new Array(options.leaf_blade_edges.length).fill(false)))
-        dispatch(toggleLeafDuration(new Array(options.leaf_duration.length).fill(false)))
-        dispatch(toggleLeafShapeData(new Array(options.leaf_shape.length).fill(false)))
-        dispatch(toggleLeafTypeData(new Array(options.leaf_type.length).fill(false)))
-        dispatch(toggleLeafletDivisions(new Array(options.leaflet_divisions.length).fill(false)))
-        dispatch(toggleLipShape(new Array(options.lip_shape.length).fill(false)))
-        // dispatch(toggleNative(new Array(options.native_or_introduced_or_invasive.length).fill(false)))
-        dispatch(togglePetalSymmetry(new Array(options.petal_symmetry.length).fill(false)))
-        dispatch(toggleSporeCovering(new Array(options.spore_covering.length).fill(false)))
-        dispatch(toggleSporeLocation(new Array(options.spore_location.length).fill(false)))
-        dispatch(toggleSporeShape(new Array(options.spore_shape.length).fill(false)))
-        dispatch(toggleSporeUnderLeaf(new Array(options.spore_under_leaf.length).fill(false)))
-        dispatch(toggleStemsData(new Array(options.stems.length).fill(false)))
-        dispatch(activeFilterData([]))
-    };
-
     return (
         <div style={{ marginLeft: '10px' }}>
             {activeFilterList.length >= 1 &&
                 <div style={{ marginBottom: '10px', fontSize:'14px' }}> {activeFilterList.length} item(s) selected.
                     <span className='linklike' onClick={handleClearAll} ><b>Clear All</b></span></div>}
             <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap' }}>
-                {Object.keys(listOfSelector).map((option, index) => (
-                    listOfSelector[option].map((name, i) => (
-                        <Chip label={name.name} key={option + "_" + name.name + "_" + name.index} sx={{ textTransform: 'capitalize', mb: '7px' }}
-                            variant="outlined" onDelete={(e) => handleDelete(e, option + "$$" + name.name + "$$" + name.indexx)} />
+                {Object.keys(listOfSelector).map((option) => (
+                    listOfSelector[option].map((name) => (
+                        <Chip label={name.name} key={`${option}_${name.name}_${name.index}`} sx={{ textTransform: 'capitalize', mb: '7px' }}
+                            variant="outlined" onDelete={(e) => handleDelete(e, `${option}$$${name.name}$$${name.indexx}`)} />
                     ))))}
             </Stack>
             <style jsx>
