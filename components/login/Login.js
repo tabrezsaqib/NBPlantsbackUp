@@ -5,9 +5,9 @@ import { adminLogin } from "../../redux/actions/loginAction"
 import AuthService from "../../generics/authService"
 import LoginForm from "./LoginForm"
 
-const Login = ({ user_data }) => {
+function Login() {
   const router = useRouter()
-  const [error, setError] = useState("")
+  const [error] = useState("")
   const auth = new AuthService()
   const isLoggedIn = auth.loggedIn()
   useEffect(() => {
@@ -28,10 +28,8 @@ const Login = ({ user_data }) => {
     </div>
   )
 }
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = (state) => ({
     user_data: state.user.user_data,
-  }
-}
+  })
 
 export default connect(mapStateToProps)(Login)

@@ -1,10 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import styles from "../styles/resources.module.css"
-
+import React from "react";
+import styles from "../styles/about.module.css"
 import Footer from "../components/layouts/Footer";
-import Header from "../components/layouts/Header";
 import Navbar from "../components/layouts/Navbar";
 
 
@@ -12,20 +9,18 @@ import Navbar from "../components/layouts/Navbar";
 const resources = () => {
   return (
     <>
-    <Header />
     <Navbar />
     <div>
-      <div className={styles.resourcesPageContainer}>
-        <iframe 
-        className={styles.resourcesPageContent}
-        src="https://api-v3.newbrunswickplants.ca/resources/">
-        </iframe>
+        <div className={styles.aboutPageContainer}>
+          <iframe
+            className={styles.aboutPageContent}
+            src="https://api-v3.newbrunswickplants.ca/resources/">
+          </iframe>
+        </div>
       </div>
-    </div>
-    <Footer />
+      <Footer isFixed={true} />
   </>
   )
 }
 
 export default resources;
-

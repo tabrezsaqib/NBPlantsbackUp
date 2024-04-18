@@ -2,7 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: "Lato", Droid Sans, Helvetica Neue, sans-serif;
+  font-family: "Lato", Droid Sans, Helvetica Neue, sans-serif!important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   color: #333333;
@@ -93,7 +93,6 @@ p {
 #plant_type .form-check{
   width: 165px; 
 }
-
 #four-column .form-check {
   width: 70px!important;
 }

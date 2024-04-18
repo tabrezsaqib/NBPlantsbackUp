@@ -1,7 +1,8 @@
 import { useState } from "react"
 import styles from "../../styles/LoginForm.module.css"
 
-const LoginForm = ({ login, error }) => {
+// eslint-disable-next-line react/prop-types
+function LoginForm({ login }) {
   const [details, setDetails] = useState({ username: "", password: "" })
 
   const submitHandler = (e) => {
@@ -9,9 +10,8 @@ const LoginForm = ({ login, error }) => {
     login(details)
   }
   return (
-    <>
-      <div className="row">
-        <div className="col-lg-4"></div>
+    <div className="row">
+        <div className="col-lg-4" />
         <div className="col-lg-4">
           <h2 className="text-center mt-4">Please login as Admin</h2>
           <div className={[styles.formSection, "form-section"].join(" ")}>
@@ -47,9 +47,8 @@ const LoginForm = ({ login, error }) => {
             </form>
           </div>
         </div>
-        <div className="col-lg-4"></div>
+        <div className="col-lg-4" />
       </div>
-    </>
   )
 }
 

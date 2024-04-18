@@ -1,18 +1,15 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable camelcase */
 // import Footer from "./Footer"
-import Footer from "./Footer"
-import Header from "./Header"
+import { connect } from "react-redux"
 import Navbar from "./Navbar"
-import { connect, useDispatch } from "react-redux"
-import { authenticateAction } from '../../redux/actions/authenticateAction';
 
 
-const Layout = ({ children, authentication_state }) => {
-  const dispatch = useDispatch();
+function Layout({ children, authentication_state }) {
   return (
     <>
         {authentication_state?
         <>
-        <Header />
         <Navbar />
         </>
         : null}
@@ -23,10 +20,8 @@ const Layout = ({ children, authentication_state }) => {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
+const mapStateToProps = (state) => ({
     authentication_state: state.authenticate.authentication_state
-  }
-}
+  })
 
 export default connect(mapStateToProps)(Layout);

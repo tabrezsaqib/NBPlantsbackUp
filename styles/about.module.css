@@ -1,33 +1,37 @@
-.aboutPageContainer{
-  position: relative;
- overflow:hidden;
- margin:0;
-  padding-top: 100%;
- }
- .aboutPageContent{
-   position: absolute;
-   top:0;
-   border: 0;
-   margin:0;
-   left:0;
-   width: 100%;
-   height:100%;
-   
- }
- @media screen and (min-width: 1200px){
-   .aboutPageContainer{
-     position: relative;
-     margin:0;
-     padding-top: 57%;
-    }
-    .aboutPageContent{
-      position: absolute;
-      top:0;
-      border: 0;
-      margin:0;
-      left:0;
-      width: 100%;
-      height:100%;
-      
-    }
-   }
+.aboutPageContainer {
+  overflow: hidden;
+  margin: 0;
+}
+
+.aboutPageContent {
+  top: 0;
+  border: 0;
+  margin: 0;
+  left: 0;
+  width: 100%;
+  height: 40vh;
+
+}
+
+@media screen and (min-width: 800px) {
+  .aboutPageContent {
+    height: 50vh;
+  }
+
+}
+
+@media screen and (min-width: 1200px) {
+  .aboutPageContainer {
+    margin: 0;
+  }
+
+  .aboutPageContent {
+    top: 0;
+    border: 0;
+    margin: 0;
+    left: 0;
+    width: 100%;
+    height: 60vh
+
+  }
+}

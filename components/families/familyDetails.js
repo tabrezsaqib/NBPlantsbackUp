@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-use-before-define */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable camelcase */
 /* eslint-disable react/no-unknown-property */
@@ -6,9 +8,9 @@
 /* eslint-disable react/prop-types */
 
 import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
-import * as api from "../../generics/api";
 import ReactHtmlParser from "react-html-parser"
 import { useRouter } from 'next/router'
+import * as api from "../../generics/api";
 import ListPlantSpecies from '../main/ListPlantSpecies'
 import styles from "../../styles/SearchResults.module.css"
 import BrokenPageAlert from "../../generics/brokenPageAlert";
@@ -87,7 +89,7 @@ function FamilyDetails ({ plant_id }) {
     const [plantFamily, setPlantFamily] = useState([]);
     const [isLoading, setLoading] = useState(true)
     const [isError, setIsError] = useState(false)
-    const router = useRouter()
+    const router = useRouter();
 
     useEffect(() => {
 

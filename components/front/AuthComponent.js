@@ -1,20 +1,20 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable camelcase */
 import React,{useState} from 'react';
 import {useRouter} from 'next/router';
 import { connect, useDispatch } from "react-redux"
 import { authenticateAction } from '../../redux/actions/authenticateAction';
 import styles from "../../styles/AuthComponent.module.css"
 
-const AuthComponent = ({children, authentication_state}) => {
+function AuthComponent({authentication_state}) {
   const dispatch = useDispatch();
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
-    const [authenticated, setAuthenticated] = useState(false);
     const router = useRouter();
 
     const handleLogin = (event) => {
       event.preventDefault();
         if ((userId === 'etflogin' && password === 'vi0L3t0rch1d$') || (userId === 'testguest' && password === 'NbPlants@Year3')){
-            setAuthenticated(true);
             dispatch(authenticateAction(true)).then(() => {
               router.push("/home");
             });
@@ -24,8 +24,7 @@ const AuthComponent = ({children, authentication_state}) => {
     };
     if (!authentication_state){
         return(
-            <>
-            <div className={[styles.loginContainer, "row"].join(" ")}>
+            <div className={[styles.loginContainer].join(" ")}>
                 <h2 className={[styles.loginTitle, "text-center", "mt-4"].join(" ")}>NB Plants Login Page</h2>
                 <div className={[styles.formSection, "form-section"].join(" ")}>
                   <form onSubmit={handleLogin}>
@@ -54,17 +53,14 @@ const AuthComponent = ({children, authentication_state}) => {
                   </form>
                 </div>
               </div>
-          </>
         );
     }
 
     return authentication_state;
-};
-
-const mapStateToProps = (state) => {
-  return {
-    authentication_state: state.authenticate.authentication_state
-  }
 }
+
+const mapStateToProps = (state) => ({
+    authentication_state: state.authenticate.authentication_state
+  })
 
 export default connect(mapStateToProps)(AuthComponent);

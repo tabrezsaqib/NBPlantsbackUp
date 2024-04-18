@@ -2,12 +2,12 @@
 import { connect, useDispatch } from "react-redux"
 import { useRouter } from "next/router"
 import Link from "next/link"
+import { useEffect, useState } from "react"
 import PlantSpecies from "./PlantSpecies"
 import styles from "../../styles/Global.module.scss"
 import loaderStyles from "../../styles/Loader.module.scss"
 import LoaderThumbnail from "./LoaderThumbnail"
 import SelectedFilter from "./selectedFilter"
-import { useEffect, useState } from "react"
 import { Alert, AlertTitle } from "@mui/material"
 
 const ListPlantSpecies = ({
@@ -18,12 +18,14 @@ const ListPlantSpecies = ({
   const loaderDataCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   const [filteredListSorted, setFilteredListSorted] = useState([])
   useEffect(() => {
+    console.log(filteredList)
     const sorted = [...filteredList].sort((a, b) => {
       if (a.title.rendered && b.title.rendered)
         return a.title.rendered.localeCompare(b.title.rendered)
       else
         return a.title.localeCompare(b.title)
     });
+    console.log(sorted)
     setFilteredListSorted(sorted)
   }, [filteredList])
   return (
