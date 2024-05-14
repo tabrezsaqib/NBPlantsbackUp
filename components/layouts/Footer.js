@@ -99,6 +99,11 @@ function Footer({ isFixed }) {
                     <a className={localstyles.footerLink}>Conservation Rank</a>
                   </Link>
                 </li>
+                <li className={localstyles.footerListItem} >
+                  <Link href='/conservationRank' as="/conservationRank" legacyBehavior>
+                    <a className={localstyles.footerLink}>Invasive Plants</a>
+                  </Link>
+                </li>
               </ul>
             </div>
           </div>

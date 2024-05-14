@@ -125,8 +125,11 @@ function FamilyDetails ({ plant_id }) {
                     const filtered = response.data.filter((res) => res.acf.plantsnb_id === char.replace(/\s+/g, ""))
                     return filtered
                 } 
-                    response.data.shift();
-                    setPlantFamily(response.data.length > 0 ? response.data : [])
+                else {
+                    const filtered = response.data.filter((res) => res.acf.plant_family === char.replace(/\s+/g, ""))
+
+                    setPlantFamily(filtered.length > 0 ? filtered : [])
+                }
 
             } catch (error) {
                 setIsError(true)

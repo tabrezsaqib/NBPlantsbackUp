@@ -542,7 +542,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                       ) : ''}
                 {plant_details.acf.characteristics.invasive && (
                   <div className="d-flex label-value-section">
-                    <p>
+                    <p style={{ color: 'red' }}>
                       <strong style={{ color: 'red' }}>Invasive: &nbsp;</strong>
                       {plant_details.acf.characteristics.invasive}
                     </p>
