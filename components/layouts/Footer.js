@@ -101,7 +101,7 @@ function Footer({ isFixed }) {
                 </li>
                 <li className={localstyles.footerListItem} >
                   <Link href='/conservationRank' as="/conservationRank" legacyBehavior>
-                    <a className={localstyles.footerLink}>Invasive Plants</a>
+                    <a className={localstyles.footerLink}>Invasive Species</a>
                   </Link>
                 </li>
               </ul>

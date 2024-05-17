@@ -63,7 +63,7 @@ function ConservationRank() {
                     <img className={styles.imgContent} src="../../images/loading.gif" alt="loader" />
                 </div>) :
                 Object.keys(plantFamily).length > 0 &&
-                <div style={{ margin: '10px', height: '65vh' }}>
+                <div style={{ margin: '10px 10px 50px 10px', height: '65vh' }}>
                     <h2 style={{ textAlign: 'center', marginBottom: '30px' }}>Plants by Conservation Rank</h2>
                     <div className="row " >
                         {plantFamily.map((family, i) => (
@@ -74,7 +74,14 @@ function ConservationRank() {
                                     {api.capitalizeFirstLetter(formatCase(capitalizeAfterColon(family)))}
                                 </span>
                             </div></>))
-                        }</div>
+                        }
+                        <div className="listOfPlants  col-sm-12 col-md-12  col-lg-12">
+                            <span className="invasiveLink"
+                                onClick={() => loadPlantFamily("Invasive")}>
+                                Invasive Species
+                            </span>
+                        </div>
+                     </div>
                 </div>}
             <style jsx>{`
         .familyLink {
@@ -82,7 +89,15 @@ function ConservationRank() {
             font-style: italic;
             font-weight:bold;
             margin-right: 8px;
+            font-size: 23px;
             cursor: pointer
+        }
+        .invasiveLink {
+            color: #0e9d47;
+            font-weight:bold;
+            font-size: 2rem;
+            margin-right: 8px;
+            cursor: pointer;
         }
         .center-align{
             margin-left: 50%;
