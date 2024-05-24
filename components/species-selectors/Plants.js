@@ -50,35 +50,27 @@ const Plants = ({ all_plants, nonwoody_plants, woody_plants, ferns, isLoading, a
           }
           return
         })
-        const filterWithSelector = {}
-        activeFilterList.map((element) => {
-          const listOfSelector = Object.keys(options);
-          for (let i = 0; i < listOfSelector.length; i++) {
-            if (options[listOfSelector[i]].includes(element)) {
-              let type = listOfSelector[i]
-              if (filterWithSelector[type]) filterWithSelector[type].push(element)
-              else filterWithSelector[type] = [element]
-            }
-          }
-        })
+        console.log(filter)
+        let filteredPlants = []
         for (let i = 0; i < Object.keys(filter).length; i++) {
           let element = Object.keys(filter)[i];
-          const filteredPlants = plant_data.filter((item) => {
+          let data = i === 0 ? plant_data : filteredPlants
+          filteredPlants = data.filter((item) => {
             if (element == "plant_type" || element == "type") {
               return filter[element].some(ai => item.acf[element].includes(ai));
             }
             return filter[element].some(ai => item.acf.characteristics[element].includes(ai));
           })
+        }
           console.log(filteredPlants)
           setFilteredList(filteredPlants)
-        }
-      } else {
+        } else {
         return filteredList
       }
     } catch (error) {
       console.log(error.message)
     }
-    // eslint-disable-next-line react-hooks/exhaustiv
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeFilterList])
 
 
@@ -105,7 +97,7 @@ const Plants = ({ all_plants, nonwoody_plants, woody_plants, ferns, isLoading, a
 
       }
       else if (router.query.type == "Non-woody") {
-        if (nonwoody_plants.length === 0) {
+        if (nonwoody_plants.length == 0) {
           await dispatch(setLoader())
           await dispatch(fetchNonWoodyPlantPosts(router.query.type))
         } else {
@@ -122,7 +114,7 @@ const Plants = ({ all_plants, nonwoody_plants, woody_plants, ferns, isLoading, a
       }
     }
     fetch()
-    // eslint-disable-next-line react-hooks/exhaustiv
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allType, woody_plants, ferns, all_plants, nonwoody_plants, router, activeFilterList])
 
   const toggleSidebarVisibility = () => {
