@@ -35,12 +35,24 @@ const Plants = ({ all_plants, nonwoody_plants, woody_plants, ferns, isLoading, a
   const router = useRouter()
 
   const filterPlantsTypeData = useCallback((plant_data) => {
-    console.log(plant_data)
     setPage(0);
     setFilteredList(plant_data)
     try {
       if (activeFilterList.length !== 0) {
         let filter = {}
+        const filterWithSelector = {}
+
+        activeFilterList.map((element) => {
+          const listOfSelector = Object.keys(options);
+          for (let i = 0; i < listOfSelector.length; i++) {
+            if (options[listOfSelector[i]].includes(element)) {
+              let type = listOfSelector[i]
+              if (filterWithSelector[type]) filterWithSelector[type].push(element)
+              else filterWithSelector[type] = [element]
+            }
+          }
+        })
+
         Object.entries(allType).map((item) => {
           if (Array.isArray(item[1])) {
             if (item[1].includes(true)) {
@@ -50,19 +62,18 @@ const Plants = ({ all_plants, nonwoody_plants, woody_plants, ferns, isLoading, a
           }
           return
         })
-        console.log(filter)
+
         let filteredPlants = []
         for (let i = 0; i < Object.keys(filter).length; i++) {
           let element = Object.keys(filter)[i];
           let data = i === 0 ? plant_data : filteredPlants
-          filteredPlants = data.filter((item) => {
+          filteredPlants = data.filter((plant) => {
             if (element == "plant_type" || element == "type") {
-              return filter[element].some(ai => item.acf[element].includes(ai));
+              return filter[element].some(ai => plant.acf[element].includes(ai));
             }
-            return filter[element].some(ai => item.acf.characteristics[element].includes(ai));
+            return filter[element].some(ai => plant.acf.characteristics[element].includes(ai));
           })
         }
-          console.log(filteredPlants)
           setFilteredList(filteredPlants)
         } else {
         return filteredList
