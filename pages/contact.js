@@ -1,28 +1,26 @@
 /* eslint-disable @next/next/no-img-element */
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
 import styles from "../styles/contact.module.css"
-
-
 import Footer from "../components/layouts/Footer";
-import Header from "../components/layouts/Header";
 import Navbar from "../components/layouts/Navbar";
-
+import Head from "next/head";
 
 const contact = () => {
   return (
     <>
-    <Header />
-    <Navbar />
-    <div>
-      <div className={styles.contactPageContainer}>
-        <iframe 
-        className={styles.contactPageContent}
-        src="https://api-v3.newbrunswickplants.ca/contact-us/">
-        </iframe>
+      <Head>
+          <title>Contact | New Brunswick Plants</title>
+      </Head>
+      <Navbar />
+      <div>
+        <div className={styles.contactPageContainer}>
+          <iframe 
+          className={styles.contactPageContent}
+          src="https://api-v3.newbrunswickplants.ca/contact-us/">
+          </iframe>
+        </div>
       </div>
-    </div>
-    <Footer />
+      <Footer />
     </>
   )
 }

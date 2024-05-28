@@ -3,22 +3,26 @@ import React from "react";
 import styles from "../styles/about.module.css"
 import Footer from "../components/layouts/Footer";
 import Navbar from "../components/layouts/Navbar";
+import Head from "next/head";
 
 
 
 const resources = () => {
   return (
     <>
-    <Navbar />
-    <div>
-        <div className={styles.aboutPageContainer}>
-          <iframe
-            className={styles.aboutPageContent}
-            src="https://api-v3.newbrunswickplants.ca/resources/">
-          </iframe>
+      <Head>
+          <title>Resources | New Brunswick Plants</title>
+      </Head>
+      <Navbar />
+      <div>
+          <div className={styles.aboutPageContainer}>
+            <iframe
+              className={styles.aboutPageContent}
+              src="https://api-v3.newbrunswickplants.ca/resources/">
+            </iframe>
+          </div>
         </div>
-      </div>
-      <Footer isFixed={true} />
+        <Footer isFixed={true} />
   </>
   )
 }

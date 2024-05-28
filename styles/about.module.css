@@ -9,13 +9,13 @@
   margin: 0;
   left: 0;
   width: 100%;
-  height: 40vh;
+  height: 60vh;
 
 }
 
 @media screen and (min-width: 800px) {
   .aboutPageContent {
-    height: 50vh;
+    height: 60vh;
   }
 
 }
@@ -31,7 +31,7 @@
     margin: 0;
     left: 0;
     width: 100%;
-    height: 60vh
+    height: 70vh
 
   }
 }

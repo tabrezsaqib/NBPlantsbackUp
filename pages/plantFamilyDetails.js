@@ -1,12 +1,14 @@
 import Footer from "../components/layouts/Footer";
-import Header from "../components/layouts/Header";
+import Head from "next/head";
 import Navbar from "../components/layouts/Navbar";
 import FamilyDetails from "../components/families/familyDetails";
 
 const PlantFamilyDetails = () => {
   return (
     <>
-      <Header />
+      <Head>
+        <title>Family Details | New Brunswick Plants</title>
+      </Head>
       <Navbar />
       <FamilyDetails />
       <Footer />

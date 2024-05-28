@@ -1,10 +1,14 @@
 import styles from "../styles/about.module.css"
 import Footer from "../components/layouts/Footer";
 import Navbar from "../components/layouts/Navbar";
+import Head from "next/head";
 
 const about = () => {
   return (
     <>
+      <Head>
+        <title>About | New Brunswick Plants</title>
+      </Head>
       <Navbar />
       <div>
         <div className={styles.aboutPageContainer}>

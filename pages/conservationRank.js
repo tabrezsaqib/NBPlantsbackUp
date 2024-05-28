@@ -1,12 +1,15 @@
 import Footer from "../components/layouts/Footer";
-import Header from "../components/layouts/Header";
 import Navbar from "../components/layouts/Navbar";
 import ConservationRank from "../components/conservation-rank/conservationRank";
+import Head from "next/head";
+
 
 const ConservationRankPage = () => {
     return (
         <>
-            <Header />
+            <Head>
+                <title>Conservation Rank | New Brunswick Plants</title>
+            </Head>
             <Navbar />
             <ConservationRank/>
             <Footer />

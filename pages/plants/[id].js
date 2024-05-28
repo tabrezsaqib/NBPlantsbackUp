@@ -3,6 +3,7 @@ import { useRouter } from "next/router"
 import Router from "next/router"
 import { useDispatch } from "react-redux"
 import PlantSpeciesDetails from "../../components/main/PlantSpeciesDetails"
+import Head from "next/head"
 const API_URL = process.env.API_URL
 
 const PlantsDetails = ({ plant_details }) => {
@@ -15,6 +16,9 @@ const PlantsDetails = ({ plant_details }) => {
   const data = plant_details[0]
   return (
     <div>
+      <Head>
+        <title>Plant Details | New Brunswick Plants</title>
+      </Head>
       <PlantSpeciesDetails plant_details={data} />
     </div>
   )
