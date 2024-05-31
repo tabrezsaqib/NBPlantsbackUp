@@ -10,7 +10,7 @@ const families = () => {
   return (
     <>
       <Head>
-          <title>Families | New Brunswick Plants</title>
+          <title>Families | NB Plants</title>
       </Head>
       <Navbar />
       <div>

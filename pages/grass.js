@@ -43,7 +43,7 @@ const grass = () => {
   return (
     <>
       <Head>
-          <title>Grass | New Brunswick Plants</title>
+          <title>Grass | NB Plants</title>
       </Head>
       <Navbar />
       <div>

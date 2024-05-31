@@ -11,7 +11,7 @@ const resources = () => {
   return (
     <>
       <Head>
-          <title>Resources | New Brunswick Plants</title>
+          <title>Resources | NB Plants</title>
       </Head>
       <Navbar />
       <div>

@@ -7,7 +7,7 @@ const about = () => {
   return (
     <>
       <Head>
-        <title>About | New Brunswick Plants</title>
+        <title>About | NB Plants</title>
       </Head>
       <Navbar />
       <div>

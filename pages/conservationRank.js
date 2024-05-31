@@ -8,7 +8,7 @@ const ConservationRankPage = () => {
     return (
         <>
             <Head>
-                <title>Conservation Rank | New Brunswick Plants</title>
+                <title>Conservation Rank | NB Plants</title>
             </Head>
             <Navbar />
             <ConservationRank/>

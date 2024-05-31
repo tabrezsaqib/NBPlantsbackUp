@@ -13,7 +13,7 @@ export default function home() {
   return (
     <div className={styles.flexContent}>
       <Head>
-        <title>Home | New Brunswick Plants</title>
+        <title>Home | NB Plants</title>
       </Head>
       <Navbar />
       <div className="col-md-12 col-lg-12 " >

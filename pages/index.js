@@ -7,7 +7,7 @@ export default function Index() {
   return (
     <div className={styles.main}>
       <Head>
-        <title>Home | New Brunswick Plants</title>
+        <title>Home | NB Plants</title>
       </Head>
       <div className={styles.selectionArea}>
         <div className="row justify-content-center">

@@ -7,7 +7,7 @@ const search = () => {
   return (
     <>
       <Head>
-          <title>Search | New Brunswick Plants</title>
+          <title>Search | NB Plants</title>
       </Head>
       <Navbar />
       <div className="pt-4">

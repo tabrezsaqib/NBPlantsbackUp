@@ -12,7 +12,7 @@ const admin = () => {
   return (
     <>
     <Head>
-        <title>Admin | New Brunswick Plants</title>
+        <title>Admin | NB Plants</title>
     </Head>
     <Navbar />
     <>

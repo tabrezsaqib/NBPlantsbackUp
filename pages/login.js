@@ -9,7 +9,7 @@ const login = () => {
   return (
 <>
       <Head>
-        <title>Login | New Brunswick Plants</title>
+        <title>Login | NB Plants</title>
       </Head>
     <Navbar />
     <Login />

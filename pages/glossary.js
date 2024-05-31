@@ -11,7 +11,7 @@ function Glossary  () {
   return (
     <>
       <Head>
-          <title>Glossary | New Brunswick Plants</title>
+          <title>Glossary | NB Plants</title>
       </Head>
       <Navbar />
       <div>

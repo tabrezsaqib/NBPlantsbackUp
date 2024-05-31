@@ -17,7 +17,7 @@ const PlantsDetails = ({ plant_details }) => {
   return (
     <div>
       <Head>
-        <title>Plant Details | New Brunswick Plants</title>
+        <title>{plant_details[0].title} | NB Plants</title>
       </Head>
       <PlantSpeciesDetails plant_details={data} />
     </div>

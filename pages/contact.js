@@ -9,7 +9,7 @@ const contact = () => {
   return (
     <>
       <Head>
-          <title>Contact | New Brunswick Plants</title>
+          <title>Contact | NB Plants</title>
       </Head>
       <Navbar />
       <div>
