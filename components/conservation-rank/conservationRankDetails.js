@@ -11,6 +11,7 @@ import ListPlantSpecies from '../main/ListPlantSpecies'
 import styles from "../../styles/SearchResults.module.css"
 import BrokenPageAlert from "../../generics/brokenPageAlert";
 
+
 import ReactHtmlParser from "react-html-parser"
 
 function ClampedDiv({ children }) {

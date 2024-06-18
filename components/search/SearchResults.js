@@ -11,6 +11,7 @@ import * as localStore from "../../generics/localStore"
 import styles from "../../styles/SearchResults.module.css"
 import TablePagination from '@mui/material/TablePagination';
 import BrokenPageAlert from "../../generics/brokenPageAlert";
+import Router from "next/router"
 
 const SearchResults = ({ search_results, searchError }) => {
 
@@ -52,7 +53,14 @@ const SearchResults = ({ search_results, searchError }) => {
   ])
 
   useEffect(() => {
-    if (search_results.length > 0) {
+    if (search_results.length === 1) {
+      Router.push({
+        pathname: `/plants/${search_results[0].slug}`,
+        query: { type: search_results[0].acf.plant_type },
+      }).then(() => {
+      })
+    }
+    else if (search_results.length > 0) {
       setCurrentItems(search_results.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage))
     } else {
       setCurrentItems([])

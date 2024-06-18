@@ -13,7 +13,7 @@ const SideNavPopover = ({ triggerPopUp, popoverData, popoverStatus }) => {
     <div className="d-flex align-self-center">
       <h6
         data-bs-toggle="modal"
-        className={[styles.tooltipPopUp, "tooltipPopUp align-self-center"].join(" ")}
+        className={[styles, "tooltipPopUp align-self-center"].join(" ")}
         data-bs-target="#sideNavPopUp"
         onClick={() => triggerPopUp([], false)}>
         <i className="bi bi-info-circle-fill" />
@@ -22,6 +22,7 @@ const SideNavPopover = ({ triggerPopUp, popoverData, popoverStatus }) => {
       <div
         className="modal fade"
         id="sideNavPopUp"
+        style={{ zIndex: '10600' }}
         tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true">

@@ -8,12 +8,17 @@ import Router from "next/router"
 import ReactHtmlParser from "react-html-parser"
 import styles from "../../styles/Global.module.scss"
 import BrokenPageAlert from "../../generics/brokenPageAlert";
-
+import ErrorOutlineRoundedIcon from '@mui/icons-material/ErrorOutlineRounded';
 
 import Navbar from "../layouts/Navbar"
 import Footer from "../layouts/Footer"
-import { useDispatch } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
+import {
+  getPopoverData,
+  triggerToolTip,
+} from "../../redux/actions/getPlantsAction"
 import FamilyDetails from "../families/familyDetails"
+import { Stack } from "@mui/material"
 
 const PlantSpeciesDetails = ({ plant_details }) => {
   const [slide, setSlide] = useState(false)
@@ -21,6 +26,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
   const slideRef = useRef()
   const router = useRouter()
   const dispatch = useDispatch()
+  const { popoverData, popoverStatus } = useSelector(state => state.post)
   const API_URL = process.env.API_URL
 
   useEffect(() => {
@@ -35,6 +41,10 @@ const PlantSpeciesDetails = ({ plant_details }) => {
       router.beforePopState(() => true);
     };
   }, [router])
+
+  const cancelToolTip = (status) => {
+    dispatch(triggerToolTip(status))
+  }
 
   const slideShow = (index) => {
     setSlide(true)
@@ -79,6 +89,11 @@ const PlantSpeciesDetails = ({ plant_details }) => {
     return inputString.replace(/(:\s*\w)/g, match => match.toUpperCase());
   }
 
+  const triggerPopUp = (status) => {
+    dispatch(triggerToolTip(status))
+    dispatch(getPopoverData('invasive-species', status))
+  }
+
   const refresh = () => {
     let route = localStorage.getItem("route")
     Router.push({
@@ -104,7 +119,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
           <div className="col-lg-3" style={{borderRight: '1px solid #e0e1e3'}}> 
             <div className="side-bar">
               <div className={styles.intro_media_mobile}>
-                <div className="d-flex justify-content-between">
+                <div className="d-flex justify-content-between d-print-none">
                   <span>&nbsp;</span>
                   <a className="d-flex back-arrow" onClick={() => router.back()}>
                     <h4>
@@ -113,31 +128,10 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                     <p>&nbsp;Back to Search</p>
                   </a>
                 </div>
-                <div className="d-flex flex-column mt-2">
-                  <div className="d-flex">
-                    <h2 className="heading">
-                      <strong>{plant_details.acf.common_name}</strong>
-                    </h2>
-                    <h4 className="align-self-center pt-2">
-                      <strong>
-                        <i>
-                          &nbsp;&nbsp;
-                          {`${plant_details.title}`}
-                        </i>
-                      </strong>
-                    </h4>
-                  </div>
-                  {plant_details.acf.synonyms_english && (
-                    <div className="d-flex">
-                      <p>
-                        <strong>Alternate Names: &nbsp;</strong>
-                      </p>
-                      {ReactHtmlParser(plant_details.acf.synonyms_english)}
-                    </div>
-                  )}
-                </div>
+              
               </div>
-              <div className="d-flex flex-wrap">
+              <div className="d-none d-lg-block">
+                <div className="d-flex flex-wrap">
                 {Object.keys(plant_details.acf).includes("image_url") &&
                 plant_details.acf.image_url !== undefined &&
                 plant_details.acf.image_url.length > 0 ? (
@@ -167,7 +161,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                   plant_details.acf.image_url.length > 6 && (
                     <a
                       data-bs-toggle="modal"
-                      className="view-more"
+                      className="view-more d-print-none"
                       data-bs-target="#exampleModal"
                       onClick={() => slideShow(slideIndex)}>
                       View more
@@ -184,14 +178,14 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                   <strong>Unique Characteristics</strong>
                 </p>
                 <div className="row">
-                  <div className="col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                  <div className="col-sm-10 col-md-10 col-lg-12 col-xl-6">
                     <div className="unique-characteristics">
                       {ReactHtmlParser(
                         plant_details.acf.unique_characteristics
                       )}
                     </div>
                   </div>
-                  <div className="col-sm-12 col-md-12 col-lg-12 col-xl-6">
+                  <div className="col-sm-2 col-md-2 col-lg-12 col-xl-6">
                     <div
                       className={
                         plant_details.featured_image.image_url !== false || plant_details.featured_image.image_url !== null
@@ -215,12 +209,11 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                   </div>
                 </div>
               </div>
-<br></br>
-              <div>
+              <br></br>
                   {plant_details.acf.distribution_map_id ? <>
                     <div className="row">
-                    <div className="col-md-12 col-lg-4">  <strong>Distribution </strong></div>
-                    <div className="col-md-12  col-lg-8">
+                    <div className="col-md-3 col-lg-4">  <strong>Distribution </strong></div>
+                    <div className="col-md-3  col-lg-8">
                     <span style={{float:'right', fontSize:'12px' , display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
                       Source: AC CDC, 2023
                         <span style={{ float: 'right', fontSize: '12px', textAlign:'right' }}>
@@ -233,7 +226,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="col-sm-12 col-md-12 col-lg-12 col-xl-12">
+                    <div className="col-sm-6 col-md-6 col-lg-12 col-xl-12">
                       <div
                         className={
                           plant_details.acf.distribution_map_id !== ''
@@ -258,13 +251,46 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                   </div></>:""}
               </div>
               {plant_details.acf.similar_species &&
-                    <div>
+                    <div className="d-none d-lg-block">
                       <br></br>
                       <p><strong>Explore Similar Plants</strong></p>
                       <FamilyDetails plant_id={plant_details.acf.similar_species} />
                       {/* <ListPlantSpecies filteredList={plantFamily} isLoading={isLoading} /> */}
                     </div>
               }
+              <div className="d-flex align-self-center">
+                  <div
+                    style={{ zIndex: '10600' }}
+                    className="modal fade"
+                    id="sideNavPopUp12"
+                    role="dialog"
+                    tabIndex="-1"
+                    aria-labelledby="sideNavPopUpLabel"
+                    aria-hidden="true">
+                    <div className="modal-dialog">
+                      <div className="modal-content">
+                        <div className="modal-header">
+                          <h5 className="modal-title" id="sideNavPopUpLabel">
+                            {
+                              popoverData.length > 0 &&
+                              popoverData[0].acf.glossary_name}
+                          </h5>
+                          <button
+                            type="button"
+                            onClick={() => cancelToolTip(false)}
+                            className="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                        </div>
+                        <div className="modal-body">
+                          {
+                            popoverData.length > 0 &&
+                            ReactHtmlParser(popoverData[0].acf.description)}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               <div
                 style={{ zIndex: '10600' }}
                 className="modal fade"
@@ -298,9 +324,14 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                                         ].full_image_url
                                       })`,
                                     }}></div>
+                                <Stack direction="row" justifyContent='space-between'>
+                                  <p className="img-caption" key={index}>Description: {plant_details.acf.image_url[
+                                      slideIndex || index
+                                    ].title}</p>
                                   <p className="img-caption" key={index}>{plant_details.acf.image_url[
                                       slideIndex || index
                                     ].caption}</p>
+                                </Stack>
                                 </div>
                               ))}
                           </Slide>
@@ -412,7 +443,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                 "content-section",
               ].join(" ")}>
               <div className={styles.intro_media_desktop}>
-                <div className="d-flex justify-content-between">
+                <div className="d-flex justify-content-between d-print-none">
                   <span>&nbsp;</span>
                   <a className="d-flex back-arrow" onClick={() => router.back()}>
                     <h4>
@@ -434,6 +465,14 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                         </i>
                       </strong>
                     </h4>
+                    {plant_details.acf.characteristics.invasive &&    <h6
+                        style={{ margin: '0 8px', cursor: 'pointer' }}
+                        data-bs-toggle="modal"
+                        className={[styles.tooltipPopUp, "tooltipPopUp align-self-center"].join(" ")}
+                        data-bs-target="#sideNavPopUp12"
+                        onClick={() => triggerPopUp(false)}>
+                        <ErrorOutlineRoundedIcon  sx={{color:'white',borderRadius:'40px', backgroundColor:'red'}} />
+                      </h6>}
                   </div>
                   {plant_details.acf.synonyms_english && (
                     <div className="d-flex">
@@ -470,7 +509,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                   {plant_details.acf.family_english?<span>&#x3B;&nbsp;</span> : ""}
                   {plant_details.acf.family_english && (
                     <div className="d-flex">
-                      <span className="familyLink" onClick={() => loadPlantFamily(plant_details.acf.plant_family)}> {ReactHtmlParser(plant_details.acf.family_english)}</span>
+                      <span className="familyEnglish" onClick={() => loadPlantFamily(plant_details.acf.plant_family)}> {ReactHtmlParser(plant_details.acf.family_english)}</span>
                     </div>
                   )}
                 </div>
@@ -509,10 +548,10 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                   ))}
               </div>
 
-              <h4>
+              {/* <h4>
                 <strong>Characteristics</strong>
               </h4>
-              <hr />
+              <hr /> */}
 
               <div className="d-flex flex-column">
               {plant_details.acf.conservation_rank ?
@@ -1292,35 +1331,146 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                   </div>
                 </div>
                )}
-                {/* {plant_details.acf.characteristics.wildlife_benefits && (
-                  <div className="d-flex label-value-section">
-                    <p>
-                      <strong>Wildlife Benefits: &nbsp;</strong>
-                    </p>
-                    {plant_details.acf.characteristics.wildlife_benefits}
-                  </div>
-                )} */}
-                <div className="mb-3">
-                  {/* {plant_details.acf.characteristics.uses && (
-                    <div className="d-flex flex-column">
-                      <p>
-                        <strong>Uses: </strong>
-                      </p>
-                      <div className="rtc-content">
-                        {ReactHtmlParser(plant_details.acf.uses)}
-                      </div>
-                    </div>
-                  )} */}
-                </div>
               </div>
             </div>
+            <div className="d-lg-none d-xl-none d-sm-block d-md-block">
+            <div>
+
+                  <div className="d-flex flex-wrap">
+                    {Object.keys(plant_details.acf).includes("image_url") &&
+                      plant_details.acf.image_url !== undefined &&
+                      plant_details.acf.image_url.length > 0 ? (
+                      plant_details.acf.image_url.slice(0, 6).map((item, index) => (
+                        <div
+                          data-bs-toggle="modal"
+                          key={index}
+                          className={[
+                            styles.img_container_media,
+                            "img-container img-tabs",
+                          ].join(" ")}
+                          data-bs-target="#exampleModal"
+                          onClick={() => slideShow(index)}>
+                          <img src={item.thumbnail_image_url} alt="plant image" onContextMenu={(e) => e.preventDefault()} />
+                        </div>
+                      ))
+                    ) : (
+                      <div className="d-flex flex-column text-center stock-img-container">
+                        <img src="../../images/no_result_found.png" alt="" onContextMenu={(e) => e.preventDefault()} />
+                        <span>Oops! No images found!</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="d-flex justify-content-end mt-2">
+                    {Object.keys(plant_details.acf).includes("image_url") &&
+                      plant_details.acf.image_url.length !== 0 &&
+                      plant_details.acf.image_url.length > 6 && (
+                        <a
+                          data-bs-toggle="modal"
+                          className="view-more d-print-none"
+                          data-bs-target="#exampleModal"
+                          onClick={() => slideShow(slideIndex)}>
+                          View more
+                        </a>
+                      )}
+                  </div>
+                  <div
+                    className={
+                      plant_details.acf.unique_characteristics !== ""
+                        ? "unique-characteristics"
+                        : "hide"
+                    }>
+                    <p>
+                      <strong>Unique Characteristics</strong>
+                    </p>
+                    <div className="row">
+                      <div className="col-sm-10 col-md-10 col-lg-12 col-xl-6">
+                        <div className="unique-characteristics">
+                          {ReactHtmlParser(
+                            plant_details.acf.unique_characteristics
+                          )}
+                        </div>
+                      </div>
+                      <div className="col-sm-2 col-md-2 col-lg-12 col-xl-6">
+                        <div
+                          className={
+                            plant_details.featured_image.image_url !== false || plant_details.featured_image.image_url !== null
+                              ? "featured-image"
+                              : "featured-image disable-pointer-events"
+                          }
+                          data-bs-toggle="modal"
+                          data-bs-target="#featured-image">
+                          {plant_details.featured_image.image_url == false || plant_details.featured_image.image_url == null ? (
+                            <div className="d-flex flex-column text-center stock-img-container">
+                              <img src="../../images/no_result_found.png" alt="" onContextMenu={(e) => e.preventDefault()} />
+                              <span>Oops! No images found!</span>
+                            </div>
+                          ) : (
+                            <img
+                              src={plant_details.featured_image.image_url}
+                              alt="plant image" onContextMenu={(e) => e.preventDefault()}
+                            />
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <br></br>
+                </div>
+            {plant_details.acf.distribution_map_id ? <>
+                    <div className="row">
+                    <div className="col-md-3 col-lg-4">  <strong>Distribution </strong></div>
+                    <div className="col-md-3  col-lg-8">
+                    <span style={{float:'right', fontSize:'12px' , display: 'flex', flexDirection: 'column', alignItems: 'flex-end'}}>
+                      Source: AC CDC, 2023
+                        <span style={{ float: 'right', fontSize: '12px', textAlign:'right' }}>
+                        <div><span className="grey-dot"></span>
+                          Recent (&gt;= 2000)</div>
+                          <div> <span className="green-dot"></span>
+                          Historic (&lt; 2000)</div>
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-sm-6 col-md-6 col-lg-12 col-xl-12">
+                      <div
+                        className={
+                          plant_details.acf.distribution_map_id !== ''
+                            ? "featured-image"
+                            : "featured-image disable-pointer-events"
+                        }
+                        data-bs-toggle="modal"
+                        data-bs-target="#distribution-map">
+                           {plant_details.acf.distribution_map_id == '' ? (
+                          <div className="d-flex flex-column text-center stock-img-container">
+                            <img src="../../images/no_result_found.png" alt="" onContextMenu={(e)=>e.preventDefault()}/>
+                            <span>Oops! No images found!</span>
+                          </div>
+                        ) : (
+                          <img
+                            src={`../../images/maps/${plant_details.acf.distribution_map_id}.png`}
+                            alt="Distribution map" onContextMenu={(e)=>e.preventDefault()}
+                          />
+                        )}
+                      </div>
+                    </div>
+                  </div></>:""}
+            </div>
+            {plant_details.acf.similar_species &&
+                    <div className="d-lg-none d-xl-none d-sm-block d-md-block">
+                      <br></br>
+                      <p><strong>Explore Similar Plants</strong></p>
+                      <FamilyDetails plant_id={plant_details.acf.similar_species} />
+                      {/* <ListPlantSpecies filteredList={plantFamily} isLoading={isLoading} /> */}
+                    </div>
+              }
           </div>
         </div>
       ) : (
         <div style={{ margin: '5% 0 20% 0', padding: '0 5%' }}> <BrokenPageAlert /> </div>
       )}
       <style jsx>{`
-        .heading {
+         .heading {
           font-size: 2rem;
           color: #0e9d47;
         }
@@ -1423,6 +1573,10 @@ const PlantSpeciesDetails = ({ plant_details }) => {
         .familyLink{
           color: #0e9d47;
           font-style: italic;
+          font-weight: bold;
+          cursor: pointer
+        }
+        .familyEnglish{
           font-weight: bold;
           cursor: pointer
         }

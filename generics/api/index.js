@@ -66,3 +66,15 @@ export function capitalizeEveryWord(data) {
     word => word.charAt(0).toUpperCase() + word.slice(1)
   ).join(' ')
 }
+
+export function formatCase(data) {
+  if (data.search('sna') >= 0 || data.search('Sna') >= 0) {
+      return data.replace(/sna/ig, 'SNA')
+  } else {
+      return data
+  }
+}
+
+export function capitalizeAfterColon(data) {
+  return data.replace(/(:\s*\w)/g, match => match.toUpperCase());
+}
