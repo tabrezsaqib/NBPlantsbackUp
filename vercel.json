@@ -1,0 +1,15 @@
+{
+    "redirects": [
+      {
+        "source": "https://www.newbrunswickplants.com/(.*)",
+        "destination": "https://newbrunswickplants.ca/$1",
+        "permanent": true
+      },
+      {
+        "source": "https://newbrunswickplants.com/(.*)",
+        "destination": "https://newbrunswickplants.ca/$1",
+        "permanent": true
+      }
+    ]
+  }
+  
