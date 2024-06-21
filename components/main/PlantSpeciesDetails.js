@@ -324,14 +324,14 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                                         ].full_image_url
                                       })`,
                                     }}></div>
-                                <Stack direction="row" justifyContent='space-between'>
-                                  <p className="img-caption" key={index}>Description: {plant_details.acf.image_url[
+                                {/* <Stack direction="row" justifyContent='space-between'> */}
+                                  {/* <p className="img-caption" key={index}>Description: {plant_details.acf.image_url[
                                       slideIndex || index
-                                    ].title}</p>
+                                    ].title}</p> */}
                                   <p className="img-caption" key={index}>{plant_details.acf.image_url[
                                       slideIndex || index
                                     ].caption}</p>
-                                </Stack>
+                                {/* </Stack> */}
                                 </div>
                               ))}
                           </Slide>
