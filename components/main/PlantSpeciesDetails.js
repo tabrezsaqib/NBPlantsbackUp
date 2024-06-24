@@ -110,6 +110,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
       },
     }).then(() => {})
   }
+  console.log('aaaaa',plant_details);
   return (
     <>
     <Navbar />
