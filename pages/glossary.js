@@ -23,7 +23,7 @@ function Glossary  () {
           </iframe>
         </div>
       </div>
-      <Footer />
+      <Footer isFixed={true} />
     </>
   )
 }

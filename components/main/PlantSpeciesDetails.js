@@ -18,7 +18,6 @@ import {
   triggerToolTip,
 } from "../../redux/actions/getPlantsAction"
 import FamilyDetails from "../families/familyDetails"
-import { Stack } from "@mui/material"
 
 const PlantSpeciesDetails = ({ plant_details }) => {
   const [slide, setSlide] = useState(false)
@@ -110,7 +109,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
       },
     }).then(() => {})
   }
-  // console.log('aaaaa',plant_details);
+
   return (
     <>
     <Navbar />
@@ -325,14 +324,9 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                                         ].full_image_url
                                       })`,
                                     }}></div>
-                                {/* <Stack direction="row" justifyContent='space-between'> */}
-                                  {/* <p className="img-caption" key={index}>Description: {plant_details.acf.image_url[
-                                      slideIndex || index
-                                    ].title}</p> */}
                                   <p className="img-caption" key={index}>{plant_details.acf.image_url[
                                       slideIndex || index
                                     ].caption}</p>
-                                {/* </Stack> */}
                                 </div>
                               ))}
                           </Slide>
@@ -533,22 +527,23 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                     </p>
                   </div>
                 )}
-                {plant_details.acf.type.length !== 0 &&
-                  plant_details.acf.type.map((item, index) => (
-                    <div className="d-flex label-value-section" key={index}>
-                      <p>
-                        <strong>Type: &nbsp;</strong>
-                      </p>
-                      <div>
-                        <p>
-                          {api.capitalizeFirstLetter(item)}
-                          &nbsp;
-                        </p>
-                      </div>
-                    </div>
-                  ))}
               </div>
-
+              <div className="d-flex label-value-section">
+                {plant_details.acf.type.length !== 0 &&
+                    plant_details.acf.type.map((item, index) => (
+                      <div className="d-flex label-value-section" key={index}>
+                        <p>
+                          <strong>Type: &nbsp;</strong>
+                        </p>
+                        <div>
+                          <p>
+                            {api.capitalizeFirstLetter(item)}
+                            &nbsp;
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+              </div>
               {/* <h4>
                 <strong>Characteristics</strong>
               </h4>

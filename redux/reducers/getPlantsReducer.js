@@ -16,7 +16,8 @@ const initialState = {
   popoverStatus: false,
   plantFamily: [],
   plantsError:false,
-  searchError: false
+  searchError: false,
+  filteredPlantList:[]
 }
 export const getPlantsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -108,6 +109,11 @@ export const getPlantsReducer = (state = initialState, action) => {
       return {
         ...state,
         plantFamily: action.payload,
+      }
+    case types.FILTERED_PLANT_LIST:
+      return {
+        ...state,
+        filteredPlantList: action.payload,
       }
     default:
       return state

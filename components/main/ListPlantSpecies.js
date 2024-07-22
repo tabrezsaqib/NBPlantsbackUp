@@ -9,6 +9,7 @@ import loaderStyles from "../../styles/Loader.module.scss"
 import LoaderThumbnail from "./LoaderThumbnail"
 import SelectedFilter from "./selectedFilter"
 import { Alert, AlertTitle } from "@mui/material"
+import { setFilteredPlantList } from "../../redux/actions/getPlantsAction"
 
 const ListPlantSpecies = ({
   activeFilterList,
@@ -17,6 +18,7 @@ const ListPlantSpecies = ({
 }) => {
   const loaderDataCount = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   const [filteredListSorted, setFilteredListSorted] = useState([])
+  const dispatch = useDispatch();
   useEffect(() => {
     console.log(filteredList)
     const sorted = [...filteredList].sort((a, b) => {
@@ -25,8 +27,8 @@ const ListPlantSpecies = ({
       else
         return a.title.localeCompare(b.title)
     });
-    console.log(sorted)
     setFilteredListSorted(sorted)
+    dispatch(setFilteredPlantList(sorted))
   }, [filteredList])
   return (
     <div >
@@ -55,6 +57,7 @@ const ListPlantSpecies = ({
                 <div>
                 <Alert severity="error" >
                 <AlertTitle>Plant Not Found </AlertTitle>
+                This plant is not available now. Please check back again later.
             </Alert>
                 </div>
             )

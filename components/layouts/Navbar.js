@@ -40,6 +40,7 @@ function Navbar(props) {
   };
 
   const drawer = (
+    <div>
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
       <Link href="/home" as="/home" legacyBehavior>
         <a>
@@ -80,13 +81,13 @@ function Navbar(props) {
           </ListItemButton>
         </ListItem>
             </Link>
-        <ListItem key='about' disablePadding>
-          <ListItemButton sx={{ textAlign: 'center' }}>
-            <SearchForm />
-          </ListItemButton>
-        </ListItem>
+        
       </List>
     </Box>
+    <div style={{ margin: '0 10px' }}>
+      <SearchForm />
+    </div>
+  </div>
   );
 
   const container = window !== undefined ? () => window().document.body : undefined;
@@ -113,7 +114,7 @@ function Navbar(props) {
               />
             </a>
           </Link>
-          <Box sx={{ display: { sm: 'none', xs: 'none', md: 'block', float: 'right' } }}>
+          <Box sx={{ display: { sm: 'none', xs: 'none', md: 'flex', float: 'right' } }}>
             <Button color="success" key="home" sx={{ color: 'black', textTransform: 'none' }}>
               <Link href='/home' as="/home" legacyBehavior>
                 <a style={{ color: 'inherit' }}>Home</a>

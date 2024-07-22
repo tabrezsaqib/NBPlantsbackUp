@@ -161,6 +161,14 @@ export const setPlantFamilyDetails = (data) => async (dispatch) => {
     payload: data,
   })
 }
+
+export const setFilteredPlantList = (data) => async (dispatch) => {
+  dispatch({
+    type: types.FILTERED_PLANT_LIST,
+    payload: data,
+  })
+}
+
 export const searchByKeyword = (slug) => async (dispatch) => {
   const response = await api.get(`${API_URL}plants_db_search?plant_type=${slug}`);
   /// const filtered = response.data.filter((res) => res.acf.plantsnb_id === char.replace(/\s+/g, ""))

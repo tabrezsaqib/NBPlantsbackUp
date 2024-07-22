@@ -38,6 +38,8 @@ import {
     toggleSporeUnderLeaf
 } from "../../redux/actions/toggleSelectorAction"
 import * as options from "../../data/sideNavListDataArray"
+import { Button } from '@mui/material';
+import PlantListModal from './plantListModal';
 
 export default function SelectedFilter() {
     const { activeFilterList, plant_type, type, habitat,
@@ -46,6 +48,8 @@ export default function SelectedFilter() {
         spore_location, spore_covering, spore_under_leaf, stems, growth_form, petal_symmetry,
         inflorescence, fruit_type, fruit_color } = useSelector(state => state.selector);
     const allType = useSelector(state => state.selector);
+    const [openModal, setOpenModal] = React.useState(false);
+    const { filteredPlantList } = useSelector(state => state.post)
     const dispatch = useDispatch();
 
     const [listOfSelector, setListOfSelector] = React.useState({})
@@ -257,11 +261,18 @@ export default function SelectedFilter() {
         }
     }
 
+    const handleModal=()=>{
+        setOpenModal(!openModal)
+    }
+
     return (
         <div style={{ marginLeft: '10px' }}>
             {activeFilterList.length >= 1 &&
+            <Stack direction="row" spacing={1} justifyContent="space-between">
                 <div style={{ marginBottom: '10px', fontSize:'14px' }}> {activeFilterList.length} item(s) selected.
-                    <span className='linklike' onClick={handleClearAll} ><b>Clear All</b></span></div>}
+                    <span className='linklike' onClick={handleClearAll} ><b>Clear All</b></span></div>
+                    {filteredPlantList.length>0 &&<Button variant="outlined" size='small' sx={{ color: '#0e9d47', borderColor: '#0e9d47', m: '10px' }} onClick={handleModal}><b>Plants List</b></Button>}
+            </Stack>}
             <Stack direction="row" spacing={1} sx={{ flexWrap: 'wrap' }}>
                 {Object.keys(listOfSelector).map((option) => (
                     listOfSelector[option].map((name) => (
@@ -269,6 +280,7 @@ export default function SelectedFilter() {
                             variant="outlined" onDelete={(e) => handleDelete(e, `${option}$$${name.name}$$${name.indexx}`)} />
                     ))))}
             </Stack>
+            {openModal && <PlantListModal openModal={openModal} handleModal={handleModal}/>}
             <style jsx>
                 {`.linklike{
                         text-decoration: underline;
