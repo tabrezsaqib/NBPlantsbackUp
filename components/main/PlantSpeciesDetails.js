@@ -1573,6 +1573,7 @@ const PlantSpeciesDetails = ({ plant_details }) => {
           cursor: pointer
         }
         .familyEnglish{
+          color: #0e9d47;
           font-weight: bold;
           cursor: pointer
         }
