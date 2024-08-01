@@ -12,20 +12,54 @@ import { useSelector } from "react-redux";
 import Link from "next/link";
 import styles from "../../styles/SearchResults.module.css"
 import { DialogContent, DialogActions, Button, Divider, Stack, IconButton } from "@mui/material";
-import { Close, Print } from "@mui/icons-material";
+import { Close, Download, Print } from "@mui/icons-material";
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import SortIcon from '@mui/icons-material/Sort'
+import { jsPDF } from 'jspdf';
 
 function PlantListModal({ openModal, handleModal }) {
     const [isLoading, setLoading] = useState(false)
     const { filteredPlantList } = useSelector(state => state.post)
     const [alignment, setAlignment] = React.useState('latin');
     const [plantList, setPlantList] = React.useState([]);
+    
+    const doc = new jsPDF();
+    const pageHeight = doc.internal.pageSize.height; // Page height in units
+    const marginTop = 10;
+    const lineHeight = 10; // Approximate height of one line of text
+    let currentY = marginTop;
+
+    const addText = (text) => {
+        if (currentY + lineHeight > pageHeight - marginTop) {
+            doc.addPage();
+            currentY = marginTop;
+        }
+        if (alignment === 'latin')
+            doc.text(`${text.acf.latin} / ${text.acf.common_name}`, 10, currentY + 10);
+        else
+            doc.text(`${text.acf.common_name ? text.acf.common_name : '-'} / ${text.acf.latin ? text.acf.latin : '-'}`, 10, currentY + 10);
+        currentY += lineHeight;
+    };
+    
     const handleChange = (event, newAlignment) => {
         if (newAlignment !== null) {
             setAlignment(newAlignment);
         }
+    };
+    const generatePDF = () => {
+
+        doc.setFontSize(22);
+        doc.setFont("helvetica", "bold");
+        doc.text("Plants List", 10, 10);
+
+        doc.setFontSize(13);
+        doc.setTextColor('#0e9d47');
+        doc.setFont("helvetica", "italic");
+        for (let i = 1; i <= plantList.length; i++) {
+            addText(plantList[i - 1])
+        }
+        doc.save("document.pdf");
     };
 
     useEffect(() => {
@@ -67,8 +101,8 @@ function PlantListModal({ openModal, handleModal }) {
                                 <ToggleButton sx={{ textTransform: 'none', fontWeight: '600' }} value="latin"><SortIcon />Latin Name</ToggleButton>
                                 <ToggleButton sx={{ textTransform: 'none', fontWeight: '600' }} value="english"><SortIcon />English Name</ToggleButton>
                             </ToggleButtonGroup>
-                            <Button  sx={{displayPrint: 'none', ml: '10px'}} color="success"  variant="contained" endIcon={<Print />} onClick={() => { window.print() }}>
-                                Print
+                            <Button  sx={{ textTransform: 'none', displayPrint: 'none', ml: '10px'}} color="success"  variant="contained" endIcon={<Download />} onClick={generatePDF}>
+                                Download
                             </Button>
                             <IconButton sx={{ ml: '10px',displayPrint: 'none' }} aria-label="close" onClick={handleModal}>
                                 <Close />

@@ -17,7 +17,8 @@ const search = ({ search_results }) => {
           <PlantSpeciesDetails plant_details={search_results[0]} /> :
         <SearchResults itemsPerPage={20} />}
       </div>
-      {search_results.length !== 1 ? <Footer /> : null}
+      <br></br>
+      {search_results.length !== 1 ? <Footer isFixed={search_results.length > 6 ? false : true} /> : null}
   </>
   )
 }
