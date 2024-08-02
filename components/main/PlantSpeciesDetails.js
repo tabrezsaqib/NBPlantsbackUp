@@ -641,7 +641,32 @@ const PlantSpeciesDetails = ({ plant_details }) => {
                       </div>
                     }
                   </div>
-
+                  {plant_details.acf.characteristics.cycle  && 
+                  plant_details.acf.characteristics.cycle.length !== 0  ?
+                      plant_details.acf.characteristics.cycle !== 0 && (
+                        <div className="d-flex">
+                          <p>
+                            <strong>Life Cycle: &nbsp;</strong>
+                          </p>
+                          {plant_details.acf.characteristics.cycle.map(
+                            (item, index) => (
+                              <div className="d-flex" key={index}>
+                                <p>
+                                  {api.capitalizeFirstLetter(item)}
+                                  {item !==
+                                    plant_details.acf.characteristics.cycle
+                                      .slice(-1)
+                                      .pop() ? (
+                                    <span>, &nbsp;</span>
+                                  ) : (
+                                    ""
+                                  )}
+                                </p>
+                              </div>
+                            )
+                          )}
+                        </div>
+                      ) : ''}
                 {plant_details.acf.characteristics.growth_form
                           .length !== 0 && (
                             <div className="d-flex label-value-section">
