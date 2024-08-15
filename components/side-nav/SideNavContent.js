@@ -200,14 +200,14 @@ const SideNavContent = ({
       color: "../../images/pr.png",
       label: "pink to red",
     },
-    {
-      color: "../../images/dn.png",
-      label: "don't know",
-    },
-    {
-      color: "../../images/dn.png",
-      label: "doesn't apply",
-    },
+    // {
+    //   color: "../../images/dn.png",
+    //   label: "don't know",
+    // },
+    // {
+    //   color: "../../images/dn.png",
+    //   label: "doesn't apply",
+    // },
     {
       color: "../../images/brwn.png",
       label: "brown",

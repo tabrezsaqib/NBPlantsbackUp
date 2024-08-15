@@ -15,7 +15,7 @@ const flower_colour = [
   "pink to red",
   "white",
   "yellow to orange",
-  "don't know",
+  // "don't know",
 ]
 
 const leaf_arrangement = ["alternate", "basal", "opposite", "no leaves"]
