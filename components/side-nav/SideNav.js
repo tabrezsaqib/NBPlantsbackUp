@@ -127,6 +127,12 @@ const SideNav = ({
         )
         dispatch(toggleFruitColor(updatedFruitColor))
         break
+      case "leaf_type":
+        const updatedLeafType = leaf_type.map(
+          (item, index) => (index === position ? !item : item) //if index === position then !item i.e. true, otherwise false, since initially item is false...
+        )
+        dispatch(toggleLeafTypeData(updatedLeafType))
+        break
       case "leaf_arrangement":
         const updatedLeafArrangement = leaf_arrangement.map((item, index) =>
           index === position ? !item : item
@@ -144,12 +150,6 @@ const SideNav = ({
           index === position ? !item : item
         )
         dispatch(toggleLeafShapeData(updatedLeafShape))
-        break
-      case "leaf_type":
-        const updatedLeafType = leaf_type.map(
-          (item, index) => (index === position ? !item : item) //if index === position then !item i.e. true, otherwise false, since initially item is false...
-        )
-        dispatch(toggleLeafTypeData(updatedLeafType))
         break
 
       case "leaf_duration":

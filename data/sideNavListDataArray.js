@@ -18,8 +18,8 @@ const flower_colour = [
   // "don't know",
 ]
 
-const leaf_arrangement = ["alternate", "basal", "opposite", "no leaves"]
-const leaf_blade_edges = ["lobed", "smooth", "toothed", "no leaves"]
+const leaf_arrangement = ["alternate", "basal", "opposite"]
+const leaf_blade_edges = ["lobed", "smooth", "toothed"]
 
 let leaf_shape = [
   "arrow",
