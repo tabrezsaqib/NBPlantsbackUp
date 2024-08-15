@@ -50,7 +50,7 @@ const inflorescence = [
   "spike",
   "solitary flower",
   "umbel",
-  "whorl",
+  // "whorl",
   "other",
 ]
 
