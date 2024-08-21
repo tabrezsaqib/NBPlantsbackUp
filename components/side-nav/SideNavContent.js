@@ -82,11 +82,11 @@ const SideNavContent = ({
       group: "flowers",
       value: "Flower Arrangement",
     },
-    {
-      key: "lip_shape",
-      group: (plant_type[1] === false) && "flowers",
-      value: "Lip Shape",
-    },
+    // {
+    //   key: "lip_shape",
+    //   group: (plant_type[1] === false) && "flowers",
+    //   value: "Lip Shape",
+    // },
     {
       key: "petal_symmetry",
       group: (plant_type[1] === false) && "flowers",
@@ -249,8 +249,8 @@ const SideNavContent = ({
                   ? type[index]
                   : key == "flower_colour"
                   ? flower_colour[index]
-                  : key == "lip_shape"
-                  ? lip_shape[index]
+                  // : key == "lip_shape"
+                  // ? lip_shape[index]
                   : key == "fruit_type"
                   ? fruit_type[index]
                   : key == "fruit_color"
