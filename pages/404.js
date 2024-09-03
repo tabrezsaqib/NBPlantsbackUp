@@ -17,7 +17,7 @@ const PageNotFound = () => {
       <div className="flex-column d-flex align-items-center justify-content-center">
             <h2 style={{margin: '20px 0 0 0'}}>Page Not Found!</h2>
             <div className="site-in-progress">
-                            404 | Soory, the page could not be found.
+                            404 | Sorry, the page could not be found.
             </div>
             <img
               src="../../images/data_not_found.png"
