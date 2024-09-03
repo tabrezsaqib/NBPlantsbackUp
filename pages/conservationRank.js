@@ -12,7 +12,7 @@ const ConservationRankPage = () => {
             </Head>
             <Navbar />
             <ConservationRank/>
-            <Footer />
+            <Footer isFixed={true} />
         </>
     )
 }

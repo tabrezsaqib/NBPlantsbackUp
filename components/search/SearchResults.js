@@ -4,7 +4,7 @@ import ReactPaginate from "react-paginate"
 import { useEffect, useState } from "react"
 import { connect, useDispatch } from "react-redux"
 import { useRouter } from "next/router"
-import { searchByKeyword } from "../../redux/actions/getPlantsAction"
+import { searchByKeyword, setSearchPagination  } from "../../redux/actions/getPlantsAction"
 import SearchItem from "./SearchItem"
 import SearchFormValidate from "./SearchFormValidate"
 import * as localStore from "../../generics/localStore"
@@ -13,7 +13,7 @@ import TablePagination from '@mui/material/TablePagination';
 import BrokenPageAlert from "../../generics/brokenPageAlert";
 import Router from "next/router"
 
-const SearchResults = ({ search_results, searchError }) => {
+const SearchResults = ({ search_results, searchError, searchPagination }) => {
 
   const [hasSearchKeyword, setHasSearchKeyWord] = useState(false)
   const [isLoading, setLoading] = useState(true)
@@ -27,9 +27,13 @@ const SearchResults = ({ search_results, searchError }) => {
   };
 
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    dispatch(setSearchPagination(parseInt(event.target.value, 10)))
     setPage(0);
   };
+
+  useEffect(() => {
+    setRowsPerPage(searchPagination)
+  }, [searchPagination])
 
 
   const router = useRouter()
@@ -150,6 +154,7 @@ const mapStateToProps = (state) => {
   return {
     search_results: state.post.search_results,
     searchError: state.post.searchError,
+    searchPagination: state.post.searchPagination
   }
 }
 export default connect(mapStateToProps)(SearchResults)

@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from "react"
 import { connect, useDispatch } from "react-redux"
 import { useRouter } from "next/router"
-import { fetchNonWoodyPlantPosts, fetchWoodyPlantPosts, fetchFernPosts, fetchAllPlantPosts, setLoader } from "../../redux/actions/getPlantsAction"
+import { fetchNonWoodyPlantPosts, fetchWoodyPlantPosts, fetchFernPosts, fetchAllPlantPosts, setLoader, setPlantsPagination } from "../../redux/actions/getPlantsAction"
 import TablePagination from '@mui/material/TablePagination';
 import BrokenPageAlert from "../../generics/brokenPageAlert";
 import ListPlantSpecies from "../main/ListPlantSpecies"
@@ -10,7 +10,7 @@ import * as options from "../../data/sideNavListDataArray"
 import styles from "../../styles/Global.module.scss"
 import localstyles from "../../styles/Plants.module.css"
 
-const Plants = ({ all_plants, nonwoody_plants, woody_plants, ferns, isLoading, activeFilterList, allType, plantsError }) => {
+const Plants = ({ all_plants, nonwoody_plants, woody_plants, ferns, isLoading, activeFilterList, allType, plantsError, plantsPagination }) => {
 
   const dispatch = useDispatch()
 
@@ -27,8 +27,12 @@ const Plants = ({ all_plants, nonwoody_plants, woody_plants, ferns, isLoading, a
     setPage(newPage);
   };
 
+  useEffect(() => {
+    setRowsPerPage(plantsPagination)
+  }, [plantsPagination])
+
   const handleChangeRowsPerPage = (event) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
+    dispatch(setPlantsPagination(parseInt(event.target.value, 10)));
     setPage(0);
   };
 
@@ -186,6 +190,7 @@ const mapStateToProps = (state) => {
     activeFilterList: state.selector.activeFilterList,
     allType: state.selector,
     plant_type: state.selector.plant_type,
+    plantsPagination: state.post.plantsPagination,
     plantsError: state.post.plantsError
   }
 }

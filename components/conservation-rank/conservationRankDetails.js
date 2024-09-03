@@ -5,29 +5,36 @@
 import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
 import { useRouter } from 'next/router'
 import TablePagination from '@mui/material/TablePagination';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import * as api from "../../generics/api";
 import ListPlantSpecies from '../main/ListPlantSpecies'
 import styles from "../../styles/SearchResults.module.css"
 import BrokenPageAlert from "../../generics/brokenPageAlert";
+import { setConservationPagination } from "../../redux/actions/getPlantsAction";
 
 function ConservationRankDetails() {
     const [plantFamily, setPlantFamily] = useState([]);
     const [isLoading, setLoading] = useState(true)
     const [isError, setIsError] = useState(false)
     const router = useRouter();
+    const dispatch = useDispatch();
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(100);
-    const { all_plants } = useSelector(state => state.post)
+    const { all_plants, conservationPagination } = useSelector(state => state.post)
+    const [rowsPerPage, setRowsPerPage] = useState(conservationPagination);
+
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
 
     const handleChangeRowsPerPage = (event) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
+        dispatch(setConservationPagination(parseInt(event.target.value, 10)))
         setPage(0);
     };
+
+    useEffect(() => {
+        setRowsPerPage(conservationPagination)
+    }, [conservationPagination])
 
     const fetchDetails = async (char) => {
         setLoading(true)

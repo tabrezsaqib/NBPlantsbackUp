@@ -17,7 +17,10 @@ const initialState = {
   plantFamily: [],
   plantsError:false,
   searchError: false,
-  filteredPlantList:[]
+  filteredPlantList:[],
+  searchPagination: 20,
+  conservationPagination: 20,
+  plantsPagination: 20
 }
 export const getPlantsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -114,6 +117,21 @@ export const getPlantsReducer = (state = initialState, action) => {
       return {
         ...state,
         filteredPlantList: action.payload,
+      }
+    case types.SEARCH_PAGINATION:
+      return {
+        ...state,
+        searchPagination: action.payload,
+      }
+    case types.CONSERVATION_PAGINATION:
+      return {
+        ...state,
+        conservationPagination: action.payload,
+      }
+    case types.PLANTS_PAGINATION:
+      return {
+        ...state,
+        plantsPagination: action.payload,
       }
     default:
       return state

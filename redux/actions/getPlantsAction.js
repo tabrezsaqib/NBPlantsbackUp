@@ -192,6 +192,24 @@ export const searchByKeyword = (slug) => async (dispatch) => {
     })
   }
 }
+export const setSearchPagination = (data) => async (dispatch) => {
+  dispatch({
+    type: types.SEARCH_PAGINATION,
+    payload: data,
+  })
+}
+export const setConservationPagination = (data) => async (dispatch) => {
+  dispatch({
+    type: types.CONSERVATION_PAGINATION,
+    payload: data,
+  })
+}
+export const setPlantsPagination = (data) => async (dispatch) => {
+  dispatch({
+    type: types.PLANTS_PAGINATION,
+    payload: data,
+  })
+}
 
 // export const getAllPlantsCount = () => async (dispatch) => {
 //   const response = await api.get(`${API_URL}plants_db`)
